@@ -1,0 +1,80 @@
+<?php
+function Pagination($total, $per, $page)
+
+     {
+              /*
+              函数名称：Pagination($total, $per, $page)
+              功能：分页，并且提供相邻页的链接
+              最后修订：西大浪人(simonlsy@vip.sina.com) 2005-4-7
+
+              定义 $total : 记录总数
+              $per： 每页的记录数
+              $page ：当前页码
+              */
+             if($page=="" || $page<1) $page=1;
+             $apage=$total/$per;//计算页数（包含小数点的）
+             $allpage=ceil($apage);//取整返回
+             $next=$page+1;         //下一页
+             $pre=$page-1;          //上一页
+             $startpage=$page;      //循环输出的起始数字
+             $endpage=$page+9;      //循环输出的终止数字
+
+             if($endpage>$allpage) $endpage=$allpage  ;
+
+             if($endpage>9 && $endpage-$startpage<9) $startpage=$endpage-9;
+
+             $url=basename($_SERVER['PHP_SELF']);  //取得当前的文件名
+
+             $query_array=explode("&",$_SERVER['argv'][0]);   //取得传递的参数，并且拆分到数组打散
+
+             foreach ($query_array as $key => $value)     if (strstr($value,"page="))   unset($query_array[$key]);   //处理一下，将page=xxx的参数干掉
+
+             $query_string=implode("&amp;",$query_array);
+
+             if($page==1 && $allpage==1)
+             {
+
+                echo "无分页";
+
+             }
+             else
+             {
+
+
+              if($page==1)
+               {
+
+
+                for ($page=$startpage;$page<=$endpage;$page++)  echo "<a href=\"{$url}?{$query_string}&amp;page={$page}\">$page</a>  ";
+                echo " <a href=\"{$url}?{$query_string}&amp;page=".$next."\">下一页</a>
+                       <a href=\"{$url}?{$query_string}&amp;page=".$allpage."\">末页</a>";
+               }
+               elseif($page==$allpage)
+               {
+                        echo "  <a href=\"{$url}?{$query_string}&amp;page=1\">首页</a>
+                                <a href=\"{$url}?{$query_string}&amp;page=".$pre."\">上一页</a>
+                            ";
+
+               }
+               else
+               {
+                        echo "  <a href=\"{$url}?{$query_string}&amp;page=1\">首页</a>
+                                <a href=\"{$url}?{$query_string}&amp;page=".$pre."\">上一页</a>&nbsp;";
+
+                        if($allpage>9)
+                        {
+                         for ($page=$startpage;$page<=$endpage;$page++)  echo "<a href=\"{$url}?{$query_string}&amp;page={$page}\">$page</a>  ";
+                        }
+                        else
+                        {
+                         for ($page=1;$page<=$endpage;$page++)  echo "<a href=\"{$url}?{$query_string}&amp;page={$page}\">$page</a>  ";
+                        }
+
+                        echo " <a href=\"{$url}?{$query_string}&amp;page=".$next."\">下一页</a>
+                                <a href=\"{$url}?{$query_string}&amp;page=".$allpage."\">末页</a>
+                            ";
+               }
+             }
+
+     }
+?>

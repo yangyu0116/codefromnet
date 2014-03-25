@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script language=javascript src="dialog.js"></script>
+
+<script language="javascript">
+document.write ("<link href='../language/" + AvailableLangs["Active"] + ".css' type='text/css' rel='stylesheet'>");
+document.write ("<link href='dialog.css' type='text/css' rel='stylesheet'>");
+
+document.write ("<TITLE>" + lang["DlgMedia"] + "</TITLE>");
+
+function ReturnValue(){
+	var sFromUrl = d_fromurl.value;
+	var sWidth = d_width.value;
+	var sHeight = d_height.value;
+
+	var sHTML = '<EMBED src="' + sFromUrl + '" width="' + sWidth + '" height="' + sHeight + '" type="audio/x-pn-realaudio-plugin" autostart="true" controls="IMAGEWINDOW,ControlPanel,StatusBar" console="Clip1"></EMBED>';
+	dialogArguments.insertHTML(sHTML);
+
+	window.returnValue = null;
+	window.close();
+}
+
+function ok(){
+	d_width.value=ToInt(d_width.value);
+	d_height.value=ToInt(d_height.value);
+	if (d_fromurl.value !== "" && d_fromurl.value !== "http://"){
+		ReturnValue();
+	}else{
+                alert('No Movie Input');
+                window.close();
+        }
+}
+
+function InitDocument(){
+	AvailableLangs.TranslatePage(document);
+	adjustDialog();
+}
+</script>
+</HEAD>
+
+<BODY onload="InitDocument()">
+<table border=0 cellpadding=0 cellspacing=5 id=tabDialogSize><tr><td>
+
+
+<table border=0 cellpadding=0 cellspacing=0 align=center>
+<tr>
+	<td>
+	<fieldset>
+	<legend><span lang=DlgMediaSource></span></legend>
+	<table border=0 cellpadding=5 cellspacing=0 width="100%">
+	<tr><td>
+
+		<table border=0 cellpadding=0 cellspacing=2 width="100%">
+		<tr>
+			<td noWrap width="20%"><span lang=DlgFromUrl></span>:</td>
+			<td noWrap width="80%"><input type="text" id="d_fromurl" style="width:100%" size=10 value="http://"></td>
+		</tr>
+		</table>
+
+	</td></tr>
+	</table>
+	</fieldset>
+	</td>
+</tr>
+<tr><td height=5></td></tr>
+<tr>
+	<td>
+	<fieldset>
+	<legend><span lang=DlgMediaEffect></span></legend>
+	<table border=0 cellpadding=5 cellspacing=0 width="100%">
+	<tr><td>
+
+		<table border=0 cellpadding=0 cellspacing=2 width="100%">
+		<tr>
+			<td noWrap width="20%"><span lang=DlgMediaWidth></span>:</td>
+			<td noWrap width="29%"><input style="width:80px" type=text id=d_width size=10 value="200" ONKEYPRESS="event.returnValue=IsDigit();" maxlength=4></td>
+			<td width="2%">&nbsp;</td>
+			<td noWrap width="20%"><span lang=DlgMediaHeight></span>:</td>
+			<td noWrap width="29%"><input style="width:80px" type=text id=d_height size=10 value="200" ONKEYPRESS="event.returnValue=IsDigit();" maxlength=4></td>
+		</tr>
+		</table>
+
+	</td></tr>
+	</table>
+	</fieldset>
+	</td>
+</tr>
+<tr><td height=5></td></tr>
+<tr><td noWrap align=right><input type=submit value='' id=Ok onclick="ok()" lang=DlgBtnOK>&nbsp;&nbsp;<input type=button value='' onclick="window.close();" lang=DlgBtnCancel></td></tr>
+</table>
+
+
+</td></tr></table>
+
+<div id=divProcessing style="width:200px;height:30px;position:absolute;left:70px;top:50px;display:none">
+<table border=0 cellpadding=0 cellspacing=1 bgcolor="#000000" width="100%" height="100%"><tr><td bgcolor=#3A6EA5><marquee align="middle" behavior="alternate" scrollamount="5"><font color=#FFFFFF><span lang=DlgComUploading></span></font></marquee></td></tr></table>
+</div>
+
+</body>
+</html>

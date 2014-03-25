@@ -1,0 +1,73 @@
+单纯使用PHP很难实现,还好在有个比较适中的解决方案:
+CutyCapt的说明地址：http://cutycapt.sourceforge.net
+
+不过要求主机环境的支持:
+Linux : 要求安装了qt或x-server
+Windows:要求安装了IE(^_…)
+下边分别以两种环境开始实现:
+
+Windows :
+1.下载 CutyCapt-Win32-2008-06-11.zip (6MB, .exe for Win32 systems)
+2.
+<?php 
+//要截图的网址
+   $url = 'http://www.zhaipeng.cn/&#0...
+//输出的图片名称
+$out = 'ex.png';
+   $path = 'CutyCapt/CutyCapt.exe';//下载位置
+   $cmd = "$path --url=$url --out=$out";
+   //exec($cmd);
+   system($cmd);
+?>
+
+Linux :
+安装了qt的Linux主机 :
+Build Instructions
+If your system is set up to compile Qt applications, building CutyCapt should be a simple matter of checking out the source code and running qmake and your version of make. As an example, if you are running Ubuntu Hardy Heron and have configured the system to use packages from hardy-backports, the following should do:
+
+% sudo apt-get install subversion libqt4-webkit libqt4-dev g++
+% svn co https://cutycapt.svn.sourc...
+% cd cutycapt/CutyCapt
+% qmake
+% make
+% ./CutyCapt –url=http://www.example.org –out=example.png
+
+安装了x-server的Linux主机 :
+Using CutyCapt without X server
+You cannot use CutyCapt without an X server, but you can use e.g. Xvfb as light-weight server if you are not running an interactive graphical desktop environment. For example, you could use:
+
+% xvfb-run –server-args=”-screen 0, 1024×768x24″ ./CutyCapt –url=… –out=…
+
+使用帮助:
+Usage
+Open a command prompt and ask for help:
+
+% CutyCapt –help
+—————————————————————————–
+Usage: CutyCapt –url=http://www.example.org/ –out=localfile.png
+—————————————————————————–
+–help Print this help page and exit
+–url= The URL to capture (http:…|file:…|…)
+–out= The target file (.png|pdf|ps|svg|jpeg|…)
+–out-format= Like extension in –out, overrides heuristic
+–min-width= Minimal width for the image (default: 800)
+–max-wait= Don’t wait more than (default: 90000, inf: 0)
+–delay= After successful load, wait (default: 0)
+–user-styles= Location of user style sheet, if any
+–header=: request header; repeatable; some can’t be set
+–method= Specifies the request method (default: get)
+–body-string= Unencoded request body (default: none)
+–body-base64= Base64-encoded request body (default: none)
+–app-name= appName used in User-Agent; default is none
+–app-version= appVers used in User-Agent; default is none
+–user-agent= Override the User-Agent header Qt would set
+–javascript= JavaScript execution (default: on)
+–java= Java execution (default: unknown)
+–plugins= Plugin execution (default: unknown)
+–private-browsing= Private browsing (default: unknown)
+–auto-load-images= Automatic image loading (default: on)
+–js-can-open-windows= Script can open windows? (default: unknown)
+–js-can-access-clipboard= Script clipboard privs (default: unknown)
+—————————————————————————–
+is svg,ps,pdf,itext,html,rtree,png,jpeg,mng,tiff,gif,bmp,ppm,xbm,xpm
+

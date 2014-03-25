@@ -1,0 +1,7 @@
+<object codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" height="420px" width="500px" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+		<param value="flvplayer.swf" name="movie" />
+		<param value="high" name="quality" />
+		<param value="false" name="menu" />
+		<param value="opaque" name="wmode" />
+		<param value="vcastr_file=http://file.xiaofeicn.com/1.flv" name="FlashVars" id="FlashVars" />
+	  	</object>

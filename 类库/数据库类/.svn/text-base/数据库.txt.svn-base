@@ -1,0 +1,104 @@
+class db
+{
+     var $dbname = "";
+     var $link_id  = 0;
+         var $server   = "";
+         var $user     = "";
+         var $password = "";
+     var $technicalemail = "";
+
+       function mysql($dbhost,$dbroot,$password,$dbname,$dbcj){
+           //初始化
+           $this->dbhost=$dbhost;
+           $this->dbroot=$dbroot;
+           $this->password=$password;
+           $this->dbname=$dbname;
+                   $this->dbcj=$dbcj;//采集模式
+                   
+                    
+       }
+           function conn()//连接
+           {
+              if(0 == $this->link_id)
+                {
+                   $conn=@mysql_connect($this->dbhost,$this->dbroot,$this->password) or die("不能连接mysql服务器");
+               mysql_select_db($this->dbname,$conn);//连接
+           //mysql_query("SET NAMES ".$this->dbcj);
+                   $this->query("SET NAMES ".$this->dbcj);
+                }else{   
+                        $this->halt();
+                }
+           }
+
+
+
+            function insert($table,$data)     //插入函数
+        {
+         
+                  $result=mysql_query("insert into $table".$data);
+              return $result;
+                  
+        }
+      /*   function update($sql){
+                   $result=mysql_query($sql);
+            return $result;
+           }*/
+
+
+       function update($table,$data,$where){     //更新函数
+                   $result=mysql_query("update $table set ".$data." where ".$where);
+            return $result;
+           }
+
+
+           function query($sql)//执行SQL,送出
+           {
+               $result=mysql_query($sql);
+               return $result;
+                   
+           }
+           function rows($result)//返回当前查寻数据的数据行数
+           {
+               $rows=@mysql_num_rows($result);
+                   return $rows;
+           }
+             function fetch_array($result)//返回数据总行数
+           {
+                      $row = mysql_fetch_array($result); 
+                   return $row;
+           }
+           function rows_fen($result)//返回数据总行数
+           {
+                      $row = mysql_fetch_row($result); 
+                   return $row[0];
+           }
+           function dates($result,$i)//得到数据
+           {
+               @mysql_data_seek($result,$i);
+               $data=@mysql_fetch_array($result);
+                   return $data;           
+           }
+           function dbclose()//关闭
+           {
+               return mysql_close();
+           }
+           function halt()
+                                                                 
+         {
+                                                                                        $this->errdesc=mysql_error();
+                                                                                        $this->errno=mysql_errno();
+                                                                                        // prints warning message when there is an error
+                                                                                        global $technicalemail;
+                                                                                        $a= "<p>看上去数据库发生了轻微的错误.\n";
+                                                                                        $a.= "请再刷新尝试一下.</p>";
+                                                                                        $a.= "<p>一封电邮已经发送给我们的<a href=\"mailtothis->technicalemail\">技术人员</a>,"; $a.="如果问题依然, 您也可以联系他.</p>";
+                                                                                        $a.="<p>如有不便, 敬请原谅.</p>";
+                                                                                        return $a;
+                                                                                        
+                                                                  }
+
+
+
+
+
+}

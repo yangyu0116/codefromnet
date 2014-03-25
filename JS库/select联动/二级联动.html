@@ -1,0 +1,47 @@
+<script>
+
+var dogs = new Array("poodle","puli","greyhound");
+var fish = new Array("trout", "mackerel", "bass");
+var birds = new Array("robin", "hummingbird", "crow");
+
+function swapOptions(the_array_name)
+{
+
+	var numbers_select = document.the_form.the_examples;
+
+	var the_array = eval(the_array_name);
+
+	setOptionText(document.the_form.the_examples, the_array);
+}
+function setOptionText(the_select, the_array)
+
+{
+
+	for (loop=0; loop < the_select.options.length; loop++)
+
+	{
+
+		the_select.options[loop].text = the_array[loop];
+
+	}
+
+}
+
+
+</script>
+
+       <form name="the_form">
+        <font face="ËÎÌו">
+<select name="choose_category" onChange="swapOptions(document.the_form.choose_category.options[selectedIndex].text);"
+          size="1">
+            <option selected>dogs </option>
+            <option>fish </option>
+            <option>birds </option>
+          </select> 
+          <select name="the_examples" size="1">
+            <option>poodle </option>
+            <option>puli </option>
+            <option>greyhound</option>
+          </select> </font>
+        </form>
+

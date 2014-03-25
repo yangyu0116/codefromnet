@@ -1,0 +1,41 @@
+
+<? 
+/*自动回车和空格函数不去除html原码*/
+function subhtml($chars)
+{ $adds=0;
+ $subchar="";
+ $chars_lenght=strlen($chars);
+ for($i=0;$i<=$chars_lenght-1;$i++)
+   { $a=substr($chars,$i,1);
+  if ($a=="\t")
+   {
+    $subchar=$subchar; 
+   }  
+  elseif ($a=="\n")
+   {
+    $subchar=$subchar."<br>"; 
+   }
+  elseif ($a=="<")
+   {
+           $adds=1;
+           $subchar=$subchar."<";
+   }
+  elseif ($a==">")
+   { 
+          $adds=0;
+     $subchar=$subchar.">";
+   }
+  elseif ($a==" ")
+   {
+    if ($adds==0)
+      $subchar=$subchar."&nbsp;";
+    else
+      $subchar=$subchar." ";
+   }
+  else 
+    $subchar=$subchar.$a;
+  }
+ return $subchar;
+}
+?> 
+

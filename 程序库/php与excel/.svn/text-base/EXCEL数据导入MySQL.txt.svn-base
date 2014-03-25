@@ -1,0 +1,20 @@
+其实很简单，首先将EXCEL数据导出为csv文件，比如我保存的是1.csv文件，然后运行以下程序就行了，需要注意的就是字符编码和字段顺序~
+
+<?
+
+$ar = file("1.csv");
+
+mysql_connect('localhost','root','root');
+mysql_select_db('guestbook');
+mysql_query('set names gbk');
+//echo 1;exit;
+
+foreach($ar as $val)
+{
+ $str = explode (',',$val); 
+ $sql = "INSERT INTO `test` (`name`,`sex`,address) ";
+ $sql .= "VALUES ('".$str[0]."','".$str[1]."','".$str[2]."') ";
+ mysql_query($sql);
+}
+
+?>

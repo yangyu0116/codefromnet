@@ -1,0 +1,342 @@
+<?
+/*
+------------------------------------------------------------------------------------
+类名:Lwgpagenum
+说明:PHP+MySQL分页类
+作者:龙卫国
+网络user:lwg888
+邮箱:lwg888@163.com
+使用、修改、传播请保留作者信息
+------------------------------------------------------------------------------------
+*/
+
+
+require_once(dirname(__FILE__)."/Lwgdb.inc.php");
+//Lwgdb.inc.php是数据库连接与sql语句执行类
+
+class Lwgpageturn {
+    //----------可以设置值的变量----------------------------------------
+    var $maxnum;//每页显示数 
+    var $maxnum_max_size=100;  //每页最多显示数,用来规定$maxnum不能超过$maxnum_max_size 
+    var $sql;//sql语句
+    var $navchar=array('[|<<]','[<]','[>]','[>>|]','[<<]','[>>]');
+                 //导航条的显示字符，值可以自定义，如一个img标签 
+                 //$navchar[0]表示第一页，$navchar[1]表示前一页，$navchar[2]表示后一页，$navchar[3]表示最后页，$navchar[4]表示前n页,$navchar[5]表示后n页 
+    var $key;//如果一个页面中有多个分页时作为区别标记
+    var $debug=true;//是否显示调试信息
+    
+    //----------用来获取值的变量---------------------------------------
+    var $totalnum;//总记录数
+    var $totalpage;//总页数
+    var $startnum;//本页的第一条在总数中的序数
+    var $endnum;//本页的最后一条在总数中的序数  
+    var $pagenum;//本页在总页数中的序数
+    var $field;//结果记录的集合
+    var $id;//每条记录的序号
+    var $linkhead;//链接指定的url及要传递的相关参数
+    var $err;//记录最后一条错误信息
+    
+    //构造函数。
+    //参数$maxnum用来指定每页显示多少条记录，如果不指定$maxnum，表示全部显示而不用分页
+    //如果同一个页面中有两个以上的分页，参数$key作为区分标记，否则不用指定
+    //使用方法：
+    //       $obj=new Lwgpagenum('10');
+    //或：   $obj=new Lwgpagenum();
+    //       $obj->maxnum="10";
+    //       $obj->key="1";
+    function Lwgpageturn($maxnum="",$maxnum_max_size='',$key=""){
+        $this->maxnum=$maxnum;
+        if ($maxnum_max_size!="")$this->maxnum_max_size=$maxnum_max_size;
+        $this->key=$key;
+    }
+    
+    //通过run方法运行sql并取得相关信息
+    //$sql参数为有效的sql语句。可以通过$obj->sql=""来指定
+    //$db参数为数据库连接ID
+    //使用方法：
+    //$sql="select * from table";
+    //$db=mysql_connect('host','user','pass');
+    //$obj->run($sql,$db);
+    //或:
+    //$obj->sql="select * from table";
+    //$obj->run();
+    function run($sql='',$db=''){
+        if ($sql!="")$this->sql=$sql;
+        if ($this->sql=="") return $this->output("错误:未给出sql查询语句!");
+        if ($this->maxnum<0 || $this->maxnum_max_size<0) return $this->output("错误:maxnum、maxnum_max_size都不能小于0!");
+        if ($db=="")$db=new Lwgdb();
+        //如果没有指定参数$db,则用Lwgdb类与数据库建立连接
+
+        if (empty($this->maxnum)){
+            //如果初始maxnum为空，则显示全部记录而不用分页
+            $result = $db->query($this->sql);//执行sql语句
+            $this->totalnum = mysql_num_rows($result);//取得总记录数
+            
+            if ($this->maxnum_max_size>0 && $this->totalnum>$this->maxnum_max_size)return $this->output("错误:记录数太多,请使用分页!"); 
+
+            $this->startnum=0;//第一条记录数为0
+            $this->endnum=$this->totalnum;//最后一条记录数与总记录数相同
+        }
+        else {
+            $ifpost=false; 
+            //是否有$_POST变量,如果有的话,则在翻页时只传递其值,其它的一律省略  
+            if (sizeof($_POST)>0){
+                $formlink = "";
+                $ifpost=true;
+                foreach ($_POST as $key => $value) {
+                    //循环分析出$_POST变量的键值
+                    if (!empty($value)) $formlink .=$key."=".rawurlencode($value)."&";
+                }
+                $querystring=$formlink;//将$_POST变量的键值作为翻页时传递的参数 
+            }
+            else {
+                //如果没有$_POST变量,则将$_GET变量分析后作为翻页时传递的参数  
+                $qs=explode("totalnum".$this->key,$_SERVER['QUERY_STRING']);
+                if ($qs[0]!="")$querystring=(substr($qs[0],-1)=="&")?$qs[0]:$qs[0]."&"; 
+                //扔掉totalnum及其以后的参数,因为要付新的值 
+            }
+
+            if (isset($_GET["totalnum".$this->key]) && $_GET["totalnum".$this->key]>0 && !$ifpost)$this->totalnum = sprintf('%d',$_GET["totalnum".$this->key]);
+            //如果有$_POST变量,则不再传递旧的totalnum参数
+            //否则如果在$_GET中有totalnum,则直接传递它,而不用重新计算
+            else {
+                $all_result = $db->query($sql);
+                $this->totalnum = mysql_num_rows($all_result);
+                //如果$totalnum<=0,视为无效，重新计算值
+            }
+            
+            if (isset($_GET["maxnum".$this->key]) && $_GET["maxnum".$this->key]>0)$this->maxnum = sprintf('%d',$_GET["maxnum".$this->key]); 
+            //如果通过get接收到$maxnum,则使用之，这样便能在客户端指定要显示的记录数 
+            if ($this->maxnum_max_size>0 && $this->maxnum>$this->maxnum_max_size)$this->maxnum=$this->maxnum_max_size;
+            //如果$maxnum<=0,视为无效，重新计算值
+        
+            if ($this->maxnum==$this->totalnum){  
+                //虽然前面说maxnum的初始值为空时也是全部显示,但没有任何统计与导航, 适用于如首页的显示前n条记录
+                $this->totalpage=1;
+                $this->startnum=0;
+                $this->endnum=$this->totalnum;
+                $result=(empty($all_result))?$db->query($sql):$all_result;
+                //$result是用来显示记录的数据库查询id;
+                //如果前面计算总数时已有id,则直接使用前面的
+            }
+            else {
+                if (!empty($all_result))mysql_free_result($all_result);
+          
+                $this->totalpage=ceil($this->totalnum/$this->maxnum);
+
+                $this->pagenum =(isset($_GET["pagenum".$this->key]) && $_GET["pagenum".$this->key]>0 && !$ifpost)?sprintf('%d',$_GET["pagenum".$this->key]):1;
+                //如果没有$_POST变量,并且$_GET变量中有发pagenum参数,则使用之,否则,表示页数的pagenum为1
+                if ($this->pagenum>$this->totalpage)$this->pagenum=$this->totalpage;
+
+                $this->startnum = max(($this->pagenum-1) * $this->maxnum,0);
+                $this->endnum=min($this->startnum+$this->maxnum,$this->totalnum);
+                //本页显示数为本页的最后一条在总数中的序数减去本页的第一条在总数中的序数
+
+                $limitstart=0; 
+                // 如果sql语句中有limit,则重新设置limit的参数
+                //重设limit的第一个参数为 $limitstart=0  
+                if (eregi("limit (-?[0-9]+) *,? *(-?[0-9]*)",$sql,$regs)){
+                   if (!empty($regs[2])) $limitstart=$regs[1];
+                    //$regs[1]为limit的第一个参数;$regs[2]为limit的第二个参数
+                    //如果存在第二个参数,则让$limitstart=第一个参数 
+                    //此时第二个参数已没有用,因为在计算总数时已发挥作用  
+                    $sql=eregi_replace("limit (-?[0-9]+) *,? *(-?[0-9]*)","",$sql);
+                    //去掉limit,因为后面要新建limit 
+                }
+                $limitstart+=$this->startnum;
+
+                $query_limit = sprintf("%s LIMIT %d, %d", $sql, $limitstart,$this->maxnum);
+                //重设limit,使结果为本页需要显示的记录
+                $result = $db->query($query_limit);
+            }
+        
+            $querystring.="totalnum".$this->key."=".$this->totalnum;
+            if (isset($_GET["maxnum".$this->key]))$querystring.="&maxnum".$this->key."=".$this->maxnum;
+            $this->linkhead=$_SERVER['PHP_SELF']."?".$querystring;
+            //将需要传递的参数加上totalnum和maxnum,然后加在url后
+        }
+        $i=0;
+        while($myrow = mysql_fetch_array($result)){
+            $this->field[$i]=$myrow;
+            //用两维数组返回要显示的记录
+            $this->id[$i]=$this->startnum+$i+1;
+            //每条记录的序号
+            $i++;
+        }
+      
+        mysql_free_result($result);
+    }
+    
+    //显示如"共14页27条"
+    //使用方法:echo $obj->total()
+    function total(){
+        if ($this->maxnum=="")return;
+        return "共".$this->totalpage."页".$this->totalnum."条";
+    }
+    
+    //显示如"本页从第9条到第10条"
+    //使用方法:echo $obj->fromto()
+    function fromto(){
+        if ($this->maxnum=="")return;
+        $startnum=$this->startnum+1;
+        if ($this->totalnum==0)$startnum=0;
+        return "本页从第".$startnum."条到第".$this->endnum."条";
+    }
+    
+    //navbar方法显示页数导航条
+    //$num_size表示多少个导航数字,如$num_size=5则显示" 1 2 3 4 5 "
+    //$num_style为数字导航条的风格,
+    //当$num_style的值为1时将数字分组,显示如"前5页 前1页 1 2 3 4 5 后一页 后5页";  
+    //当$num_style的值为非1时,显示如" 1 2 3 4 5 …";  
+    //$nolink_show没有链接的导航字符是否显示，true显示，false不显示
+    //$nolink_color没有链接的导航字符显示的颜色 
+    //使用方法：echo $obj->navbar(10,2，false,"#ffff00")
+    function navbar($num_size=0,$num_style=1,$nolink_show=false,$nolink_color="#ff0000"){
+        if ($this->totalpage<=1)return;
+        
+        if ($num_size>0){
+            if ($num_style==1){
+                $thisunit=ceil($this->pagenum/$num_size);//取得本页所有的组 
+                $preunit=($thisunit>1)?($thisunit-1):"";//取得上页所有的组 
+                $nextunit=($thisunit<ceil($this->totalpage/$num_size))?($thisunit+1):"";//取得下页所有的组
+                $startpage=($thisunit-1)*$num_size+1;//取得本组的开始页 
+                $endpage=min($thisunit*$num_size,$this->totalpage);//取得本组的最后页 
+                if ($preunit!=""){
+                    $str_preunit=" <a href=\"".$this->linkhead."&pagenum".$this->key."=".(($thisunit-2)*$num_size+1)."\" title=\"前".$num_size."页\">".$this->navchar[4]."</a> ";
+                }
+                if ($nextunit!=""){
+                    $str_nextunit=" <a href=\"".$this->linkhead."&pagenum".$this->key."=".($thisunit*$num_size+1)."\" title=\"后".$num_size."页\">".$this->navchar[5]."</a>";
+                }
+            }
+            else {
+                $tmpnum=ceil($num_size/2); 
+                $startpage=max(min($this->pagenum-$tmpnum,$this->totalpage-$num_size+1),1);
+                $endpage=min($startpage+$num_size-1,$this->totalpage);
+                if ($startpage>1)$str_frontell=" … ";
+                if ($endpage<$this->totalpage)$str_backell=" … ";
+            }
+            $str_num="";
+            for ($i=$startpage;$i<=$endpage;$i++){
+                if ($i==$this->pagenum)$str_num.=" <font color=\"".$nolink_color."\">".$i."</font> ";
+                else $str_num.= " <a href=\"".$this->linkhead."&pagenum".$this->key."=".$i."\" title=\"第".$i."页\">".$i."</a> ";
+            }
+        }
+
+        if ($this->pagenum > 1){
+            $str_first=" <a href=\"".$this->linkhead."&pagenum".$this->key."=1\" title=\"第一页\">".$this->navchar[0]."</a> ";
+            $str_pre=" <a href=\"".$this->linkhead."&pagenum".$this->key."=".($this->pagenum-1)."\" title=\"前一页\">".$this->navchar[1]."</a> ";
+        }
+        else if ($nolink_show){
+            $str_first=" <font color=\"".$nolink_color."\">".$this->navchar[0]."</font> ";
+            $str_pre=" <font color=\"".$nolink_color."\">".$this->navchar[1]."</font> ";
+        }
+        if ($this->pagenum<$this->totalpage){
+            $str_next= " <a href=\"".$this->linkhead."&pagenum".$this->key."=".($this->pagenum+1)."\" title=\"后一页\">".$this->navchar[2]."</a> ";
+            $str_last= " <a href=\"".$this->linkhead."&pagenum".$this->key."=".$this->totalpage."\" title=\"最后页\">".$this->navchar[3]."</a> 　";
+        }
+        else if ($nolink_show){
+            $str_next=" <font color=\"".$nolink_color."\">".$this->navchar[2]."</font> ";
+            $str_last=" <font color=\"".$nolink_color."\">".$this->navchar[3]."</font> ";
+        }
+        return $str_first.$str_preunit.$str_pre.$str_frontell.$str_num.$str_backell.$str_next.$str_nextunit.$str_last;
+    }
+
+    //用下拉列表显示如"到第n页共m页"
+    //使用方法:echo $obj->pagejump()
+    function pagejump(){
+        if ($this->totalpage<=1)return;
+        
+        $options=array();
+        for ($i=1;$i<=$this->totalpage;$i++)$options[$i]=$i;
+        return "到第".$this->droplist("pagenum".$this->key,$options)."页/共".$this->totalpage."页";
+    }
+    
+    //用下拉列表显示如"每页显示n条 "
+    //使用方法:echo $obj->maxnum()
+    function maxnum(){
+        if ($this->maxnum=="")return;
+        $options=array('1'=>'1','2'=>'2','3'=>'3','4'=>'4','6'=>'6','8'=>'8','9'=>'9','10'=>'10','20'=>'20','30'=>'30','50'=>'50','100'=>'100','全部'=>$this->totalnum);
+        $str="";
+        return "每页显示".$this->droplist("maxnum".$this->key,$options)."条";
+    }
+    
+    //droplist()用来生成下拉选单
+    function droplist($name,$options,$class=""){
+        $write="";
+        $write.="<select name='".$name."' ";
+        if ($class!="")$write.="class='".$class."' ";
+        $write.="onchange='javascript:location.href=this.options[this.selectedIndex].value'>";
+        $tmplinkhead=eregi_replace("&maxnum".$this->key."=[0-9]*","",$this->linkhead);
+        $preval=0;
+        while ( list( $key, $val ) = each( $options ) ) {
+          if ($name=="maxnum".$this->key){
+            if ($val!=$this->totalnum){
+              $pagenum=ceil($this->pagenum*$this->maxnum/$val);
+              while (($pagenum-1)*$val>$this->startnum)$pagenum-=1;
+              //由于每页显示记录数改变了,所以要重新计算$pagenum
+              $linkhead=$tmplinkhead."&pagenum".$this->key."=".max($pagenum,1);
+            }
+            else $linkhead=$this->linkhead;
+            
+            if ($this->maxnum_max_size>0 && $this->totalnum>$this->maxnum_max_size){
+                if ($val>=$this->maxnum_max_size){
+                    $write.="<option value=".$linkhead."&".$name."=".$this->maxnum_max_size.(($this->maxnum_max_size==$this->maxnum)?" selected>":">").$this->maxnum_max_size."</option>";
+                    //创建值为$this->maxnum的选单
+                    break;
+                }
+               //如果总数大于$this->maxnum_max_size,则不显示"all"以及大于$this->maxnum_max_size的选项
+            }
+            else if ($preval<$this->maxnum && $val>$this->maxnum)$write.="<option value=".$linkhead."&".$name."=".$this->maxnum." selected>".$this->maxnum."</option>";
+            //当$maxnum的值不在选单中时则创建它
+            
+            $write.="<option value=".$linkhead."&".$name."=".$val;
+            if ($this->maxnum==$val)$write.=" selected";
+            $preval=$val;
+          }
+          else if ($name=="pagenum".$this->key){
+            $write.="<option value=".$this->linkhead."&".$name."=".$val;
+            if ($this->pagenum==$val)$write.=" selected";
+          }
+          $write.=">".$key."</option>";
+        }
+        $write.="</select>";
+        return $write;
+    }
+    
+    //输出错误信息
+    function output($msg){
+        if ($msg!="")$this->err=$msg;
+        if ($this->debug)echo "<script language=\"JavaScript\" type=\"text/JavaScript\">alert('".$msg."');history.go(-1)</script>";
+        return false;
+    }
+}
+
+/*---------使用方法----------------------------------------------
+$sql="……";
+$obj=new lwg_pageturn(20); 
+$obj->run($sql); 
+//下面单列显示记录示例
+for ($i=0;$i<$obj->endnum-$obj->startnum;$++){
+    echo $obj->id[$i];//显示序号
+    echo $obj->field[$i]['name']."<br>";//显示字段名为name的第$i条记录
+}
+//下面多列显示记录示例
+echo "<table>";
+$colnum=2;//表示分两列
+$totalraw=ceil(($obj->endnum-$obj->startnum)/$colnum);
+for ($x=0;$x<$totalraw;$x++){ 
+    echo "<tr>";
+    $startsell=$colnum*$x;
+    $endsell=min($x*$colnum+$colnum,$obj->endnum-$obj->startnum);
+    for ($i=$startsell;$i<$endsell;$i++){ 
+        echo "<td>";
+        echo $obj->id[$i];//显示序号
+        echo $obj->field[$i]['name']."<br>";//显示字段名为name的第$i条记录
+        echo "</td>";
+    }
+    echo "</tr>";
+}
+echo "</table>";
+-----------------------------------------------------------------
+*/
+?>

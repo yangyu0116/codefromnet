@@ -1,0 +1,18 @@
+<?php
+function createdir($dir='')
+{
+        if (!is_dir($dir))
+        {
+            $temp = explode('/',$dir);
+            $cur_dir = '';
+            for($i=0;$i<count($temp);$i++)
+            {
+                $cur_dir .= $temp[$i].'/';
+                if (!is_dir($cur_dir))
+                {
+                @mkdir($cur_dir,0777);
+                }
+            }
+        }
+}
+?>

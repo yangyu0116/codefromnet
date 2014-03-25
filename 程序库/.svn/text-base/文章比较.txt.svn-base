@@ -1,0 +1,47 @@
+有两篇文章，一篇是原文章，另一篇是修改后的文章，请问怎么得到修改了哪些字？怎么知道修改了哪些地方？
+
+
+参考这个函数
+if(! function_exists("TextDiff")):
+        function TextDiff($old, $new) {
+                $mode = true;
+                if(! is_array($old)) {
+                        $bodyA = explode("\n", $old);
+                        $bodyB = explode("\n", $new);
+                        $mode = false;
+                }else {
+                        $bodyA = $old;
+                        $bodyB = $new;
+                }
+
+                $result['added'] = array_diff_assoc($bodyA, $bodyB);
+                $result['deleted'] = array_diff_assoc($bodyB, $bodyA);
+                if($mode)
+                        return $result;
+                if(count($result['added']) >= count($result['deleted']))
+                        $ar = $result['added'];
+                else
+                        $ar = $result['deleted'];
+                $retval = '';
+                foreach($ar as $k=>$v) {
+                        $added = isset($result['added'][$k]) ? $result['added'][$k] : "";
+                        $deleted = isset($result['deleted'][$k]) ? $result['deleted'][$k] : "";
+                        preg_match_all("/[\x81-\xfe]?./",$added,$a1);
+
+                        preg_match_all("/[\x81-\xfe]?./",$deleted,$b1);
+                        $p = TextDiff($b1[0],$a1[0]);
+                        foreach($p['added'] as $key=>$value){
+                                $b1[0][$key] = "<font color=lime>$value</font>";
+                        }
+                        $deleted = join("",$b1[0]);
+                        foreach($p['deleted'] as $key=>$value){
+                                $a1[0][$key] = "<s><font color=red>$value</font></s>";
+                        }
+                        $added = join("",$a1[0]);
+                        $retval .= "<br/><br/>第".($k+1)."行";
+                        $retval .= "<br/>[原文]$added";
+                        $retval .= "<br/>[新文]$deleted";
+                }
+                return $retval;
+        }
+endif;

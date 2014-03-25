@@ -1,0 +1,6 @@
+function createfolder($path){
+   if (!file_exists($path)){
+		createfolder(dirname($path));
+		mkdir($path, 0777);
+   }
+}

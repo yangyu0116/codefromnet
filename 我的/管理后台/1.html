@@ -1,0 +1,470 @@
+<html>
+<head>
+<title>中国移动北京公司客户服务中心 - powered by phpwind.net</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<style type="text/css">
+table { BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 2px}
+select {
+	FONT-SIZE: 12px;
+	COLOR: #000000; background-color: #E0E2F1;
+}
+a { TEXT-DECORATION: none; color:#333}
+a:hover{ text-decoration: underline;}
+body {font-family:Tahoma;FONT-SIZE: 12px;MARGIN: 0;color: #666;background: #fff;}
+textarea,input,select{font-size: 12px; background:#FFFCF0}
+td { BORDER-RIGHT: 1px; BORDER-TOP: 0px; FONT-SIZE: 12px; COLOR: #666;}
+img{border:0;}
+#right-top a{ color:#666; margin:0 7px; line-height:24px}
+#right-top a img{ border:0; vertical-align:middle; margin-right:6px}
+.b{background:#fff;}
+.left_over{background:#F0F0F0;}
+.head { color: #005681;background: #D0E6F1;font-weight:bold; padding:4px 4px 3px 4px}
+.head a{color: #4691B7; font-weight:normal}
+.head_2 { background:fffcf0 }
+.head_2 td{color: #000000;}
+.hr  {border-top: 1px solid #739ACE; border-bottom: 0; border-left: 0; border-right: 0; }
+.bold {font-weight:bold;}
+.smalltxt {font-family: Tahoma, Verdana; font-size: 12px;color: #000000;}
+.i_table{border: 1px solid #8EC1DB;background:#FFF0ee;}
+.i_table .head{border-bottom:1px solid #8EC1DB}
+.pages { margin-top:10px; margin-bottom:10px; margin-left:8px }
+.pages * { vertical-align: middle;}
+.pages a{padding:1px 4px ; background:#f9fcff;  border:1px solid #ADD2E1; margin:0 1px; color: #002F79; text-align: center; text-decoration: none; font:normal 12px Tahoma,Arial; }
+.pages a:hover { border:#37A717 1px solid; background:#EDFFE4; text-decoration:none; color: #002F79}
+.pages input { border:1px solid #ccc; font: Verdana;text-align: center; margin-left:2px}
+.pages b { padding:2px ;  margin: 0 3px;font:bold  11px/12px Tahoma}
+</style>
+
+</head>
+<body>
+<div id="right-top" style="margin:0 1% 2%; border-bottom:1px solid #F0EFEF; padding:5px" align="center">
+
+</div>
+
+<table width="95%" align="center" cellspacing="0" cellpadding="3" class="i_table">
+<tr class="b"><td>
+
+作 者(可使用通配符 "*"): <input name="author" size="10" value="">
+关键字(可使用通配符 "*"): <input name="keyword" size="20" value="">
+<select name="ktype">
+<option value="subject">标题</option>
+<option value="content">内容</option>
+</select>
+
+排序: <select name="sc">
+<option value="asc">升序</option>
+<option value="desc">降序</option>
+</select>
+显示行数: <input name="perpage" size="3" value="30">
+<input type="submit" value="提 交"></center></td></tr>
+</table>
+
+
+<input type="hidden" name="step" value="1">
+<table width="95%" align="center" cellspacing="1" cellpadding="3" class="i_table">
+
+<tr><td class="head" colspan="10">文章列表</td></tr>
+<tr class="head_2" align="center">
+<td width="5%">ID</td>
+<td width="30%">标 题</td>
+<td width="15%">作 者</td>
+<td width="15%">系统分类</td>
+<td width="10%">发表日期</td>
+<td width="5%">精华</td>
+<!--<td width="5%">置顶</td>-->
+<td width="5%">审核</td>
+<td width="5%">编辑</td>
+<td width="5%"></td></tr>
+
+<tr class="b" align="center">
+<td>1</td>
+<td>大家一起努力</td>
+<td>金莎</td>
+<td>业务园地</td>
+<td>2009-03-23</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2557">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2557"></td></tr>
+
+<tr class="b" align="center">
+<td>2</td>
+<td>3.15故事会</td>
+<td>王培培</td>
+<td>服务案例</td>
+<td>2009-03-20</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2556">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2556"></td></tr>
+
+<tr class="b" align="center">
+<td>3</td>
+<td>知足</td>
+<td>王培培</td>
+<td>生活感悟</td>
+<td>2009-03-20</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2555">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2555"></td></tr>
+
+<tr class="b" align="center">
+<td>4</td>
+<td>真心的倾听，耐心的解答&nbsp; &nbsp; ——美惠区域 刘彩</td>
+<td>郝佳</td>
+<td>服务案例</td>
+<td>2009-03-19</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2554">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2554"></td></tr>
+
+<tr class="b" align="center">
+<td>5</td>
+<td>工作中的语言营销&nbsp; &nbsp; ——美惠区域 张广川</td>
+<td>郝佳</td>
+<td>服务案例</td>
+<td>2009-03-19</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2553">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2553"></td></tr>
+
+<tr class="b" align="center">
+<td>6</td>
+<td>多一份惊喜，多一份满意&nbsp;  ——美惠区域 郝晓沁</td>
+<td>郝佳</td>
+<td>服务案例</td>
+<td>2009-03-19</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2552">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2552"></td></tr>
+
+<tr class="b" align="center">
+<td>7</td>
+<td>历史上最强的恶心笑话，看你能忍到第几个</td>
+<td>陈楠</td>
+<td>业务园地</td>
+<td>2009-03-14</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2551">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2551"></td></tr>
+
+<tr class="b" align="center">
+<td>8</td>
+<td>4个桃花最旺的出生时辰！</td>
+<td>陈楠</td>
+<td>娱乐休闲</td>
+<td>2009-03-14</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2550">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2550"></td></tr>
+
+<tr class="b" align="center">
+<td>9</td>
+<td>超级感人两个傻子的爱情</td>
+<td>陈楠</td>
+<td>生活感悟</td>
+<td>2009-03-14</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2549">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2549"></td></tr>
+
+<tr class="b" align="center">
+<td>10</td>
+<td>危机来了，你害怕吗？&nbsp; 王赛</td>
+<td>李莹1</td>
+<td>业务园地</td>
+<td>2009-03-14</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2548">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2548"></td></tr>
+
+<tr class="b" align="center">
+<td>11</td>
+<td>春节期间的温暖</td>
+<td>牛晓桐</td>
+<td>业务园地</td>
+<td>2009-03-11</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2547">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2547"></td></tr>
+
+<tr class="b" align="center">
+<td>12</td>
+<td>举手之劳的温暖</td>
+<td>牛晓桐</td>
+<td>服务案例</td>
+<td>2009-03-11</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2546">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2546"></td></tr>
+
+<tr class="b" align="center">
+<td>13</td>
+<td>天&nbsp; 职</td>
+<td>牛晓桐</td>
+<td>服务案例</td>
+<td>2009-03-11</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2545">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2545"></td></tr>
+
+<tr class="b" align="center">
+<td>14</td>
+<td>贴心的关怀 满意的服务</td>
+<td>牛晓桐</td>
+<td>服务案例</td>
+<td>2009-03-11</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2544">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2544"></td></tr>
+
+<tr class="b" align="center">
+<td>15</td>
+<td>做客户亲密的朋友</td>
+<td>牛晓桐</td>
+<td>服务案例</td>
+<td>2009-03-11</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2543">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2543"></td></tr>
+
+<tr class="b" align="center">
+<td>16</td>
+<td>班组博客日志</td>
+<td>陈皇玉</td>
+<td>生活感悟</td>
+<td>2009-03-07</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2542">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2542"></td></tr>
+
+<tr class="b" align="center">
+<td>17</td>
+<td>挑战!</td>
+<td>陈皇玉</td>
+<td>生活感悟</td>
+<td>2009-03-07</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2541">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2541"></td></tr>
+
+<tr class="b" align="center">
+<td>18</td>
+<td>两会运营举措</td>
+<td>许晨曦</td>
+<td>服务案例</td>
+<td>2009-03-05</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2540">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2540"></td></tr>
+
+<tr class="b" align="center">
+<td>19</td>
+<td>“专家”服务&nbsp; 为“两会”护航</td>
+<td>及昭霞</td>
+<td>业务园地</td>
+<td>2009-03-05</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2539">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2539"></td></tr>
+
+<tr class="b" align="center">
+<td>20</td>
+<td>创新如此简单</td>
+<td>许晨曦</td>
+<td>企业文化</td>
+<td>2009-03-05</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2538">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2538"></td></tr>
+
+<tr class="b" align="center">
+<td>21</td>
+<td>创新工作 有你 有我</td>
+<td>许晨曦</td>
+<td>企业文化</td>
+<td>2009-03-05</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2537">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2537"></td></tr>
+
+<tr class="b" align="center">
+<td>22</td>
+<td>梦想--王培培</td>
+<td>王培培</td>
+<td>生活感悟</td>
+<td>2009-02-28</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2536">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2536"></td></tr>
+
+<tr class="b" align="center">
+<td>23</td>
+<td>《彩虹湾》2009年1期</td>
+<td>朱培君</td>
+<td>企业文化</td>
+<td>2009-02-27</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2535">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2535"></td></tr>
+
+<tr class="b" align="center">
+<td>24</td>
+<td>感谢!</td>
+<td>陈皇玉</td>
+<td>生活感悟</td>
+<td>2009-02-27</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2534">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2534"></td></tr>
+
+<tr class="b" align="center">
+<td>25</td>
+<td>与班组一起成长</td>
+<td>及昭霞</td>
+<td>班组建设</td>
+<td>2009-02-26</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2533">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2533"></td></tr>
+
+<tr class="b" align="center">
+<td>26</td>
+<td>下班之后……</td>
+<td>及昭霞</td>
+<td>业务园地</td>
+<td>2009-02-26</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2532">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2532"></td></tr>
+
+<tr class="b" align="center">
+<td>27</td>
+<td>情系客服——难忘元宵</td>
+<td>及昭霞</td>
+<td>班组建设</td>
+<td>2009-02-26</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2531">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2531"></td></tr>
+
+<tr class="b" align="center">
+<td>28</td>
+<td>瞧，单技能也行--亦庄区域中心单技能2组&nbsp; 孟凯</td>
+<td>及昭霞</td>
+<td>业务园地</td>
+<td>2009-02-26</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2530">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2530"></td></tr>
+
+<tr class="b" align="center">
+<td>29</td>
+<td>与“188“的亲密接触--记G3业务初体验</td>
+<td>及昭霞</td>
+<td>业务园地</td>
+<td>2009-02-26</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2529">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2529"></td></tr>
+
+<tr class="b" align="center">
+<td>30</td>
+<td>电话营销中心新任项目经理培训感言</td>
+<td>刘海平</td>
+<td>班组建设</td>
+<td>2009-02-26</td>
+<td>--</td>
+<!--<td>0</td>-->
+<td>已审</td>
+<td><a href="/admin.php?action=cateatc&job=blog&set=edit&itemid=2528">编辑</a></td>
+<td><input type="checkbox" name="selid[]" value="2528"></td></tr>
+
+</table><br />
+<table width="95%" align="center" cellspacing="0" cellpadding="3">
+<tr><td><div class="pages"><a href="/admin.php?action=cateatc&job=blog&set=list&postdate1=1072886400&postdate2=1248710400&sc=desc&perpage=30&page=1" style="font-weight:bold">&laquo;</a><b> 1 </b><a href="/admin.php?action=cateatc&job=blog&set=list&postdate1=1072886400&postdate2=1248710400&sc=desc&perpage=30&page=2">2</a><a href="/admin.php?action=cateatc&job=blog&set=list&postdate1=1072886400&postdate2=1248710400&sc=desc&perpage=30&page=3">3</a><a href="/admin.php?action=cateatc&job=blog&set=list&postdate1=1072886400&postdate2=1248710400&sc=desc&perpage=30&page=4">4</a><a href="/admin.php?action=cateatc&job=blog&set=list&postdate1=1072886400&postdate2=1248710400&sc=desc&perpage=30&page=5">5</a><input type="text" size="3" onkeydown="javascript: if(event.keyCode==13){ location='/admin.php?action=cateatc&job=blog&set=list&postdate1=1072886400&postdate2=1248710400&sc=desc&perpage=30&page='+this.value;return false;}"><a href="/admin.php?action=cateatc&job=blog&set=list&postdate1=1072886400&postdate2=1248710400&sc=desc&perpage=30&page=60" style="font-weight:bold">&raquo;</a> Pages: ( 1/60 total )</div></td></tr>
+<tr><td align="right"><input type="radio" name="type" id="delete" value="delete" CHECKED> 删除
+<input type="radio" name="type" value="allowcheck"> 通过审核
+<input type="radio" name="type" value="setdigest" id="setdigest"> 设置精华
+<select name="digest" style="width:100px;" onclick="Changselect('setdigest')">
+<option value="0">取消精华</option>
+<option value="1">精华I</option>
+<option value="2">精华II</option>
+<option value="3">精华III</option>
+</select>
+<input type="radio" name="type" value="setcid" id="setcid"> 修改分类
+<select name="atccid" style="width:100px;" onclick="Changselect('setcid')">
+<option value="1"> 业务园地</option><option value="2"> 服务案例</option><option value="3"> 班组建设</option><option value="6"> 企业文化</option><option value="82"> 生活感悟</option><option value="83"> 八方游记</option><option value="84"> 娱乐休闲</option><option value="85"> 博客征文</option>
+</select>
+</td></tr>
+
+</table><br />
+<center><input type="button" name="chkall" value="全 选" onclick="CheckAll(this.form)">
+<input type="submit" value="提 交" onclick="return Checkdel(this.form,'您确认要删除选中主题？');"></center>
+
+
+<center>
+<blockquote>
+<hr class="hr" size="1">
+Powered by <a href="#" target="_blank"><b>yangyu</b></a>
+</blockquote><br />
+</center>
+</body></html>

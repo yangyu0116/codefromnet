@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Onload image fades without Flash | clagnut/sandbox</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<style type="text/css">
+@import url(sandbox.css);
+#photoholder {
+width:450px;
+height:338px;
+border:1px solid #666;
+background:#fff url('http://hiphotos.baidu.com/comasp/pic/item/25f2bfc3d7d87952b219a8d2.jpg') 50% 50% no-repeat;
+}
+#thephoto {
+width:450px;
+height:338px;
+}
+TABLE {
+margin-bottom:1em;
+border-collapse:collapse;
+}
+TH {
+font-weight:normal;
+font-style:italic;
+white-space:nowrap;
+text-align:left;
+}
+TD, TH {
+vertical-align:top;
+padding:0.25em 0.5em;
+border:1px solid #ddd;
+}
+</style><script type="text/javascript">
+<!--
+document.write("<style type='text/css'>#thephoto {visibility:hidden;}</style>");function initImage() {
+imageId = 'thephoto';
+image = document.getElementById(imageId);
+setOpacity(image, 0);
+image.style.visibility = "visible";
+fadeIn(imageId,0);
+}
+function fadeIn(objId,opacity) {
+if (document.getElementById) {
+   obj = document.getElementById(objId);
+   if (opacity <= 100) {
+    setOpacity(obj, opacity);
+    opacity += 10;
+    window.setTimeout("fadeIn('"+objId+"',"+opacity+")", 100);
+   }
+}
+}
+function setOpacity(obj, opacity) {
+opacity = (opacity == 100)?99.999:opacity;
+// IE/Win
+obj.style.filter = "alpha(opacity:"+opacity+")";
+// Safari<1.2, Konqueror
+obj.style.KHTMLOpacity = opacity/100;
+// Older Mozilla and Firefox
+obj.style.MozOpacity = opacity/100;
+// Safari 1.2, newer Firefox and Mozilla, CSS3
+obj.style.opacity = opacity/100;
+}
+window.onload = function() {initImage()}
+// -->
+</script>
+</head><body>
+<div id="content">
+<h2>Example</h2>
+<div id="photoholder">
+<img src="http://cache.atlas.sina.com.cn/nd/citylifehouse/citylife/36/74/20090531_18396_1.jpg" alt=".........." id="thephoto" />
+</div>
+<table>
+</table>
+</div> <!-- /content -->
+<p>&copy;<b>copy: http://hi.baidu.com/comasp</b></p>
+</body>
+</html>

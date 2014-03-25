@@ -1,0 +1,69 @@
+<?php 
+/********************************* 
+*  
+*  作者: 徐祖宁 (唠叨) 
+*  邮箱: czjsz_ah@stats.gov.cn 
+*  开发: 2002.07 
+*  
+*  
+*  函数: tags 
+*  功能: 从文件中提取HTML标签 
+*  
+*  入口: 
+*  $filename 文件名 
+*  $tag      标签名  
+*  
+*  返回: 
+*  
+*  数组,每项为: 
+*   tagName    String 
+*   Text       String 
+*   Attrs      Array 
+*  
+*  示例: 
+*  print_r(tags(test1.htm,a)); 
+*  print_r(http://localhost/index.htm,img); 
+*  
+*/ 
+
+function tags($filename,$tag) { 
+  $buffer = join(,file($filename)); 
+  $buffer = eregi_replace(rn,,$buffer); 
+  $tagkey = sql_regcase($tag); 
+  $buffer = eregi_replace(<$tagkey ,n<$tag ,$buffer); 
+  $ar = split(n,$buffer); 
+
+  foreach($ar as $v) { 
+    if(! eregi(<$tagkey ,$v)) continue; 
+    eregi(<$tagkey ([^>]*)((.*)</$tagkey)?,$v,$regs); 
+    $p[tagName] = strtoupper($tag); 
+    if($regs[3]) 
+      $p[Text] = $regs[3]; 
+    $s = trim(eregi_replace([ t]+, ,$regs[1])). ; 
+    $s = eregi_replace( *= *,=,$s); 
+
+    $a = split( ,$s); 
+    for($i=0;$i<count($a);$i++) { 
+      $ch = array(); 
+      if(eregi(=['],$a[$i])) { 
+        $j = $i+1; 
+        while(!eregi([']$,$a[$i])) { 
+          $a[$i] .= .$a[$j]; 
+          unset($a[$j]); 
+        } 
+      } 
+    } 
+    foreach($a as $k) { 
+      $name = strtoupper(strtok($k,=)); 
+      $value = strtok(0); 
+      if(eregi(^['],$value)) 
+        $value = substr($value,1,-1); 
+      if($name) 
+        $p[Attrs][$name] = $value; 
+    } 
+    $pp[] = $p; 
+  } 
+  return $pp; 
+} 
+
+?> ;

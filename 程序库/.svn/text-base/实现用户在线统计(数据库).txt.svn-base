@@ -1,0 +1,39 @@
+<?
+#
+# Author: Marco(hkfuk)
+#
+# Contact: [email]Crazy_Marco@msn.com[/email]
+#
+$host="localhost";//mysql的host
+$user="root";//mysql的用戶名稱
+$pw="";//mysql的密碼
+$db="";//mysql資料庫名稱
+$update_time="30";//更新的頻率---秒数
+session_start();
+if(!$_SESSION['name'])session_register("name");
+############################################
+$con=mysql_connect($host,$user,$pw)or die("不可以連接資料庫");
+$now=time();
+mysql_select_db($db,$con)or die("錯誤的資料庫$db");
+if(!empty($name)){//如果用戶已經登入了
+$query=mysql_query("select count(username) from online_list where username='$name'",$con);//查詢在線到表是否已經有用戶的名稱
+$result=mysql_result($query,0);//查詢的結果
+if($result!=0){//如果用戶已經在在線列表了
+@mysql_query("update online_list set second_time='$now' where username='$name'",$con);//更新用戶的最後在線時間
+}else{//如果用戶已經不在在線列表
+@mysql_query("insert into online_list(username,userip,online_time,second_time)values('$name','$REMOTE_ADDR','$now','$now')",$con);//新增一個用戶到在線列表
+}
+}
+
+else{//如果用戶沒有登入
+$query=mysql_query("select count(userip) from online_list where userip='$REMOTE_ADDR'",$con);//查詢在線到表是否已經有訪客的ip 地址
+$result=mysql_result($query,0);//查詢的結果
+if($result!=0){//如果訪客的ip地址已經在在線列表了
+@mysql_query("update online_list set second_time='$now' where userip='$REMOTE_ADDR'",$con);//更新訪客的最後在線時間
+}else{//如果用戶列表沒有訪客的ip地址
+@mysql_query("insert into online_list(username,userip,online_time,second_time)values('訪客','$REMOTE_ADDR','$now','$now')",$con);//新增一個訪客到在線列表
+}
+}
+$del_time=$now-$update_time;
+@mysql_query("delete from online_list where second_time<$del_time",$con);//刪除在$update_time秒內沒有動作的用戶
+?>

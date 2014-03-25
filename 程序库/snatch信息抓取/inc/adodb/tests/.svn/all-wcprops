@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests
+END
+test-php5.php
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test-php5.php
+END
+xmlschema.xml
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/xmlschema.xml
+END
+test-datadict.php
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test-datadict.php
+END
+benchmark.php
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/benchmark.php
+END
+time.php
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/time.php
+END
+test-xmlschema.php
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test-xmlschema.php
+END
+testmssql.php
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testmssql.php
+END
+testdatabases.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testdatabases.inc.php
+END
+testoci8cursor.php
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testoci8cursor.php
+END
+test2.php
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test2.php
+END
+test3.php
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test3.php
+END
+testoci8.php
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testoci8.php
+END
+testcache.php
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testcache.php
+END
+test4.php
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test4.php
+END
+test-active-recs2.php
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test-active-recs2.php
+END
+test5.php
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test5.php
+END
+test-active-record.php
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test-active-record.php
+END
+testpaging.php
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testpaging.php
+END
+testsessions.php
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testsessions.php
+END
+test-perf.php
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test-perf.php
+END
+client.php
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/client.php
+END
+test.php
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test.php
+END
+test_rs_array.php
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test_rs_array.php
+END
+pdo.php
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/pdo.php
+END
+test-pgblob.php
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/test-pgblob.php
+END
+tmssql.php
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/tmssql.php
+END
+testgenid.php
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testgenid.php
+END
+testpear.php
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/testpear.php
+END
+xmlschema-mssql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/adodb/tests/xmlschema-mssql.xml
+END

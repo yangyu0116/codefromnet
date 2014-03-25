@@ -1,0 +1,350 @@
+<?php
+//############################
+#    文件：cat.class.php
+#    作者：Sanders Yao
+#    名称：左右值分类节点类型
+#    功能：多级分类
+#    必须全局变量：
+#    $db：MySQL数据库操作对象（MyDB类型）
+#    类型：
+#    cat：
+#    左右值节点类型
+#    全局函数：
+#    cat2link：
+#    获取cat对象数组
+#    返回cat对象数组
+#    递归的方法合并一组cat对象
+#    cat2expert：
+#    获取cat对象
+#    返回二维数组
+#    导出cat对象及其子集对象到一个二维数组中
+#    最后修改时间：2007-2-2
+/*    sql:
+CREATE TABLE `cat2_cat` (
+  `cid` int(10) unsigned NOT NULL auto_increment,
+  `lid` int(10) NOT NULL,
+  `rid` int(10) NOT NULL,
+  `cname` char(255) NOT NULL,
+  PRIMARY KEY  (`cid`),
+  KEY `left` (`lid`),
+  KEY `right` (`rid`),
+  FULLTEXT KEY `name` (`cname`)
+) ENGINE=MyISAM ROW_FORMAT=FIXED;
+--    test records:
+insert into `cat2_cat` (`cid`,`lid`,`rid`,`cname`) values (1,1,8,'root'),(2,2,3,'newTest'),(3,4,7,'newTest2'),(4,5,6,'oomph');
+*/
+//############################
+
+//左右值分类节点类型
+class cat{
+    var $itsId;
+    var $itsLid;
+    var $itsRid;
+    var $itsName;
+    var $itsPerfix;
+    var $itsNumSub;
+    var $itsSub;
+    var $itsParent;
+    
+    function cat($id = 0, $perfix = ""){
+        $this->itsId        = $id;
+        $this->itsLid        = 0;
+        $this->itsRid        = 0;
+        $this->itsName        = "";
+        $this->itsPerfix    = $perfix;
+        $this->itsNumSub    = 0;
+        $this->itsSub        = array();
+        $this->itsParent    = NULL;
+        $this->load();
+    }
+    
+    //导入数据(*checked*)
+    function import(& $array){
+        $this->itsId        = isset($array["cid"])        ? $array["cid"]        : $this->itsId;
+        $this->itsLid        = isset($array["lid"])        ? $array["lid"]        : $this->itsLid;
+        $this->itsRid        = isset($array["rid"])        ? $array["rid"]        : $this->itsRid;
+        $this->itsName        = isset($array["cname"])    ? $array["cname"]    : $this->itsName;
+        $this->itsNumSub    = ($this->itsRid - $this->itsLid - 1) / 2;
+    }
+    
+    //导出数据(*checked*)
+    function export($ignoreId = false){
+        $result = array(
+        "cid" => $this->itsId,
+        "lid" => $this->itsLid,
+        "rid" => $this->itsRid,
+        "cname" => $this->itsName);
+        if($ignoreId){
+            unset($result["cid"]);
+        }
+        return $result;
+    }
+    
+    //加载分类信息(*checked*)
+    function load(){
+        global $db;
+        if(0 == $this->itsId){
+            return false;
+        }
+        $query_string = sprintf("SELECT * FROM `%scat2_cat` WHERE `cid`=%d;", $this->itsPerfix, $this->itsId);
+        $result = $db->query($query_string);
+        if(0 == mysql_num_rows($result)){
+            print_r($db);
+            die("");
+            return false;
+        }
+        $arrayTmp = mysql_fetch_array($result, MYSQL_ASSOC);
+        mysql_free_result($result);
+        $this->import($arrayTmp);
+        return true;
+    }
+    
+    //获取所有子集分类(*checked*)
+    function loadSub(){
+        global $db;
+        if(0 == $this->itsNumSub){
+            return false;
+        }
+        $query_string = sprintf("SELECT * FROM `%scat2_cat` WHERE `lid`>%d AND `rid`<%d ORDER BY `lid` ASC;", $this->itsPerfix, $this->itsLid, $this->itsRid);
+        $result = $db->query($query_string);
+        $num = mysql_num_rows($result);
+        $tmpArray = array();
+        for($i = 0;$i < $num;$i ++){
+            $tmpArray[$i] = new cat;
+            $tmpArray[$i]->import(mysql_fetch_array($result, MYSQL_ASSOC));
+        }
+        cat2link($this, $tmpArray);
+        mysql_free_result($result);
+        return true;
+    }
+    
+    //通过偏移量设定左值(右值联动)(*checked*)
+    function setLeft($delta){
+        $this->itsLid += $delta;
+        $this->itsRid = $this->itsNumSub * 2 + $this->itsLid + 1;
+        foreach($this->itsSub as $key => $cat){
+            $this->itsSub[$key]->setLeft($delta);
+        }
+    }
+    
+    //添加子分类(*checked*)
+    //返回false: 缺失分类名称
+    function add($cat, $save = false){
+        global $db;
+        if("" == $cat->itsName){
+            return false;
+        }
+        if($save){
+            $query_string = sprintf("UPDATE `%scat2_cat` SET `rid`=`rid`+%d WHERE `rid`>=%d;", $this->itsPerfix, ($cat->itsNumSub + 1) * 2, $this->itsRid);
+            $db->query($query_string);
+            $query_string = sprintf("UPDATE `%scat2_cat` SET `lid`=`lid`+%d WHERE `lid`>%d;", $this->itsPerfix, ($cat->itsNumSub + 1) * 2, $this->itsRid);
+            $db->query($query_string);
+        }
+        $this->itsRid += ($cat->itsNumSub + 1) * 2;
+        $delta = ($this->itsRid - ($cat->itsNumSub + 1) * 2) - $cat->itsLid;
+        $cat->setLeft($delta);
+        $this->itsRid += ($cat->itsNumSub + 1) * 2;
+        $this->itsSub[0] = & $cat;
+        $this->itsSub[0]->itsParent = & $this;
+        if($save){
+            $arrayNew = cat2expert($cat, true);
+            $arrayQuery = array();
+            foreach($arrayNew as $key => $row){
+                $arrayQuery[$key] = sprintf("(%d, %d, '%s')", $row["lid"], $row["rid"], $row["cname"]);
+            }
+            $query_string = sprintf("INSERT INTO `%scat2_cat`(`lid`, `rid`, `cname`) VALUES %s;", $this->itsPerfix, implode(",", $arrayQuery));
+            $db->query($query_string);
+        }
+        return true;
+    }
+    
+    //删除该节点及其子节点(*checked*)
+    //复制返回自己（左值归1）
+    function destroy($save = false){
+        global $db;
+        if(1 == $this->itsLid){
+            return false;
+        }
+        if($save){
+            $query_string = sprintf("DELETE FROM `%scat2_cat` WHERE `lid`>=%d AND `rid`<=%d;", $this->itsPerfix, $this->itsLid, $this->itsRid);
+            $db->query($query_string);
+            $query_string = sprintf("UPDATE `%scat2_cat` SET `rid`=`rid`-%d WHERE `rid`>%d;", $this->itsPerfix, ($this->itsNumSub + 1) * 2, $this->itsRid);
+            $db->query($query_string);
+            $query_string = sprintf("UPDATE `%scat2_cat` SET `lid`=`lid`-%d WHERE `lid`>%d;", $this->itsPerfix, ($this->itsNumSub + 1) * 2, $this->itsRid);
+            $db->query($query_string);
+        }
+        $this->setLeft(1 - $this->itsLid);
+        return $this;
+    }
+    
+    //清空子分类(*checked*)
+    //返回false：无子分类
+    function clean($save = false){
+        global $db;
+        if(0 == $this->itsNumSub){
+            return false;
+        }
+        if($save){
+            $query_string = sprintf("DELETE FROM `%scat2_cat` WHERE `lid`>%d AND `rid`<%d;", $this->itsPerfix, $this->itsLid, $this->itsRid);
+            $db->query($query_string);
+            $query_string = sprintf("UPDATE `%scat2_cat` SET `rid`=`rid`-%d WHERE `rid`>=%d;", $this->itsPerfix, $this->itsNumSub * 2, $this->itsRid);
+            $db->query($query_string);
+            $query_string = sprintf("UPDATE `%scat2_cat` SET `lid`=`lid`-%d WHERE `lid`>%d;", $this->itsPerfix, $this->itsNumSub * 2, $this->itsRid);
+            $db->query($query_string);
+        }
+        $this->load();
+        $this->loadSub();
+        return true;
+    }
+    
+    //移动(*checked*)
+    //返回false：无效的目标
+    function move($id, $save = false){
+        global $db;
+        if($save){
+            //加载所有子分类
+            if(0 == count($this->itsSub)){
+                $this->loadSub();
+            }
+            
+            //检查目标分类的合法性
+            $target = new cat($id, $this->itsPerfix);
+            if("" == $target->itsName || $target->itsId == $this->itsId || ($target->itsLid < $this->itsLid && $target->itsRid > $this->itsRid)){
+                return false;
+            }
+            
+            //填补自己之前的位置 腾出新的空位置
+            if($target->itsLid < $this->itsLid){
+                $query_string = sprintf("UPDATE `%scat2_cat`
+SET `rid`=`rid`+%d
+WHERE `rid`<%d AND `rid`>=%d;", $this->itsPerfix, ($this->itsNumSub + 1) * 2, $this->itsRid, $target->itsRid);
+                $db->query($query_string);
+                
+                $query_string = sprintf("UPDATE `%scat2_cat`
+SET `lid`=`lid`+%d
+WHERE `lid`<%d AND `lid`>%d;", $this->itsPerfix, ($this->itsNumSub + 1) * 2, $this->itsLid, $target->itsRid);
+                $db->query($query_string);
+                $this->setLeft($target->itsRid - $this->itsLid);
+            }else{
+                $query_string = sprintf("UPDATE `%scat2_cat`
+SET `rid`=`rid`+%d
+WHERE `rid`>%d AND `rid`<%d;", $this->itsPerfix, ($this->itsNumSub + 1) * -2, $this->itsRid, $target->itsRid);
+                $db->query($query_string);
+                
+                $query_string = sprintf("UPDATE `%scat2_cat`
+SET `lid`=`lid`+%d
+WHERE `lid`>%d AND `lid`<%d;", $this->itsPerfix, ($this->itsNumSub + 1) * -2, $this->itsRid, $target->itsRid);
+                $db->query($query_string);
+                $this->setLeft($target->itsRid - ($this->itsNumSub + 1) * 2 - $this->itsLid);
+            }
+            
+            //批量将节点数据移动到空置位置
+            $arrayNew = cat2expert($this);
+            $arrayQuery = array();
+            foreach($arrayNew as $key => $row){
+                $arrayQuery[$key] = sprintf("(%d, %d, %d, '%s')", $row["cid"], $row["lid"], $row["rid"], $row["cname"]);
+            }
+            $query_string = sprintf("REPLACE INTO `%scat2_cat`(`cid`, `lid`, `rid`, `cname`) VALUES %s;", $this->itsPerfix, implode(",", $arrayQuery));
+            $db->query($query_string);
+        }
+        $this->load();
+        $this->loadSub();
+        return true;
+    }
+    
+    //复制(*checked*)
+    //返回false：无效的目标
+    function clone($id, $save = false){
+        if($save){
+            if(0 == count($this->itsSub)){
+                $this->loadSub();
+            }
+            $buffer = $this;
+            $target = new cat($id, $this->itsPerfix);
+            if("" == $target->itsName || $target->itsId == $this->itsId || ($target->itsLid < $this->itsLid && $target->itsRid > $this->itsRid)){
+                return false;
+            }
+            $buffer->setLeft(1 - $this->itsLid);
+            $target->add($buffer, $save);
+        }
+        $this->load();
+        $this->loadSub();
+        return true;
+    }
+    
+    //保存分类信息(*checked*)
+    function save(){
+        global $db;
+        if(0 == $this->itsId){
+            return false;
+        }
+        $query_string = sprintf("UPDATE `%scat2_cat` SET `lid`=%d, `rid`=%d, `cname`='%s' WHERE `cid`=%d;", $this->itsPerfix, $this->itsLid, $this->itsRid, $this->itsName, $this->itsId);
+        return $db->query($query_string);
+    }
+    
+    //输入分类名称
+    function setName($str){
+        if("" == $str || 255 < count($str)){
+            return false;
+        }
+        $this->itsName = $str;
+        return true;
+    }
+    
+    //获取到根节点的路径(*checked*)
+    function getPath(){
+        global $db;
+        $query_string = sprintf("SELECT * FROM `%scat2_cat` WHERE `lid`<%d AND `rid`>%d ORDER BY `lid` ASC;", $this->itsPerfix, $this->itsLid, $this->itsRid);
+        $result = $db->query($query_string);
+        $num = mysql_num_rows($result);
+        $arrayCat = array();
+        $root = new cat;
+        for($i = 0;$i < $num;$i ++){
+            $arrayTmp = mysql_fetch_array($result, MYSQL_ASSOC);
+            $tmpCat = new cat;
+            $tmpCat->import($arrayTmp);
+            if(1 == $tmpCat->itsLid){
+                $root = $tmpCat;
+            }else{
+                $arrayCat[$tmpCat->itsId] = $tmpCat;
+            }
+        }
+        mysql_free_result($result);
+        cat2link($root, $arrayCat);
+        return $root;
+    }
+}
+
+//归并左右值对象数组(左值起始)(*checked*)
+function cat2link(& $parent, $array){
+    $result    = array();
+    $left    = $parent->itsLid;
+    $right    = $parent->itsRid;
+    if(1 != $right - $left){
+        foreach($array as $key => $cat){
+            if($left == $cat->itsLid - 1 && $cat->itsRid < $right){
+                $left = $cat->itsRid;
+                $cat->itsParent    = & $parent;
+                $result[$cat->itsId] = $cat;
+                //unset($array[$key]);
+                cat2link($result[$cat->itsId], $array);
+            }
+        }
+    }
+    $parent->itsSub = $result;
+}
+
+//导出分类对象到二维数组(*checked*)
+function cat2expert(& $cat, $ignoreId = false){
+    $result = array();
+    foreach($cat->itsSub as $sub){
+        array_push($result, $sub->export($ignoreId));
+        if(0 != $sub->itsNumSub){
+            array_merge($result, cat2expert($sub));
+        }
+    }
+    $self = $cat->export($ignoreId);
+    array_unshift($result, $self);
+    return $result;
+}
+?>

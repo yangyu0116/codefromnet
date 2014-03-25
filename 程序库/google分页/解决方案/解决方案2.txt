@@ -1,0 +1,102 @@
+<?
+   function Pagination($total, $per, $page)
+
+     {
+              /*
+              函数名称：Pagination($total, $per, $page)
+              功能：分页，并且提供相邻页的链接
+              最后修订：西大浪人(simonlsy@vip.sina.com) 2005-4-8
+
+              定义 $total : 记录总数
+              $per： 每页的记录数
+              $page ：当前页码
+              */
+             if($page=="" || $page<1) $page=1;
+             $apage=$total/$per;//计算页数（包含小数点的）
+             $allpage=ceil($apage);//取整返回
+             $next=$page+1;         //下一页
+             $pre=$page-1;          //上一页
+             $startcount0=$page-5;  //前面5页输出起始序号
+             $endcount0=$page-1;    //前面5页输出终止序号
+             $startcount=$page+1;   //后面5页输出起始序号
+             $endcount=$page+5;     //后面5页输出终止序号
+             if($startcount0<1) $startcount0=1; //为了避免输出的时候产生负数，设置如果小于1就从序号1开始
+             if($allpage<$endcount) $endcount=$allpage;  //页码+5的可能性就会产生最终输出序号大于总页码，那么就要将其控制在页码数之内
+
+
+             $url=basename($_SERVER['PHP_SELF']);  //取得当前的文件名
+
+             $query_array=explode("&",$_SERVER['argv'][0]);   //取得传递的参数，并且拆分到数组打散
+
+             foreach ($query_array as $key => $value)     if (strstr($value,"page="))   unset($query_array[$key]);   //处理一下，将page=xxx的参数干掉
+
+             $query_string=implode("&amp;",$query_array);
+
+
+             if($page==1 && $allpage==1)
+             {
+
+                        echo "无分页";
+
+             }
+             else
+             {
+
+
+                        if($page==1)
+                         {
+                          /*如果为第一页，直接从第二页链接开始输出*/
+                              echo $page."&nbsp;";
+                              for ($page=2;$page<=$endcount;$page++)  echo "<a href=\"{$url}?{$query_string}&amp;page={$page}\">$page</a>  ";
+                              echo " <a href=\"{$url}?{$query_string}&amp;page=".$next."\">下一页</a>
+                                     <a href=\"{$url}?{$query_string}&amp;page=".$allpage."\">末页</a>";
+
+                         }
+                         elseif($page==$allpage)
+                         {
+
+                               echo "  <a href=\"{$url}?{$query_string}&amp;page=1\">首页</a>
+                                       <a href=\"{$url}?{$query_string}&amp;page=".$pre."\">上一页</a>&nbsp;";
+                               for ($page=$startcount0;$page<=$endcount0;$page++)  echo "<a href=\"{$url}?{$query_string}&amp;page={$page}\">$page</a>  "; //后面5页
+                               echo $allpage;
+
+                         }
+                         else
+                         {
+                                    echo "  <a href=\"{$url}?{$query_string}&amp;page=1\">首页</a>
+                                          <a href=\"{$url}?{$query_string}&amp;page=".$pre."\">上一页</a>&nbsp;";
+
+
+
+                                   for ($page=$startcount0;$page<=$endcount0;$page++)  echo "<a href=\"{$url}?{$query_string}&amp;page={$page}\">$page</a>  ";     //前面5页输出
+                                   echo $page."&nbsp;";
+                                   for ($page=$startcount;$page<=$endcount;$page++)  echo "<a href=\"{$url}?{$query_string}&amp;page={$page}\">$page</a>  "; //后面5页
+
+                                   echo " <a href=\"{$url}?{$query_string}&amp;page=".$next."\">下一页</a>
+                                          <a href=\"{$url}?{$query_string}&amp;page=".$allpage."\">末页</a>
+                                      ";
+                         }
+             }
+
+
+     }
+
+
+
+
+
+
+ ?>
+
+
+
+
+
+<?
+/*********************
+ 用法： 200000条数据 每页输出30条
+
+***********************/
+Pagination("200000", "30",$_GET['page']);
+
+?>

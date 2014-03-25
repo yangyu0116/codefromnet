@@ -1,0 +1,65 @@
+函数
+
+
+CODE:[Copy to clipboard]<?
+/*
+名称: page()
+功能: 模板式分页
+参数: 
+    table 数据库查询表名，必选 
+    where 数据库查询条件，可选 
+    pageSize 每页显示信息数量，可选
+    midPage 分页导航链接数量，可选
+全局变量: 
+    db 数据库操作object
+    tpl 模板操作object
+    start 返回的LIMIT的开始下标
+返回: 无，
+
+时间: 2005-9-12
+*/
+function page ($table,$where="1=1",$pageSize=10,$midPage=5)
+{
+    global $db,$tpl,$start,$total;
+    //分页开始
+    if(empty($pageSize))$pageSize=5;
+
+    $total = $db->getOne("SELECT count(*) FROM $table WHERE $where");
+    $totalPage = ceil($total/$pageSize);
+    $currentPage=@$_GET['page']+0;
+    if($currentPage < 1 || empty($currentPage) ||  $currentPage > $totalPage)
+    {
+        $currentPage=1;
+    }
+    #设置地址
+    $url=preg_replace(
+        array(
+            "!(([&]|^)(page)[=]?([^&]+)?)|((([&]){2,})|(^[&])|([&]$))!",
+        ),
+        array(
+            ""
+        ),
+    $_SERVER["QUERY_STRING"]
+    );//正则替换掉
+    $url.=($url?"&":"").'page'; //追加
+
+    $start    = ($currentPage-1)*$pageSize;
+    $back    = $currentPage > 1?"<a href=\"?$url=".($currentPage-1)."\">上一页</a>n":"上一页n";
+    $next    = $currentPage < $totalPage ?"<a href=\"?$url=".($currentPage+1)."\">下一页</a>n":"下一页n";
+    $first        = $currentPage > 1 ? "<a href=\"?$url=1\">首页</a>n":"首页n";
+    $last        = $currentPage < $totalPage ?"<a href=\"?$url=$totalPage\">尾页</a>n":"尾页n";
+    for($midPages='',$i=$currentPage-$midPage,$i>0||$i=1,$end=$currentPage+$midPage,$end<=$totalPage||$end=$totalPage+1;$i<$end;$i++)
+    {
+        $midPages.=$i==$currentPage?"[$i]n":"<a href=\"?$url=$i\">$i</a>n";
+    }
+    $tpl->set_var("总计",$total);
+    $tpl->set_var("当前页码",$currentPage);
+    $tpl->set_var("总页数",$totalPage);
+    $tpl->set_var("上一页",$back);
+    $tpl->set_var("下一页",$next);
+    $tpl->set_var("首页",$first);
+    $tpl->set_var("尾页",$last);
+    $tpl->set_var("中间页",$midPages);
+    $tpl->set_var("当前页地址",$url);
+}
+?>

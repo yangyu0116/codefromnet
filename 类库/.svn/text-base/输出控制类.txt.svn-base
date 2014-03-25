@@ -1,0 +1,72 @@
+<?php
+/**
+* 
+*  作者: 徐祖宁 (唠叨)
+*  邮箱: czjsz_ah@stats.gov.cn
+*  开发: 2002.07
+* 
+* 
+*  类: outbuffer
+*  功能: 封装部分输出控制函数，控制输出对象。
+* 
+*  方法:
+*  run($proc)                运行php程序
+*    $proc     php程序名
+*  display()                 输出运行结果
+*  savetofile($filename)     保存运行结果到文件，一般可用于生成静态页面
+*    $filename 文件名
+*  loadfromfile($filename)   装入保存的文件
+*    $filename 文件名
+* 
+*  示例:
+*  1.
+*  require_once "outbuffer.php";
+*  $out = new outbuffer();
+*  $out->run("test.php");
+*  $out->display();
+* 
+*  2.
+*  require_once "outbuffer.php";
+*  require_once "outbuffer.php";
+*  $out = new outbuffer("test.php");
+*  $out->savetofile("temp.htm");
+* 
+*  3.
+*  require_once "outbuffer.php";
+*  $out = new outbuffer();
+*  $out->loadfromfile("temp.htm");
+*  $out->display();
+* 
+*/
+
+class outbuffer {
+  var $length;
+  var $buffer;
+  function outbuffer($proc="") {
+    $this->run($proc);
+  }
+  function run($proc="") {
+    ob_start();
+    include($proc);
+    $this->length = ob_get_length();
+    $this->buffer = ob_get_contents();
+    $this->buffer = eregi_replace("\r?\n","\r\n",$this->buffer);
+    ob_end_clean();
+  }
+  function display() {
+    echo $this->buffer;
+  }
+  function savetofile($filename="") {
+    if($filename == "") return;
+    $fp = fopen($filename,"w");
+    fwrite($fp,$this->buffer);
+    fclose($fp);
+  }
+  function loadfromfile($filename="") {
+    if($filename == "") return;
+    $fp = fopen($filename,"w");
+    $this->buffer = fread($fp,filesize($filename));
+    fclose($fp);
+  }
+}
+?>

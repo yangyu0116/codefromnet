@@ -1,0 +1,11 @@
+<script language="JavaScript">
+step=0
+function flash_title(){
+step++;
+if (step==3) {step=1}
+if (step==1) {document.title='您有新短消息'}
+if (step==2) {document.title='请注意查收'}
+setTimeout("flash_title()",380);
+}
+flash_title()
+</script>

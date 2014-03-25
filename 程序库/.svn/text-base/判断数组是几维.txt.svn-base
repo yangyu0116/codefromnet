@@ -1,0 +1,22 @@
+http://www.phpx.com/happy/viewthread.php?tid=118356
+
+
+$s = serialize($a);
+preg_match_all("/\}+/", substr($s, 0, -1), $r);
+$num = 0;
+foreach($r[0] as $v) {
+  $num = max($num, strlen($v));
+}
+echo $num; 
+
+
+我修改之后的：
+
+
+$s = serialize($a);
+preg_match_all("/\}+/", substr($a, 0), $r);
+$num = 0;
+foreach($r[0] as $v) {
+  $num = max($num, strlen($v)+1);
+}
+echo $num;

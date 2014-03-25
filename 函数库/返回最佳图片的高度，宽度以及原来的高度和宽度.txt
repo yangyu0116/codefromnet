@@ -1,0 +1,16 @@
+//返回最佳图片的高度，宽度。以及原来的高度和宽度
+//$SrcH:原高度,$SrcW：原宽度,$DstH：目标高度,$DstW：目标宽度
+//调用时用 list($SrcW,$SrcH,$DstW,$DstH) = RtImageSize($ImgFile,200,200)
+function RtImageSize($ImgFile,$ImgW,$ImgH)
+{
+        if(file_exists($ImgFile))
+        {
+        $Size = @GetImageSize($ImgFile);
+        $SrcW = $Size[0];
+        $SrcH = $Size[1];
+        $Ratio = max($SrcW/$ImgW,$SrcH/$ImgH);
+        $DstW = ($SrcW / $Ratio);
+        $DstH = ($SrcH / $Ratio);
+        }
+        return array($SrcW,$SrcH,$DstW,$DstH);
+}

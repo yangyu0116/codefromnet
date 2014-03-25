@@ -1,0 +1,23 @@
+<?
+/* È¥³ý´úÂëº¯Êý */
+function drophtml($chars)
+{ 
+ $dropchar="";
+ $length=strlen($chars);
+ for($i=0;$i<$length;$i++)
+   { $a=substr($chars,$i,1);
+  if ($a=="<")
+    $dropchar=$dropchar."&lt;";
+  elseif ($a==">")
+    $dropchar=$dropchar."&gt;";
+  elseif ($a==" ")
+    $dropchar=$dropchar."&nbsp;";
+  elseif ($a=="\t")
+    $dropchar=$dropchar; 
+     elseif ($a=="\n")
+    $dropchar=$dropchar."<br>";
+  else 
+    $dropchar=$dropchar.$a;
+   }
+ return $dropchar;
+} 

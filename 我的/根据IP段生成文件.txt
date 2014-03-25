@@ -1,0 +1,11 @@
+function ip2file($startip,$endip,$dir = './ipdata/'){
+	(ip2long($startip) > ip2long($endip)) &&  list($startip,$endip) = array($endip,$startip);
+	$endip_long = ip2long($endip);
+	for ($i = ip2long($startip); $i <= $endip_long; $i++){
+		$str = str_replace('.','/',long2ip($i));
+		$dirname = $dir.substr($str,0,strrpos($str,'/'));
+		createfolder($dirname);
+		touch($dir.$str.'.ip');
+	}
+	//echo 'make successfully by yangyu <br />';
+}

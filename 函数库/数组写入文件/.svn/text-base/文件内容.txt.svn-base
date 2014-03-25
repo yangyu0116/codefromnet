@@ -1,0 +1,74 @@
+<?php
+$list = Array
+(
+    0 => Array
+        (
+            "id" => 1,
+            "name" => "家电",
+            "parent_id" => 0,
+            "sec" => Array
+                (
+                    0 => Array
+                        (
+                            "id" => 3,
+                            "name" => "电视",
+                            "parent_id" => 1,
+                            "third" => Array
+                                (
+                                    '0' => Array
+                                        (
+                                            'id' => 6,
+                                            'name' => '黑白电视机',
+                                            'parent_id' => 3,
+                                        ),
+
+                                    '1' => Array
+                                        (
+                                            'id' => '7',
+                                            'name' => '彩色电视机',
+                                            'parent_id' => 3,
+                                        )
+
+                                )
+
+                        ),
+
+                    '1' => Array
+                        (
+                            'id' => '4',
+                            'name' => '电冰箱',
+                            'parent_id' => 1,
+                            'third' => Array
+                                (
+                                )
+
+                        )
+
+                )
+
+        ),
+
+    '1' => Array
+        (
+            'id' => 2,
+            'name' => '日用品',
+            'parent_id' => 0,
+            'sec' => Array
+                (
+                    '0' => Array
+                        (
+                            'id' => 5,
+                            'name' => '洗衣粉',
+                            'parent_id' => 2,
+                            'third' => Array
+                                (
+                                )
+
+                        )
+
+                )
+
+        )
+
+);
+?>

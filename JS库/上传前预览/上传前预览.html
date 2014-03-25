@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>images</title>
+<SCRIPT language=javascript>
+function preview_icon()
+{
+  if (document.formFile.fileName.value!= ''){
+    document.getElementById('prev_icon').src = document.formFile.fileName.value;
+    document.getElementById('prev_icon').style.display="";
+  }
+}
+</SCRIPT>
+</head>
+
+<body>
+<form action="" method="post" enctype="multipart/form-data" name="formFile" id="formFile">
+  <input name="fileName" type="file" id="fileName" onchange="preview_icon();" /><br />
+<IMG id=prev_icon style="DISPLAY: none" height=45 
+width=60>
+</form>
+<script type='text/javascript'>
+//<![CDATA[
+if (document.getElementById('processtime')) document.getElementById('processtime').innerHTML="<span class='runtimedisplay'>Run in 54 ms, 6 Queries.</span>";
+//]]>
+</script></body>
+</html>
+

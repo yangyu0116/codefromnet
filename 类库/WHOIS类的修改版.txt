@@ -1,0 +1,191 @@
+
+
+class whois { 
+
+var $use_cache = 1; 
+var $FROM_CACHE=0; 
+var $cache_dir = "./"; // 根据你的系统自己设置
+
+var $port = 43; 
+var $MAXLEN = 100; 
+
+// 如果你想在连接失败后自动重试，
+// 设置重试次数 $MAX_RETRIES
+var $MAX_RETRIES = 0; 
+var $SLEEP_VAL = 1; 
+var $RETRY = 0; 
+
+var $FOUND = 0; // 查询没有结果，次值为0
+var $ERROR = 0; // 查询过程中的出错次数
+var $DATA_MIN = 8; // 我们至少应该获得8个字节的数据
+var $DATA_COUNT = 0; 
+
+var $WHOIS_SERVER;
+var $NEW_WHOIS;
+var $FURTHER_INFO = 0;
+
+
+// 打开和WHOIS SERVER的SOCKET连接
+// 默认的是 whois.internic.net 
+function connect ($server) {
+$this->RETRY=0;
+while($this->RETRY <= $this->MAX_RETRIES):
+$ptr = fsockopen($server, $this->port); 
+if($ptr>0): 
+$this->ERROR=0; // just in case we're on a retry 
+return($ptr); 
+else: 
+$this->ERROR++; 
+$this->RETRY++; 
+sleep($this->SLEEP_VAL); 
+endif; 
+endwhile; 
+} 
+
+// 获取简单的查询结果，并以行为单位，放入数组
+// 国际域名查询
+function rawlookup ($query, $server) {
+
+if(!$query): 
+return( ""); 
+endif;
+
+$ptr=$this->connect($server);
+
+if($ptr): 
+if(!ereg($query, "\n$")): 
+$query .= "\n"; 
+endif; 
+fputs($ptr, "$query"); 
+$i=0; 
+$this->FOUND=1; 
+while(!feof($ptr)): 
+$array[$i]=fgets($ptr,$this->MAXLEN); 
+$this->DATA_COUNT+=strlen(chop($array[$i])); 
+if(eregi( "No match for", $array[$i]) || eregi ("No entries found", $array[$i])): 
+$this->FOUND=0; 
+elseif(eregi( "WHOIS database is down",$array[$i])): 
+$this->ERROR++; 
+$this->FOUND=0; 
+elseif(eregi( "Please wait a while and try again",$array[$i])): 
+$this->ERROR++; 
+$this->FOUND=0; 
+break; 
+endif; 
+if(eregi("Whois Server:",$array[$i])):
+$this->NEW_WHOIS=trim(substr(trim($array[$i]),(strlen(trim($array[$i]))-13)*(-1)));
+$this->FURTHER_INFO=1;
+endif;
+$i++; 
+endwhile; 
+
+fclose($ptr); 
+
+if($this->DATA_COUNT>$this->DATA_MIN):
+return($array); 
+else: 
+$this->ERROR++; 
+endif; 
+else: 
+$this->ERROR++; 
+endif;
+} 
+
+
+// 国内域名查询
+function cnrawlookup ($query, $server) { 
+if(!$query): 
+return( ""); 
+endif; 
+
+$ptr=$this->connect($server); 
+if($ptr): 
+if(!ereg($query, "\n$")): 
+$query .= "\n"; 
+endif; 
+fputs($ptr, "$query"); 
+$i=0; 
+$this->FOUND=1; 
+while(!feof($ptr)): 
+$array[$i]=fgets($ptr,$this->MAXLEN); 
+$this->DATA_COUNT+=strlen(chop($array[$i])); 
+if(eregi( "No match for", $array[$i]) || eregi ("No entries found", $array[$i])): 
+$this->FOUND=0; 
+elseif(eregi( "WHOIS database is down",$array[$i])): 
+$this->ERROR++; 
+$this->FOUND=0; 
+elseif(eregi( "Please wait a while and try again",$array[$i])): 
+$this->ERROR++; 
+$this->FOUND=0; 
+break; 
+endif; 
+$i++; 
+endwhile; 
+fclose($ptr); 
+
+if($this->DATA_COUNT>$this->DATA_MIN):
+return($array); 
+else: 
+$this->ERROR++; 
+endif; 
+else: 
+$this->ERROR++; 
+endif; 
+} 
+};
+
+
+
+$myWHOIS=new whois();
+
+$thisname=$servername.$domainname;
+// 根据国内域名或国际域名选择WHOIS SERVER
+if (ereg(".cn$",$thisname))
+{
+$myWHOIS->WHOIS_SERVER="whois.cnnic.net.cn";
+$array=$myWHOIS->cnrawlookup($thisname,$myWHOIS->WHOIS_SERVER);
+}
+else
+{
+$myWHOIS->WHOIS_SERVER="whois.internic.net";
+//$myWHOIS->WHOIS_SERVER="whois.networksolutions.com";
+$array=$myWHOIS->rawlookup($thisname,$myWHOIS->WHOIS_SERVER);
+}
+
+
+
+echo "
+".$thisname."
+";
+echo "";
+$x=0;
+while ($x {
+echo " $x ";
+echo " $array[$x] ";
+$x++;
+}
+echo " 
+";
+
+if (!ereg(".cn$",$thisname))
+{
+echo "
+Furth infomation
+";
+$array_further=$myWHOIS->rawlookup($thisname,$myWHOIS->NEW_WHOIS);
+
+echo "";
+$x=0;
+while ($x {
+echo " $x ";
+echo " $array_further[$x] ";
+$x++;
+}
+echo " 
+";
+}
+
+?> 
+
+
+

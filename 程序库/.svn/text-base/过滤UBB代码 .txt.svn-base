@@ -1,0 +1,42 @@
+<?php
+function   ubb($text)   
+  {     
+  $text=htmlspecialchars($text);     
+  $text=stripslashes($text);   
+  $text=ereg_replace("\r\n","<br/>",$text);     
+  $text=ereg_replace("\r","<br/>",$text);     
+  $text=nl2br($text);     
+  $text=preg_replace("/\\t/is","     ",$text);     
+  $text=ereg_replace("   ","&nbsp;",$text);     
+    
+  $text=preg_replace("/\[h1\](.+?)\[\/h1\]/is","<h1>\\1</h1>",$text);     
+  $text=preg_replace("/\[h2\](.+?)\[\/h2\]/is","<h2>\\1</h2>",$text);     
+  $text=preg_replace("/\[h3\](.+?)\[\/h3\]/is","<h3>\\1</h3>",$text);     
+  $text=preg_replace("/\[h4\](.+?)\[\/h4\]/is","<h4>\\1</h4>",$text);     
+  $text=preg_replace("/\[h5\](.+?)\[\/h5\]/is","<h5>\\1</h5>",$text);     
+  $text=preg_replace("/\[h6\](.+?)\[\/h6\]/is","<h6>\\1</h6>",$text);     
+  $text=preg_replace("/\[center\](.+?)\[\/center\]/is","<center>\\1</center>",$text);     
+  $text=preg_replace("/\[big\](.+?)\[\/big\]/is","<big>\\1</big>",$text);     
+  $text=preg_replace("/\[small\](.+?)\[\/small\]/is","<small>\\1</small>",$text);     
+    
+  $text=preg_replace("/\[url\](http:\/\/.+?)\[\/url\]/is","<a   href=\\1>\\1</a>",$text);     
+  $text=preg_replace("/\[url\](.+?)\[\/url\]/is","<a   href=\http://\\1\>http://\\1</a>",$text);     
+  $text=preg_replace("/\[url=(http:\/\/.+?)\](.*)\[\/url\]/is","<a   href=\\1>\\2</a>",$text);     
+  $text=preg_replace("/\[url=(.+?)\](.*)\[\/url\]/is","<a   href=http://\\1>\\2</a>",$text);     
+    
+  $text=preg_replace("/\[img\](.+?)\[\/img\]/is","<img   src=\\1   border=0>",$text);     
+  $text=preg_replace("/\[color=(.+?)\](.+?)\[\/color\]/is","<font   color=\\1>\\2</font>",$text);     
+  $text=preg_replace("/\[size=(.+?)\](.+?)\[\/size\]/is","<font   size=\\1>\\2</font>",$text);     
+  $text=preg_replace("/\[sup\](.+?)\[\/sup\]/is","<sup>\\1</sup>",$text);     
+  $text=preg_replace("/\[sub\](.+?)\[\/sub\]/is","<sub>\\1</sub>",$text);     
+  $text=preg_replace("/\[pre\](.+?)\[\/pre\]/is","<pre>\\1</pre>",$text);     
+  $text=preg_replace("/\[email\](.+?)\[\/email\]/is","<a   href=mailto:\\1>\\1</a>",$text);     
+  $text=preg_replace("/\[i\](.+?)\[\/i\]/is","<i>\\1</i>",$text);     
+  $text=preg_replace("/\[b\](.+?)\[\/b\]/is","<b>\\1</b>",$text);     
+  $text=preg_replace("/\[quote\](.+?)\[\/quote\]/is","<blockquote><font   size=1   face=courier   new>quote:</font><hr>\\1<hr></blockquote>",   $text);     
+  $text=preg_replace("/\[code\](.+?)\[\/code\]/is","<blockquote><font   size=1   face=times   new   roman>code:</font><hr   color=lightblue><i>\\1</i><hr   color=lightblue></blockquote>",   $text);     
+  $text=preg_replace("/\[sig\](.+?)\[\/sig\]/is","<div   style=text-align:   left;   color:   darkgreen;   margin-left:   5%><br/><br/>--------------------------<br/>\\1<br/>--------------------------</div>",   $text);     
+  $text=ereg_replace("\[hr\]","<hr>",$text);   
+  return   $text;     
+  } ?>
+

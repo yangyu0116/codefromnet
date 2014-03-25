@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="description" content="http://blog.pr1984.com - 代码剪辑库 ( PR 50198763 )" />
+<title>符合标准的正常工作的对联广告</title>
+<script type="text/javascript">
+<!-- 
+lastScrollY = 0;
+function heartBeat(){ 
+var diffY;
+if (document.documentElement && document.documentElement.scrollTop)
+diffY = document.documentElement.scrollTop;
+else if (document.body)
+diffY = document.body.scrollTop
+else
+{/*Netscape stuff*/}
+
+//alert(diffY);
+percent=.1*(diffY-lastScrollY); 
+if(percent>0)percent=Math.ceil(percent); 
+else percent=Math.floor(percent); 
+document.getElementById("leftDiv").style.top = parseInt(document.getElementById("leftDiv").style.top)+percent+"px";
+document.getElementById("rightDiv").style.top = parseInt(document.getElementById("leftDiv").style.top)+percent+"px";
+lastScrollY=lastScrollY+percent; 
+//alert(lastScrollY);
+}
+//下面这段删除后，对联将不跟随屏幕而移动。
+window.setInterval("heartBeat()",1);
+//-->
+</script>
+<style type="text/css">
+<!--
+/* 这里定义滴是页面高度，用来测试对联跟随效果滴，跟广告无关 */
+html,body{height:1000px; background:#a9050c;}
+#mm{height:1000px;}
+/* 这里是设置对联样式滴 */
+#leftDiv,#rightDiv{
+width:100px; /* 宽度 */
+height:300px; /* 高度 */
+position:absolute; /* 绝对定位激活 */
+}
+-->
+</style>
+</head>
+<body>
+<!--对联开始-->
+<div id="leftDiv" style="top:120px; /* 距离顶部120px */ left:2px; /* 距离左侧2px */ "><img src="http://i0.sinaimg.cn/hs/cal/U3275P62T15D26000F266DT20091218145011.jpg" alt="" width="120" height="120" /></div>
+<div id="rightDiv" style="top:120px; /* 距离顶部120px */ right:2px; /* 距离右侧2px */ "><img src="http://i0.sinaimg.cn/hs/cal/U3275P62T15D26000F266DT20091218145011.jpg" alt="" width="120" height="120" /></div>
+<!--对联结束-->
+</body>
+</html>
+

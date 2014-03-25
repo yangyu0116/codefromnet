@@ -1,0 +1,47 @@
+<?
+  class Style { 
+
+    var $text; 
+    var $alink; 
+    var $vlink; 
+    var $link; 
+    var $bgcol; 
+    var $face; 
+    var $size; 
+    var $align; 
+    var $valign; 
+
+    function Style ($text= "#000000",$alink= "#AA00AA",
+      $vlink= "#AA00AA",$link= "#3333FF",$bgcol= "#999999",
+      $face= "Book Antiqua",$size=3,$align= "CENTER",
+      $valign= "TOP"){
+      
+      $this->text=$text; 
+      $this->alink=$alink; 
+      $this->vlink=$vlink; 
+      $this->link=$link; 
+      $this->bgcol=$bgcol; 
+      $this->face=$face; 
+      $this->size=$size; 
+      $this->align=$align; 
+      $this->valign=$valign; 
+    } 
+  } 
+
+  function Body() { 
+    PRINT "<BODY BGCOLOR="$this->bgcol" ". 
+          "TEXT="$this->text" ". 
+          "LINK="$this->link" VLINK="$this->vlink" ". 
+          "ALINK="$this->alink"><FONT ". 
+          "FACE="$this->face" SIZE=$this->size>n"; 
+  } 
+
+
+  function TextOut($message= " ") { 
+    PRINT "<FONT FACE="$this->face" ". 
+          "SIZE=$this->size COLOR="$this-> ". 
+          "text">$message</FONT>n"; 
+  } 
+
+
+?>

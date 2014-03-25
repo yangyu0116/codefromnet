@@ -1,0 +1,351 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<script type="text/javascript">
+$().ready(function(){
+	$("#checkavail").click(function(){
+		var name = $("#username").val();
+		var check = "无内容";
+			$.get('check_user.php?username='+name, function(o){
+				if( o == '1' ){ check = "请输入用户名"; }
+				if( o == '2' ){ check = "请正确输入用户名"; }
+				$("#chk_username").html(check);
+				$("#chk_username").show();
+			});
+    });
+});
+</script>
+<script language="javascript" type="text/javascript">
+javascript:window.history.forward(1);//no-cache
+<!--//
+function check_select_index(sel_obj,opn_val)
+{
+ 	var idx_i = 0;
+	for ( idx_i = 0; idx_i<sel_obj.length; idx_i++)
+	{
+		if(sel_obj.options[idx_i].value == opn_val)
+		{ return idx_i; }
+	}
+	return 0;
+}
+
+function ShowStrong(obj,oMsg,status){
+		var obj = oo(obj);
+				if(status==1){
+				obj.innerHTML = oMsg
+		}else{
+				obj.innerHTML = ""
+		}
+}
+//-->
+</script>
+
+</head>
+<body>
+
+<div id="wrap">
+	<div class="dl_contant">
+		<div class="yellow_t"><span class="y_t_l"><span></span></span></div>
+		<div class="bor_l">
+			<div class="wrap_t_bg col764">
+
+				<table width=100% border=0 cellpadding=0 cellspacing=0>
+	<tr><td width=30></td><td align=left>请用<font color=red><b>英文</b></font>和<font color=red><b>简体中文（GB）</b></font>填写</td></tr>
+	</table>
+	<span class=vip><b></b></span>
+
+	<table width=100% border=0 cellpadding=0 cellspacing=0>
+	<form name="memberform" method="post" action="register.php" onSubmit="return fm_chk(this);">
+	<tr><td>
+
+<!--用户名、邮箱名 begin-->
+		<table width=100% border=0 cellpadding=0 cellspacing=0>
+		<tr><td align="right" valign="top" style="padding:2px">
+			<!--登录名 beign-->
+			<table border=0 cellpadding=0 cellspacing=0>
+			<tr>
+			<td width=130 align="right" style="padding-top:0px"><span class=vip>*</span>登录名：</td>
+
+			<td width=330 align="left"><input id="username" name=username value="" tabindex="1" type=text maxlength="16" alt="登录名:4-16/怪字符/全数字/无内容/下划线/有全角/有空格/有大写">
+			<label id="chk_username"></label>&nbsp;&nbsp;
+			</td></tr>
+			</table>
+		</td>
+		<td width=272 bgcolor=#F7F7F7 style="padding:2px">
+			<table width=100% border=0 cellpadding=0 cellspacing=0>
+			<tr><td style="padding-top:10px;padding-left:5px" class=lr></td></tr>
+			<tr><td style="display:none;padding-top:10px;padding-left:5px;" class=lr id=mailfm2></td></tr>
+			</table>
+		</td></tr>
+		</table>
+<!--用户名、邮箱名 end-->
+
+		<table height= border=0 cellpadding=0 cellspacing=0 width=100%>
+		<tr><td height=2></td></tr><tr><td height=1 bgcolor=#dddddd></td></tr><tr><td height=2></td></tr>
+		</table>
+
+		<table border=0 cellpadding=0 cellspacing=0 width=100%>
+		<tr><td height=2></td></tr><tr><td height=1 bgcolor=#dddddd></td></tr><tr><td height=2></td></tr>
+		</table>
+
+<!--个人信息 beign-->
+		<table border=0 cellpadding=0 cellspacing=0>
+		<tr><td width=620>
+			<table width=100% border=0 cellspacing=0 cellpadding=0>
+			<tr><td colspan=2 height=5></td></tr>
+			<tr><td width=130 align=right style="padding-top:5px"><span class=vip>*</span>安全邮箱：</td>
+			<td width=330>
+				<table border=0 cellpadding=0 cellspacing=0>
+				<tr><td><input name="safemail1" type=text value="" class="input02" tabindex="6" maxlength="80" alt="安全邮箱名:无内容/怪字符/有空格/有全角/有汉字">&nbsp;@&nbsp;<input name="safemail2" type=text value="" class="input02" tabindex="7" maxlength="80" alt="安全邮箱域:无内容/怪字符/有空格/有全角/有汉字/邮箱域"></td>
+
+				<td></td><td></td></tr>
+				</table>
+			</td></tr>
+			<tr><td height=5></td><td><label id="chk_safemail1"></label><label id="chk_safemail2"></label></td></tr>
+			</table>
+		</td>
+		<td width=272 align=center bgcolor=#F7F7F7 style="padding:2px">
+			<table width=272 border=0 cellspacing=0 cellpadding=0>
+			<tr><td class=lr style="padding-top:10px;padding-left:5px">忘记密码时，可凭安全邮箱索取密码。</td></tr>
+
+			</table>
+		</td></tr>
+		</table>
+<!--个人信息 end-->
+
+		<table border=0 cellpadding=0 cellspacing=0 width=100%>
+		<tr><td height=2></td></tr><tr><td height=1 bgcolor=#dddddd></td></tr><tr><td height=2></td></tr>
+		</table>
+
+	</td></tr>
+	</form>
+	</table>
+
+</td>
+<td width=8 class=bg01></td><td width=1 class=bg02></td>
+</tr>
+</table>
+
+<script language="JavaScript" type="text/javascript">
+<!--//
+fm_ini();
+function fm_ini(){
+	var fm,i,j;
+	for(i=0;i<document.forms.length;i++)
+	{
+		fm=document.forms[i];
+		for(j=0;j<fm.length;j++)
+		{//alert(fm[j].name + "|" + (fm[j].alt+"").indexOf(":"));
+			if((fm[j].alt+"").indexOf(":")==-1)
+				continue;
+				
+			document.getElementById("chk_"+fm[j].name).style.color="red";			
+			
+			fm[j].onblur = function(){this.style.background=(tx_chk(this)==true)?'#EEEEEE':'#FF0000'}
+			fm[j].onfocus = function(){this.style.background='#CCFF99'}
+		}
+	}
+}
+function fm_chk(fm)
+{
+	var isPass=true;
+	var j=fm.length;
+	for(var i=0;i<j;i++)
+	{
+		if((fm[i].alt+"").indexOf(":")==-1)
+			continue;
+			
+		if(fm[i-1].name=="selectQ" && fm[i-1].value!=9 && fm[i].name=="pwdQ")	
+			continue;
+			
+		if(!tx_chk(fm[i]))
+		{
+			isPass=false;
+			fm[i].style.background='#FF0000';
+		}
+	}
+	if(isPass)
+	{
+		fm.Submit.disabled = true;
+  		fm.checkname.disabled = true;
+		return true;
+	}
+	else
+	{
+		alert("您填写的信息有误，请根据页面红字更改！");
+		return false;
+	}
+}
+
+function tx_chk(obj)
+{
+	var name, key, val = obj.value, oShow=oo("chk_"+obj.name);
+	name = obj.alt.slice(0,obj.alt.indexOf(":"));
+	key = "/"+obj.alt.slice(obj.alt.indexOf(":")+1)+"/";
+	oo("chk_"+obj.name).style.display = "none";
+	
+	if(key.indexOf("/无内容/")>-1&&val==""){
+		name = (name=="password")?"密码":name;
+		oShow.innerHTML="请输入"+name
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/4-16/")>-1&&(strLen(val)<4||strLen(val)>16)){
+		oShow.innerHTML="长度必须4-16位"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/4-32/")>-1&&(strLen(val)<4||strLen(val)>32)){
+		oShow.innerHTML="长度必须4-32位"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/6-16/")>-1&&(strLen(val)<6||strLen(val)>16)&&strLen(val)!=0){
+		oShow.innerHTML="长度必须6-16位"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/8-16/")>-1&&(strLen(val)<8||strLen(val)>16)){
+		oShow.innerHTML="长度必须8-16位"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/怪字符/")>-1&&(/>|<|,|\[|\]|\{|\}|\?|\/|\+|=|\||\'|\\|\"|:|;|\~|\!|\@|\#|\*|\$|\%|\^|\&|\(|\)|`/i).test(val)){
+		oShow.innerHTML=" 请勿使用特殊字符"
+		oShow.style.display=""
+		return false
+	}	
+	if(key.indexOf("/怪字符pwd/")>-1&&(/>|<|\+|,|\[|\]|\{|\}|\/|=|\||\'|\\|\"|:|;|\~|\!|\@|\#|\*|\$|\%|\^|\&|\(|\)|`/i).test(val)){
+		oShow.innerHTML=" 请勿使用特殊字符"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/有空格/")>-1&&val.indexOf(" ")>-1){
+		oShow.innerHTML=" 不能包含空格符"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/选择/")>-1&&(obj.options[obj.selectedIndex].value==0 || obj.options[obj.selectedIndex].value=='')){
+		oShow.innerHTML=" 请选择内容"
+		oShow.style.display=""
+		return false
+	}
+	if( key.indexOf("/首尾不能是空格/")>-1&&val!="")
+	{
+		var pat_s = /^(\s)/;
+		var pat_e = /(\s)$/;
+
+		if ( pat_s.test(val) || pat_e.test( val))
+		{
+			oShow.innerHTML="首尾不能是空格"
+			oShow.style.display=""
+			return false
+		}
+	}
+	if(key.indexOf("/全数字/")>-1&&val!=""){
+		if ( /^[0-9]+$/.test(val)){
+			oShow.innerHTML="不可以全是数字"
+			oShow.style.display=""
+			return false}
+	}
+	if(key.indexOf("/有大写/")>-1&&/[A-Z]/.test(val)){
+		oShow.innerHTML="不能有大写字母"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/邮箱域/")>-1 && val != "" && !(/([0-9a-z]+(([0-9a-z]*)|([0-9a-z-]*[0-9a-z]))+\.)+[a-z]{2,4}$/i).test(val)){
+		oShow.innerHTML=" 邮箱域有错误";
+		oShow.style.display="";
+		return false;
+	}		
+	if(key.indexOf("/英文数字/")>-1&&!/^[a-zA-Z0-9_]*$/.test(val)){
+		oShow.innerHTML="只能为英文和数字"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/有全角/")>-1&&/[ａ-ｚＡ-Ｚ０-９！＠＃￥％＾＆＊（）＿＋｛｝［］｜：＂＇；．，／？＜＞｀～　]/.test(val))
+	{
+		oShow.innerHTML=" 不能有全角字符"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/有汉字/")>-1&&escape(val).indexOf("%u")>-1){
+		oShow.innerHTML=" 不能有汉字"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/下划线/")>-1&&val.slice(val.length-1)=="_"){
+		oShow.innerHTML="下划线不能在最后"
+		oShow.style.display=""
+		return false
+	}
+	if(key.indexOf("/确认密码/")>-1){
+		if(obj.form[name].value!=val){
+			oShow.innerHTML="确认密码不一致"
+			oShow.style.display=""
+			return false
+		}
+	}
+	if(key.indexOf("/确认安全码/")>-1){
+		if(obj.form[name].value!=val){
+			oShow.innerHTML="确认安全码不一致"
+			oShow.style.display=""
+			return false
+		}
+	}
+	if(key.indexOf("/确认证件号码/")>-1){
+		if(obj.form[name].value!=val){
+			oShow.innerHTML="确认证件号码不一致"
+			oShow.style.display=""
+			return false
+		}
+	}
+	if(key.indexOf("/必选/")>-1){
+		var ol=obj.form[obj.name],isSel=false
+		for(var i=0;i<ol.length;i++){
+			if(ol[i].checked)
+				isSel=true
+		}
+		if(!isSel){
+			oShow.innerHTML=name+"必须选择"
+			oShow.style.display=""
+			return false
+		}
+	}
+	if(key.indexOf("/条款/")>-1){
+		var ol=obj.form[obj.name],isSel=false
+		if(ol.checked){
+			isSel=true
+		}
+		if(!isSel){
+			oShow.innerHTML=name+"必须选择"
+			oShow.style.display=""
+			return false
+		}
+	}
+	if ( name=="password" || name=="密码"){
+		ShowStrong('pswstrong',checkStrong(val),1);
+	}
+	return true
+}
+function strLen(key){
+	var l=escape(key),len
+	len=l.length-(l.length-l.replace(/\%u/g,"u").length)*4
+	l=l.replace(/\%u/g,"uu")
+	len=len-(l.length-l.replace(/\%/g,"").length)*2
+	return len
+}
+function oo(obj){
+	return document.getElementById(obj)
+}
+
+//-->
+</script>
+			</div>
+		</div>
+	</div>
+	<!--站点信息==================================-->
+
+</div>
+
+</body></html>

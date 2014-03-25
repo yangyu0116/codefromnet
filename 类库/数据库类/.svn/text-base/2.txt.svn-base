@@ -1,0 +1,168 @@
+<?php
+class MySQL {
+	var $mLinkId = 0;
+	var $mQueryId = 0;
+	var $mQueryString = '';
+	var $mRecord = array();
+
+	var $mServerName = 'localhost';
+	var $mDbUserName = 'root';
+	var $mDbPassWord = '';
+	var $mDbName = '';
+
+	var $mError = '';
+	var $mErrNo = 0;
+	var $mReportError = 1;
+
+	var $mAppName = '';
+	var $mTechNicalEmail = 'hustmayonghui@163.com';
+
+	function Connect($ServerName, $DbUserName, $DbPassWord, $DbName = '')
+        {
+	  if ($ServerName != '') $this->mServerName = $ServerName;
+	  if ($DbUserName != '') $this->mDbUserName = $DbUserName;
+	  if ($DbPassWord != '') $this->mDbPassWord = $DbPassWord;
+	  if ($DbName != '') $this->mDbName = $DbName;
+	  if ($this->mLinkId == 0) {
+		if ($this->mDbPassWord == '') {
+		  $this->mLinkId = @mysql_pconnect($this->mServerName, $this->mDbUserName);
+		} else {
+		  $this->mLinkId = @mysql_connect($this->mServerName, $this->mDbUserName, $this->mDbPassWord);
+		}
+		if (!$this->mLinkId) $this->GetErr('错误的登录信息，数据库连接失败');
+                      if($this->version() > '4.1') {
+                            global $SET;
+                            mysql_query("SET NAMES '$SET[def_charset]'");
+                     }
+
+                if($this->version() > '5.0.1') {
+                        mysql_query("SET sql_mode=''");
+                }
+		if ($this->mDbName != '') $this->SelectDb($this->mDbName);
+		return $this->mLinkId;
+	  }
+	}
+
+	function SelectDb($DbName = '', $LinkdId = '')
+        {
+	  if ($DbName != '') $this->mDbName = $DbName;
+	  if ($LinkId != '') $this->mLinkId = $LinkId;
+	  if(!@mysql_select_db($this->mDbName, $this->mLinkId)) $this->GetErr('不能够使用 '.$this->mDbName.' 数据库');
+	}
+
+	function QueryAlone($QueryString)
+        {
+	  $this->mQueryId = $this->Query($QueryString);
+	  $rows = $this->FetchArray($this->mQueryId);
+	  $this->FreeResult($this->mQueryId);
+	  return $rows[0];
+	}
+
+	function QueryFirst($QueryString)
+        {
+	  $this->mQueryId = $this->Query($QueryString);
+	  $rows = $this->FetchArray($this->mQueryId);
+	  return $rows;
+	}
+
+	function Query($QueryString = '')
+        {
+	  if ($QueryString != '') {
+		if (!$this->mQueryId = @mysql_query($QueryString, $this->mLinkId)) $this->GetErr('数据查询出错'.str_replace($_GLOBAL[tablepre],"",$QueryString));
+		return $this->mQueryId;
+	  } else {
+		$this->GetErr('查询语句为空');
+	  }
+	}
+
+	function FetchArray($QueryId = -1)
+        {
+	  if ($QueryId != -1) $this->mQueryId = $QueryId;
+	  if (isset($this->mQueryId)) $this->mRecord = @mysql_fetch_array($this->mQueryId);
+	  return $this->mRecord;
+	}
+
+	function FreeResult($QueryId = -1)
+        {
+	  if ($QueryId != -1) $this->mQueryId = $QueryId;
+	  return @mysql_free_result($this->mQueryId);
+	}
+
+	function NumRows($QueryId = -1)
+        {
+	  if ($QueryId != -1) $this->mQueryId = $QueryId;
+	  return mysql_num_rows($this->mQueryId);
+	}
+
+	function FetchRow($query)
+        {
+		$query = mysql_fetch_row($query);
+		return $query;
+	}
+
+	function NumFields($query) 
+        {
+		return mysql_num_fields($query);
+	}
+
+	function InsertId() 
+        {
+	  return mysql_insert_id($this->mLinkId);
+	}
+                	
+        function AffectedRows() 
+        {
+		return mysql_affected_rows();
+	}
+
+        function version()
+        {
+                return mysql_get_server_info();
+        }
+
+	function close($LinkId = -1) {
+	  if ($LinkId != -1) $this->mLinkId = $LinkId;
+	  return mysql_close($this->mLinkId);
+	}
+
+	function GetErr($msg)
+        {
+	  global $_SERVER, $user_info, $SET;
+	  $this->mError = mysql_error();
+	  $this->mErrNo = mysql_errno();
+
+	  if ($this->mReportError == 1) {
+		$message = "数据库发生错误：" . $msg . "|";
+		$message .= "MySQL错误信息：" . $this->mError . "|";
+		$message .= "MySQL错误代号: " . $this->mErrNo . "|";
+		$message .= "日期：" . date("Y-m-d H:i:s") . "|";
+		$message .= "脚本：http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . "|";
+		$message .= "提交：" . $_SERVER['HTTP_REFERER'] ;
+		print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
+<title>" . $this->mAppName . " 数据库出错</title>
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\">
+</head>
+
+<body>
+<font color=\"#FF0000\"><strong>数据库出错！</strong></font>
+<hr size=\"1\" color=\"#000000\">
+<p>数据库好象发生了一些小错误</p>
+<p>请按浏览器的 <a href=\"javascript:window.location=window.location;\">刷新</a> 按钮重试.</p>
+<p>一封E-Mail已经发送到我们的 <a href=\"mailto:" . $this->mTechNicalEmail . "\">技术支持信箱</a>, 如果问题仍然存在, 你也可以发邮件联系.</p>
+<p>我们为由此给你带来不便深感抱歉.</p>\n";
+ print "<hr size=\"1\" color=\"#000000\">
+<p>" .  str_replace("|","<br>",$message) . "</p>
+<hr size=\"1\" color=\"#000000\">\n";
+print "</body>
+</html>";
+		exit();
+#<hr size=\"1\" color=\"#000000\">
+#<p>".str_replace("\n","</p><p>\n",$message)."</p>
+	  }
+                                   writetofile('../admin/temp/log.txt',$message."\n",'a+');
+	}
+
+}
+?>

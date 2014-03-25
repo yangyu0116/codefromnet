@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0058)http://v35.blog.sina.com.cn/myblog/uic.html?uid=1280213783 -->
+<HTML><HEAD><TITLE>new document</TITLE>
+<META content="MSHTML 6.00.2900.3157" name=GENERATOR>
+<META content=FlashSoft name=Author>
+<META content=FlashSoft name=Keywords>
+<META content="" name=Description>
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<META http-equiv=CACHE-CONTROL content=NO-CACHE>
+<SCRIPT language=javascript> 
+function dwlinks(){             
+   var links=parent.document.getElementsByTagName("link");
+   for(var i=0; i<links.length; i++){
+                document.write('<link media="all" href='+links[i].href+' type="text/css" rel="Stylesheet"/>');
+        }
+	//document.write('<link media="all" href="/css/uic.css" type="text/css" rel="Stylesheet"/>'); 
+}
+	dwlinks();
+</SCRIPT>
+
+<STYLE type=text/css>BODY {
+	BORDER-RIGHT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; BORDER-LEFT: 0px; PADDING-TOP: 0px; BORDER-BOTTOM: 0px; BACKGROUND-COLOR: transparent
+}
+BODY {
+	FONT-SIZE: 12px; COLOR: #000; FONT-FAMILY: "Courier New", "宋体"
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #000; FONT-FAMILY: "Courier New", "宋体"
+}
+DIV {
+	FONT-SIZE: 12px; COLOR: #000; FONT-FAMILY: "Courier New", "宋体"
+}
+SPAN {
+	FONT-SIZE: 12px; COLOR: #000; FONT-FAMILY: "Courier New", "宋体"
+}
+A {
+	FONT-SIZE: 12px; COLOR: #000; FONT-FAMILY: "Courier New", "宋体"
+}
+A {
+	TEXT-DECORATION: none
+}
+.name {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 12px; PADDING-BOTTOM: 0px; WIDTH: 120px; PADDING-TOP: 0px; FONT-FAMILY: "Courier New", "宋体"; HEIGHT: 12px
+}
+.links {
+	WIDTH: 100%
+}
+.links .wd {
+	WIDTH: 100%
+}
+.tdLine {
+	
+}
+</STYLE>
+
+<SCRIPT src="uic.files/dialog.js"></SCRIPT>
+
+<SCRIPT language=JavaScript>
+<!--
+// 获取地址栏的CGI参数
+function GetQueryString(str) {
+	var rs = new RegExp("(^|)" + str + "=([^\&]*)(\&|$)", "gi").exec(String(window.location.href)), tmp;
+	if(tmp = rs)return tmp[2];
+	return null;
+}
+// 获取指定Cookie中指定key的值
+function GetCookieString(str) {
+	var rs = new RegExp("(^|)" + str + "=([^\;]*)(\;|$)", "gi").exec(document.cookie), tmp;
+	if(tmp = rs)return tmp[2];
+	return "";
+}
+function JsLoader(){
+	this.load = function(url, charset){
+		var ss = document.getElementsByTagName("script");
+		for(var i = 0;i < ss.length; i++){
+			if(ss[i].src && ss[i].src.indexOf(url) != -1) {
+				this.onsuccess();
+				return;
+			}
+		}
+		var s = document.createElement("script");
+		s.type= "text/javascript";
+		s.src = url;
+		s.charset = charset ? charset : "utf-8";
+		var head = document.getElementsByTagName("head")[0];
+		head.appendChild(s);
+
+		
+		var self = this;
+		s.onload = s.onreadystatechange = function() {
+			if(this.readyState && this.readyState == "loading")return;
+			self.onsuccess();
+		}
+		s.onerror = function() {
+			head.removeChild(s);
+			self.onfailure();
+		}
+	};
+	this.onsuccess=function(){};
+	this.onfailure=function(){};
+}
+function getLocTime(nS) {
+	return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, " - ").replace(/日/g, " "); 
+}
+function getFlower(d1, d2) {
+	if(d2 >= d1) {
+		if((d2 - d1)/60/60 < 24) {
+			return "";
+		}
+		else {
+			return "none";
+		}
+	}
+	return "";
+}
+function getURL(sURL) {
+	return "http://blog.sina.com.cn/" + sURL;
+}
+function getPhoto(sURL) {	
+	if(sURL.length > 1) {
+	return "http://upic.album.sina.com.cn/pic_4/" + sURL;
+	}
+	return "http://image2.sina.com.cn/blog/tmpl/v3/images/fl_defualt.jpg";
+}
+function showCard(oid,event,l) {
+	if(parent){
+		parent.bc.show(oid,event,window,l)
+	}else{
+		bc.show(oid,event,l);
+	}
+}
+function addHTML(oParentNode, sHTML) {
+	if(window.addEventListener) {// for MOZ
+		var oRange = oParentNode.ownerDocument.createRange();
+		oRange.setStartBefore(oParentNode);
+		var oFrag = oRange.createContextualFragment(sHTML);
+		oParentNode.appendChild(oFrag);
+	}
+	else {// for IE5+
+		oParentNode.insertAdjacentHTML("BeforeEnd", sHTML);
+	}
+}
+function getConnt() {
+	//addHTML(document.body, "<img style='display:none' src='http://stat.blog.sina.com.cn/i.html?rr&lrr&nick&" + new Date().valueOf() + "'>");
+}
+/*
+function showDialog(nUID) {
+	parent._confirm_msg_show("您是否要删除您的访客记录？删除后1小时内，您将无法进入到此博客的最近访客列表", "clearRRData("+nUID+")", "{}", "是否删除访问记录");
+}
+*/
+function showDialog(nUID) {
+
+         var s = window.frameElement.id;
+
+         parent._confirm_msg_show("您是否要删除您的访客记录？删除后1小时内，您将无法进入到此博客的最近访客列表。","(document.getElementById('"+s+"').contentWindow.clearRRData('"+nUID+"'))","{}", "是否删除访问记录");
+}
+
+function clearRRData(nUID) {
+	rr_data = null;
+	var jl = new JsLoader();
+	jl.onsuccess = function(){
+		if(window["rr_data"] != null) {
+			writeData();
+		}
+		else {
+			this.onfailure();
+		}
+	}
+	jl.onfailure = function(){
+		rr_data = [];
+		writeData();
+	}
+	jl.load("http://util.blog.sina.com.cn/rr?" + nUID + "&d&" + new Date().valueOf(), "gb2312");
+}
+function getClearButton(nUID, nUID2) {
+	return nUID == nUID2 ? "" : "none";
+}
+function writeData() {
+	var rr_time = new Date().valueOf()/ 1000;
+	var Head_Data = '<table border="0" width="100%" cellspacing="0" cellpadding="0">';
+	var Body_Data = '';
+	var Foot_Data = '</table>';
+	rr_data.reverse();
+	for(var i = 0; i < rr_data.length; i ++ ) {
+		Body_Data += '<tr><td valign="top" class="tdLine" style="height: 41px;background-position: left bottom;background-repeat:repeat-x; padding-top: 10px;">\
+			<table cellspacing="0" width="100%" cellpadding="0" border="0" class="wd">\
+			<tbody><tr>\
+				<td width="12" align="center" class="ico"></td>\
+				<td class="dashed">\
+					<table cellspacing="0" cellpadding="0" border="0">\
+					   <tbody>\
+						 <tr>\
+						 	<td rowspan="2" width=15 align=left><img alt="该博客最近有新文章" src="http://image2.sina.com.cn/blog/tmpl/v3/images/flower.gif" style="display:' + getFlower(rr_data[i].newupdate, rr_time) + '"\></td>\
+							<td width="31" rowspan="2"><a href="javascript:void(0);" onclick="showCard(' + rr_data[i].uid + ',event,\'lrr\')"><img alt="查看个人名片" src="' + getPhoto(rr_data[i].photo) + '" style="border:1px solid #000" height="23" width="23" onerror="this.src=\'http://image2.sina.com.cn/blog/tmpl/v3/images/fl_defualt.jpg\'"></a></td>\
+							<td  class="name"><a style="padding: 0px; font-size: 12px; font-weight: normal;" target="_blank" href="' + getURL(rr_data[i].url) + '" onclick="getConnt()">' + rr_data[i].nick + '</a></td>\
+							<td width="30" rowspan="2" align="left" valign="top"><div title="删除您的访客记录" class="RR_closeButton sysHand" onclick="showDialog(' + UID + ')" style="display: '+getClearButton(rr_data[i].uid, CookieUID)+'"></div></td>\
+						 </tr>\
+						  <tr>\
+							 <td style="text-align:left;padding: 0px; font-family: Arial; font-size: 10px; height: 10px;" class="desc">' + getLocTime(rr_data[i].time) + '</td>\
+						  </tr>\
+						</tbody>\
+					</table>\
+				</td>\
+			</tr></tbody></table></td>\
+		</tr>';
+	}
+	if(rr_data == 0) 
+	{
+		Body_Data += '<tr><td valign="middle" class="tdLine" style="height: 41px;background-position: left bottom;background-repeat:repeat-x; padding-top: 10px;"><table border="0" cellpadding="0" cellspacing="0" width="100%">\
+		<tr><td class="tdCHS" align="center">暂时还没有访客记录，<br>赶快邀请您的朋友来访问吧。</td>\
+		</tr>\
+		</table></td>\
+		</tr>';
+	}
+	document.getElementById("DataBox").innerHTML = Head_Data + Body_Data + Foot_Data;
+	parent.iframeResize(window.frameElement.id,document.body.scrollHeight);
+}
+var timeoutNum = 10; // 单位秒
+var timer;
+var UID = GetQueryString("uid");
+var s2 = GetCookieString("nick");
+if(s2 != "") {
+	var s4 = s2.split(")"); 
+	var s5 = s4[0].split("(");
+	if(s5[1].length == 10) {
+		var CookieUID = s5[1];
+	}
+	else {
+		var CookieUID = "";
+	}
+}
+else {
+	var CookieUID = "";
+}
+window.onload = function () {
+	var jl = new JsLoader();
+	jl.onsuccess = function(){
+		if(window["rr_data"] != null) {
+			writeData();
+		}
+		else {
+			this.onfailure();
+		}
+	}
+	jl.onfailure = function(){
+		rr_data = [];
+				writeData();
+	}
+	jl.load("http://util.blog.sina.com.cn/rr?" + UID, "gb2312");
+}
+//-->
+</SCRIPT>
+</HEAD>
+<BODY>
+<DIV class=links>
+<DIV class=mid id=DataBox style="TEXT-ALIGN: left">
+<TABLE height="100%" cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=center height="100%">
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD align=middle 
+  height="100%">加载中...</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV></DIV>
+<SCRIPT src="uic.files/bc.js" type=text/javascript></SCRIPT>
+
+<SCRIPT language=JavaScript>
+<!--
+document.onclicks = function () {
+	try{
+		parent.bc.hidden();
+	}
+	catch(e)  {
+		bc.hidden();
+	}
+}
+//-->
+</SCRIPT>
+</BODY></HTML>

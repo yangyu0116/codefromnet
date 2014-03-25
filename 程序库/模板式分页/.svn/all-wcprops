@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/%E6%A8%A1%E6%9D%BF%E5%BC%8F%E5%88%86%E9%A1%B5
+END
+测试.txt
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/%E6%A8%A1%E6%9D%BF%E5%BC%8F%E5%88%86%E9%A1%B5/%E6%B5%8B%E8%AF%95.txt
+END
+函数.txt
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/%E6%A8%A1%E6%9D%BF%E5%BC%8F%E5%88%86%E9%A1%B5/%E5%87%BD%E6%95%B0.txt
+END
+模板.txt
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/%E6%A8%A1%E6%9D%BF%E5%BC%8F%E5%88%86%E9%A1%B5/%E6%A8%A1%E6%9D%BF.txt
+END

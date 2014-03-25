@@ -1,0 +1,39 @@
+/***************************************
+  函数作用:取得各类商品
+  函数参数:
+  修改时间:20:27 2006-9-26
+  说明    :此函数使用缓存,以减少数据库查询次数
+***************************************/
+Function GetGoods( $type='', $cid=0 , $num=4 , $len=30, $orderby='pid', $ordertype='DESC', $query='')
+{
+     global $db , $tablepre , $cid_config , $pageno, $pagestring, $trademark;
+
+     $sql     = "select pid,pbh,cid,pname,pcount,trademark,unit,pic,simpleinfo,dateline,marketprice,memberprice from {$tablepre}product";
+     if( $type){
+           $where = " where $type=1 and is_pass=1 and recycle=0 ";
+     }else{
+           $where = " where is_pass=1 and recycle=0 ";
+     }
+     if( $cid){
+           $where.= " and cid IN (".$cid_config[$cid][arrchildid].") ";
+     }
+     if( $trademark) $where.=" and trademark='".urldecode($trademark)."' ";
+     if( $query)
+     {
+          $startid = ( $pageno-1)*$num ; 
+          $total      = $db->QueryAlone("select count(*) from {$tablepre}product $where ");
+          $pagestring = MyPage( $total, $pageno, $num, $query);
+     }
+     else
+     {
+          $startid = 0;
+     }
+     $result = $db->Query( $sql . $where ." order by ".$orderby." ".$ordertype."  limit ".$startid." ,".$num );
+     while( $list = $db->FetchArray( $result))
+     {
+            $list[simpleinfo] = substrs( $list[simpleinfo] , $len);
+            $lists[]          = $list ;
+     }
+
+     return $lists ;
+}

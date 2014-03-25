@@ -1,0 +1,245 @@
+<?php
+//####################################
+#    文件：get_http_request.class.php
+#    名称：http请求类型
+#    作者：Sanders Yao
+#    共能：请求远程资源
+#    目前只测试了post提交数据
+#    修改时间：2007-4-2
+//####################################
+
+//http请求类
+class httpRequest{
+    var $itsUrl;        //网址
+    var $itsParseUrl;    //解析后的地址
+    var $itsFp;            //句柄
+    var $itsError;        //错误信息
+    var $itsPHead;        //发送文件头
+    var $itsRHead;        //获取文件头
+    var $itsContent;    //数据内容
+    var $itsJumps;        //被重定向次数
+    var $itsStartTime;    //开始时间
+    var $itsPostData;    //post数据
+    var $itsCChars;        //客户端字符集
+    var $itsSChars;        //服务器端字符集
+    
+    function httpRequest($url = ""){
+        $this->itsUrl = $url;
+        $this->itsParseUrl = array(
+            "scheme"    => "http",
+            "host"        => "",
+            "port"        => 80,
+            "user"        => "",
+            "pass"        => "",
+            "path"        => "",
+            "query"        => "",
+            "fragment"    => ""
+        );
+        $this->itsFp = false;
+        $this->itsError = "";
+        $this->itsPHead = array();
+        $this->itsRHead = array();
+        $this->itsContent = "";
+        $this->itsJumps = 0;
+        $this->itsStartTime = time();
+        $this->itsPostData = array();
+        $this->itsCChars = "GB2312";
+        $this->itsSChars = "GB2312";
+        $this->ini();
+    }
+    
+    //根据url初始化
+    function ini(){
+        $tmpArray = parse_url($this->itsUrl);
+        foreach($tmpArray as $k => $v){
+            $this->itsParseUrl[$k] = $v;
+        }
+        if("http" != strtolower($this->itsParseUrl["scheme"])){
+            $this->itsError .= "[1]";//无法判断协议或非http协议链接
+        }
+        if("" == $this->itsParseUrl["host"]){
+            $this->itsError .= "[2]";//无法判断域名
+        }
+        if("" == $this->itsParseUrl["path"]){
+            $this->itsError .= "[3]";//无法判断路径
+        }
+        return "" == $this->itsError ? true : false;
+    }
+    
+    //设定发送的文件头
+    function setHead($k, $v){
+        $this->itsPHead[$k] = $v;
+    }
+    
+    //获取收到的文件头
+    function getHead($k){
+        return isset($this->itsRHead[$k]) ? $this->itsRHead[$k] : "";
+    }
+        
+    //发送请求
+    function send($iconv = false){
+        $errn = 0;
+        $errs = "";
+        $data = "";//post数据
+        $headText = "";    //debug
+        $this->itsFp = @fsockopen(
+        $this->itsParseUrl["host"],
+        $this->itsParseUrl["port"],
+        $errn, $errs);
+        if(false === $this->itsFp){
+            $this->itsError .= "[4]" . $errn . ":" . $errs;//请求失败
+            return false;
+        }
+        $httpv = "" == $this->getHead("http-version") ? "HTTP/1.0" : "HTTP/1.1";
+        $target = 0 == count($this->itsPostData) ? "GET " : "POST ";
+        $target .= $this->itsParseUrl["path"] . " " . $httpv;
+        
+        $this->itsPHead["Host"] = 
+        isset($this->itsPHead["Host"])
+        ? $this->itsPHead["Host"]
+        : $this->itsParseUrl["host"];
+        
+        $this->itsPHead["Accept"] =
+        isset($this->itsPHead["Accept"])
+        ? $this->itsPHead["Accept"]
+        : "*/*";
+        
+        $this->itsPHead["User-Agent"] =
+        isset($this->itsPHead["User-Agent"])
+        ? $this->itsPHead["User-Agent"]
+        : "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.8.1.3) Gecko/20070309 Firefox/2.0.0.3";
+        
+        $this->itsPHead["Refer"] =
+        isset($this->itsPHead["Refer"])
+        ? $this->itsPHead["Refer"]
+        : $this->itsParseUrl["scheme"] . "://" . $this->itsParseUrl["host"] . "/";
+        
+        fputs($this->itsFp, $target);
+        $headText .= $target;
+        foreach($this->itsPHead as $k => $v){
+            fputs($this->itsFp, $k . ": " . $v . "rn");
+            $headText .= $k . ": " . $v . "rn";
+        }
+        
+        if(0 < count($this->itsPostData)){
+            $this->itsPHead["Content-Type"] =
+            isset($this->itsPHead["Content-Type"])
+            ? $this->itsPHead["Content-Type"]
+            : "application/x-www-form-urlencoded";
+            
+            if(function_exists("iconv")){
+                $data =
+                $this->itsCChars != $this->itsSChars
+                ? iconv($this->itsCChars, $this->itsSChars, $this->importPost())
+                : $this->importPost();
+            }else{
+                $data = $this->importPost();
+            }
+            fputs($this->itsFp, "Content-Type: " . $this->itsPHead["Content-Type"] . "rn");
+            $headText .= "Content-Type: " . $this->itsPHead["Content-Type"] . "rn";
+            fputs($this->itsFp, "Content-Length: " . strlen($data) . "rn");
+            $headText .= "Content-Length: " . strlen($data) . "rn";
+        }
+        
+        if("HTTP/1.1" == $httpv){
+            fputs($this->itsFp, "Connection: Closernrn");
+            $headText .= "Connection: Closernrn";
+        }else{
+            fputs($this->itsFp, "rn");
+            $headText .= "rn";
+        }
+        fputs($this->itsFp, $data);
+        $headText .= $data;
+        
+        $status = fgets($this->itsFp, 256);
+        $this->itsRHead["http-version"] = substr($status, 0, 8);
+        $this->itsRHead["status"] = substr($status, 9, 3);
+        $this->itsRHead["description"] = substr($status, 13);
+        for(;1;){
+            if(feof($this->itsFp)){
+                fclose($this->itsFp);
+                $this->itsFp = false;
+                break;
+            }
+            if("" == $line = trim(fgets($this->itsFp, 256))){
+                break;
+            }
+            if(0 != preg_match("~^([^:]+):(.*)$~", $line, $clip)){
+                $this->itsRHead[trim($clip[1])] = trim($clip[2]);
+            }
+        }
+        
+        //重定向处理
+        if(3 == $this->itsRHead["status"][0]){
+            if(3 < $this->itsJumps){
+                $this->itsError .= "[5]";//重定向次数已满
+                return false;
+            }
+            if(isset($this->itsRHead["location"])){
+                if("http" != substr($this->itsRHead["location"], 0, 4)){
+                    $tempUrl = $this->itsRHead["location"];
+                    $this->itsRHead["location"] = "http://" . $this->itsParseUrl["host"]
+                    . ":" . $this->itsPHead["port"] . "/"
+                    . $this->itsRHead["location"];
+                }
+                $this->itsUrl = $this->itsRHead["location"];
+                $this->ini();
+                $this->send();
+            }else{
+                $this->itsError .= "[6]";//无法获取重定向地址
+                return false;
+            }
+        }
+        
+        //读取内容
+        if(2 == $this->itsRHead["status"][0]){
+            for(;1;){
+                if(feof($this->itsFp)){
+                    fclose($this->itsFp);
+                    $this->itsFp = false;
+                    break;
+                }
+                $this->itsContent .= fread($this->itsFp, 1024);
+            }
+            if(function_exists("iconv") && $iconv){
+                $this->itsContent =
+                $this->itsSChars != $this->itsCChars
+                ? iconv($this->itsSChars, $this->itsCChars, $this->itsContent)
+                : $this->itsContent;
+            }
+            return true;
+        }
+        fclose($this->itsFp);
+        $this->itsFp = false;
+        return false;
+    }
+    
+    //导入并格式化post数据
+    function importPost($array = NULL, $perfix = ""){
+        $array = NULL == $array ? $this->itsPostData : $array;
+        foreach($array as $k => $v){
+            if(is_array($v)){
+                if("" == $perfix){
+                    $postData[$k] = urlencode($k) . "=" . $this->importPost($v, $k);
+                }else{
+                    $postData[$k] = urlencode($k) . "=" . $this->importPost($v, $perfix . urlencode("[" . $k . "]"));
+                }
+            }else{
+                if("" == $perfix){
+                    $postData[$k] = urlencode($k) . "=" . urlencode($v);
+                }else{
+                    $postData[$k] = $perfix . urlencode("[" . $k . "]") . "=" . urlencode($v);
+                }
+            }
+        }
+        return implode("&", $postData);
+    }
+}
+$req = new httpRequest("http://localhost/");
+$req->itsPostData = array("a"=>"fasfasdf", "b"=>"ljfijoifsd", "c"=>array(1,2,3));
+if($req->send()){
+    echo $req->itsContent;
+}else{
+    echo $req->itsError;
+}
+?>

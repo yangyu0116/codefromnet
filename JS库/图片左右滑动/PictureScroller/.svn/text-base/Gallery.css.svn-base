@@ -1,0 +1,76 @@
+﻿.GalleryPictureScroller
+{
+	border-style: solid;
+	border-width: 1px;
+	border-color: #999999;
+	padding: 6px;
+	overflow: hidden;
+	height: 69px;
+	background-color: #ffffff;
+}
+	.GalleryPictureScrollerMoveLeft
+	{
+		background-image: url(imagescroller-moveleft.gif);
+		background-repeat: no-repeat;
+		width: 20px;
+		height: 83px;
+		cursor: pointer;
+	}
+	.GalleryPictureScrollerMoveRight
+	{
+		background-image: url(imagescroller-moveright.gif);
+		background-repeat: no-repeat;
+		background-position: 4px 0px;
+		padding-left: 4px;
+		width: 16px;
+		height: 83px;
+		cursor: pointer;
+	}
+
+.GalleryPictureScrollerImageArea
+{
+	width: 100px;
+	margin-right: 6px;
+}
+	.GalleryPictureScrollerImage
+	{
+		border-style: solid;
+		border-width: 1px;
+		border-color: #666666;
+		background-color: #eeeeee;
+		text-align: center;
+		vertical-align: middle;
+		width: 64px;
+		height: 43px;
+		overflow: hidden;
+	}
+	.GalleryPictureScrollerDetails
+	{
+		padding-top: 2px;
+		font-family: Verdana, Arial, Helvetica;
+		font-size: 7pt;
+	}
+
+.CommonOnlineScroller {
+	background-image: url(onlinescroller-background.gif);
+	padding-bottom: 5px; 
+	overflow: hidden; 
+	width: 100%;
+	padding-top: 5px; 
+	background-repeat: repeat-x; 
+	height: 27px
+}
+.CommonOnlineScrollerMoveLeft {
+	background-image: url(onlinescroller-moveleft.gif); 
+	width: 26px; 
+	cursor: pointer; 
+	background-repeat: no-repeat; 
+	height: 37px
+}
+.CommonOnlineScrollerMoveRight {
+	background-image: url(onlinescroller-moveright.gif); 
+	width: 27px; 
+	cursor: pointer; 
+	background-repeat: no-repeat; 
+	height: 37px
+}

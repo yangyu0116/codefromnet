@@ -1,0 +1,23 @@
+function enStr($string) {
+
+        $badwords="Œ“øø|Œ“≤Ÿ|shit|SHIT|…µB|TMD";
+
+        $string=trim($string);
+
+        $string=htmlspecialchars($string);        
+        
+        //$string=addSlashes("$string");        
+
+        $string=str_replace("\r","",$string);
+
+        $string=str_replace("\n","<BR>",$string);
+
+        $badlist=explode("|",$badwords);
+        $nn=count($badlist);
+        for ($i=0; $i<$nn; $i++) {
+                $string=str_replace($badlist[$i],"XXXX",$string);
+        }
+        
+        return $string;
+
+} 

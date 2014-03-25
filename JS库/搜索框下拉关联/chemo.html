@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+<!--
+*{margin:0;padding:0;font-family:"宋体"}
+body {background:#FFF;color:#000;font-size:12px;text-align:center}
+ul,li{list-style:none}
+ul,p,ol{line-height:20px}
+select,input{vertical-align:middle}
+img{border:0}
+a{color:#000;text-decoration:none}
+a:visited{color:#848484}
+a:hover{color:#F00;text-decoration:underline}
+
+.f14{font-size:14px}
+.f18{font-size:18px;font-family:"黑体"}
+.lh20{line-height:20px}
+.lh23{line-height:23px}
+.red{color:#CF0000}
+.gray{color:#666}
+.search_btn{width:78px;height:24px;color:#FFF;background:url(http://www.sinaimg.cn/qc/pinpai/tupian/search_btn.gif) no-repeat;border:0;cursor:pointer;font-size:14px;font-weight:bold}
+.clearit{clear:both;font-size:0;line-height:0;height:0}
+
+#wrap{width:100%;background:#FFF;text-align:left} 
+
+#logo{margin:20px 0;text-align:center}
+#logo img{vertical-align:middle}
+
+#inputarea{width:570px;margin:0 auto 10px;padding:10px 0;text-align:center;background:#F7F7F7;border:1px solid #E1E1E1}
+.input01{width:345px;border:1px solid #6A89A8;font-size:14px;padding:3px;margin-right:7px}
+
+
+#search_content_10{position:relative;padding:0 62px}
+#search_content_10 form{padding:5px 0 10px}
+#sch_type{height:28px;line-height:28px;text-align:left;margin-left:-15px}
+#sch_type label{margin:0 3px 0 0;vertical-align:middle}
+
+#contentdiv{position:absolute;left:62px;top:57px;display:none;width:351px;height:50px;z-index:1;padding:1px}
+#contentdiv select{width:353px;border:1px solid #6A89A8}
+*html #contentdiv{left:-1px;top:57px}
+
+
+#help{text-align:center;padding:10px 0 30px 0}
+#help a{color:#676566;text-decoration:underline}
+#help .red,#tags .red a:link,#tags .red a:visited{color:#FD6802;text-decoration:none}
+#help .green,#tags .green a:link,#tags .green a:visited{color:#349800;text-decoration:none}
+#help .blue,#tags .blue a:link,#tags .blue a:visited{color:#0B478F;text-decoration:none}
+#help a:hover,#tags .red a:hover,#tags .red a:active,#tags .green a:hover,#tags .green a:active,#tags .blue a:hover,#tags .blue a:active{color:#F00}
+
+#siteinfo{padding-top:10px;text-align:center;color:#666;border-top:1px solid #999}
+#siteinfo a{color:#666;text-decoration:none}
+#siteinfo a:hover{color:#F00;text-decoration:underline}
+.clearfix:after {
+content: ".";
+display: block;
+clear: both;
+visibility: hidden;
+line-height: 0;
+height: 0; }
+
+.clearfix {
+display: inline-block; }
+
+html[xmlns] .clearfix {
+display: block; }
+
+* html .clearfix {
+height: 1%; }
+#channel{
+margin-left:30px;
+}
+#channel li{
+float:left;
+width:50px;
+}
+-->
+</style>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+
+var hotWord = '输入您感兴趣的车型进行搜索，如“迈腾”';
+
+function checkiask(){
+if (document.searchiask.k.value=="请输关键词" || document.searchiask.k.value=="" ){
+	//window.open("http://iask.com");
+	document.searchiask.k.value = "请输关键词";
+	document.searchiask.k.className = "iaskRedTxt";
+	document.searchiask.k.style.border = "1px solid #F00";
+	return false;
+}
+return true;
+}
+function sens(){//搜新闻
+document.searchiask.t.value = "keyword";
+}
+function sezt(){//搜专题
+document.searchiask.t.value = "subject";
+}
+//--><!]]>
+</script>
+<script type="text/javascript">
+<!--
+_S_pSt(_S_PID_);
+//-->
+</script>
+<script type="text/javascript" src="http://test.cn/js/chemo.js"></script>
+<script type="text/javascript">
+<!--
+function showdiv(){
+var data = document.simple.keyword.value;
+var op = "";
+len = brandArray.length;
+if (data!="")
+{
+	for (i=0;i<len;i++)
+	{
+		pos = brandArray[i][0].indexOf(data);
+		if (pos>=0)
+		{
+			op += "<option value='"+brandArray[i][1]+"'>"+brandArray[i][1]+"<\/option>";
+		}
+	}
+	cont = "<select name='subbrand' size='5' onchange='javascript:setVal()' onclick='closediv();'>"+op+"<\/select>";
+	document.getElementById('contentdiv').style.display = 'block';	
+	document.getElementById('contentdiv').innerHTML = cont;	
+}
+else
+{
+	document.getElementById('contentdiv').style.display = 'none';	
+}
+}
+
+function setVal()
+{
+document.simple.keyword.value = document.simple.subbrand.value;
+}
+
+function closediv(){
+document.getElementById('contentdiv').style.display = 'none';	
+}
+
+//-->
+</script>
+</head>
+<body style="height:100%">
+
+<div id="wrap">
+
+<div class="searchBlock">
+
+<div id="inputarea">
+	<div id="search_content_10">
+		<form name="simple" id="simple" autocomplete="off" method="get" action="/apps/index.php" onsubmit="return chekKeyword()">
+				<input name="query" id="keyword" class="input01" onkeyup="javascript:showdiv();" type="text" />
+				<input class="search_btn" value="搜 索" onclick="javascript:closediv();" type="submit" />	
+				<input type="hidden" name="mod" value="auto">
+				<input type="hidden" name="service" value="">
+				<input type="hidden" name="type" value="search">
+				<input type="hidden" name="combo" value="yes">
+				<input type="hidden" name="act" value="sinaresult">
+				<input type="hidden" name="homo" value="on">
+				<div id="contentdiv"></div>
+			</form>
+		</div>
+	</div>
+</div>
+
+</div>
+<script type="text/javascript">
+<!--
+function $(key){
+	return document.getElementById(key);
+}
+$('query').style.color = '#666666';
+$('query').value = hotWord;
+try {
+	if ($('query').createTextRange) {
+		var rng = $('query').createTextRange(); 
+		rng.moveStart("character", $('query').value.length); 
+		rng.collapse(true); 
+		rng.select();
+		delete rng;
+	}
+	function ClearPreLoadInput() {
+		$('query').style.color='#000';
+        if (document.attachEvent) {
+            //处理ie下回车提交问题及按键情况默认词问题
+            //if ($('s').value == hotWord) {
+                if (event.keyCode==13) {
+                    //提交
+                    $('simple').submit();
+                } else {
+                    //清空
+                    //$('keyword').value = '';
+                }
+            //}
+        }
+		if($('query').value==hotWord) $('query').value='';
+	};
+	if (document.attachEvent) {
+		$('query').attachEvent("onkeydown", ClearPreLoadInput);
+		$('keyword').attachEvent("onclick", ClearPreLoadInput);
+	} else if (document.addEventListener) {
+		$('query').addEventListener("keydown", ClearPreLoadInput, false);
+		$('query').addEventListener("click", ClearPreLoadInput, false);
+	} else {}
+}catch(ex){}
+$('query').focus();
+//-->
+</script>
+<script type="text/javascript">
+<!--
+window.document.onkeydown=KDown;
+function KDown(){
+
+	if (window.event.keyCode==38  ||  window.event.keyCode==40)
+	{	
+		try
+		{
+			if (document.simple.keyword.value!="")
+			{
+				document.simple.subbrand.focus();
+			}
+		}
+		catch(e)
+		{
+		}
+	}
+	else if (window.event.keyCode==13)
+	{
+		//document.simple.submit();
+		closediv();
+	}
+	else
+	{
+	}
+}
+//-->
+</script>
+</body>
+</html>

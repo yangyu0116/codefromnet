@@ -1,0 +1,14 @@
+function txt_down($filename,$str = null)
+{
+	if(is_null($str)) {
+		$str = file_get_contents($filename);
+		$filename = basename($filename);
+	}
+	header('Content-type: text/plain');
+	header("Content-Length: ".strlen($str));
+	header("Content-disposition: attachment; filename=$filename");
+	header("Pragma: no-cache");
+	header("Expires: 0");
+
+	print $str;
+}

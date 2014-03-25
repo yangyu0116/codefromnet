@@ -1,0 +1,15 @@
+二分法
+$min = 0;
+$max = 9;
+$found = 0;
+printf("输入要查询的数据:");
+
+while ( $min <= $max )
+{
+    $mid = intval(($min + $max) / 2);
+    if     ($b == $a[$mid]) {$found = 1; break;}
+    elseif ($b > $a[$mid]) $min = $mid + 1;
+    else   $max = $mid - 1;
+}
+if($found == 1) {printf("找到位置是：%d",$mid+1);printf("\n");}
+else printf("Not found");

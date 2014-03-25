@@ -1,0 +1,217 @@
+<?php
+使用很简单：
+先查询出条目数量$num_items,
+$newpage = new pages(55,10,10);
+$newpage->output;
+
+
+/*************************************
+ * (说明) 分页类                  *
+ * @Author: dreamblaze                  *
+ * @Date: 2006-10-14                  *
+ * @Email: [email]colacc2000@hotmail.com[/email]              *
+ * @Websit: [url]http://dreamblaze.cn[/url]                   *
+ * @access public                  * 
+ *************************************/
+class pages
+{
+    
+    var $num_items;      //所有项目数
+    var $items_per_page; //每页显示项目数
+    var $pages_per_page; //每页显示的页码
+    
+
+    var $cur_page;       //当前页
+    var $pre_page;       //上一页
+    var $next_page;      //下一页
+
+    var $num_pages;         //分页总数
+     
+    
+    
+    
+
+    
+    
+     /***********************************
+     * (功能描述)  构造函数，初始化类   *
+     * @Author: dreamblaze                *
+     * @Date:    2006-10-14                *
+     * @E-mail: [email]colacc2000@hotmail.com[/email]    *
+     * @Websit: [url]http://dreamblaze.cn[/url]    *
+     * @param    (类型)     (参数名)    *
+     ***********************************/
+    function pages($num_items=20,$items_per_page=10,$pages_per_page=10){
+
+        $this->num_items      = $num_items;
+        $this->items_per_page = $items_per_page;
+        $this->pages_per_page = $pages_per_page;
+
+        $this->cur_page  = intval($_GET['page']); 
+        
+    
+
+    }
+
+     /***********************************
+     * (功能描述)  分页过程函数            *
+     * @Author: dreamblaze                *
+     * @Date:    2006-10-14                *
+     * @E-mail: [email]colacc2000@hotmail.com[/email]    *
+     * @Websit: [url]http://dreamblaze.cn[/url]    *
+     * @param    (类型)     (参数名)    *
+     ***********************************/
+    function process(){
+
+        $this->num_pages = ceil($this->num_items/$this->items_per_page);
+
+        
+        $this->cur_page  = ($this->cur_page <= 0) ? 1 : $this->cur_page; 
+        $this->cur_page  = ($this->cur_page > $this->num_pages) ? $this->num_pages : $this->cur_page;
+        
+        $this->pre_page  = $this->cur_page - 1;
+        $this->next_page = $this->cur_page + 1;
+
+        $this->pre_page  = ($this->pre_page > 0) ? $this->pre_page : 1;
+        $this->next_page = ($this->next_page > $this->num_pages) ? $this->num_pages : $this->next_page;
+
+         
+    }
+
+
+    
+     /***********************************
+     * (功能描述)  构造URL的QUERY        *
+     * @Author: dreamblaze                *
+     * @Date:    2006-10-14                *
+     * @E-mail: [email]colacc2000@hotmail.com[/email]    *
+     * @Websit: [url]http://dreamblaze.cn[/url]    *
+     * @param    (类型)     (参数名)    *
+     ***********************************/
+     function page_query($page=1){
+         
+         parse_str($_SERVER['QUERY_STRING'],$query);
+         $query['page']    = $page;
+         
+         $page_query = $this->build_query($query);
+         Return $page_query;
+     
+     }
+
+
+     /***********************************************
+     * (功能描述)  将数组转化为QUERY_STRING,        *
+     *              等同于PHP5的http_build_query()    *
+     * @Author: dreamblaze                            *
+     * @Date:    2006-10-14                            *
+     * @E-mail: [email]colacc2000@hotmail.com[/email]                *
+     * @Websit: [url]http://dreamblaze.cn[/url]                *
+     * @param    (类型)     (参数名)    (描述)        *
+     ************************************************/
+    function build_query($arr){      //如果是PHP5可以将这个函数去掉，用http_build_query()
+
+        
+        foreach($arr as $key=>$val){
+            $str .= $key."=".$val."&";
+        }
+        $str_len = strlen($str);
+        $str{$str_len-1}='';
+        Return $str;
+
+    }
+
+     /***********************************
+     * (功能描述)  格式化输出分页        *
+     * @Author: dreamblaze                *
+     * @Date:    2006-10-14                *
+     * @E-mail: [email]colacc2000@hotmail.com[/email]    *
+     * @Websit: [url]http://dreamblaze.cn[/url]    *
+     * @param    (类型)     (参数名)    *
+     ************************************/
+    function output($style=''){
+
+        $this->process();
+
+        $view  = '<table border="1px"><tr>';
+        $view .= '<td>'.$this->num_items.'</td>';
+        $view .= '<td>'.$this->cur_page.'/'.$this->num_pages.'</td>';
+
+        $view .= ($this->cur_page == 1) ? '' : '<td><a href="'.$_SERVER['PHP_SELF'].'?'
+                .$this->page_query().'">|<</a></td>'.'<td><a href="'
+                .$_SERVER['PHP_SELF'].'?'.$this->page_query($this->pre_page).'"><</a></td>';
+    
+        if($this->num_pages <= $this->pages_per_page){
+
+            for($i=1; $i<=$this->num_pages; $i++){
+                
+                if($i == $this->cur_page){
+                    $view .= '<td>'.$i.'</td>';
+                    continue; 
+                }
+
+                $view .= '<td><a href="'.$_SERVER['PHP_SELF'].'?'.$this->page_query($i).'">';
+                $view .= $i;
+                $view .= '</a></td>';
+
+            }
+        }
+        else{
+            if($this->cur_page < 3){
+                $first_page = 1;            
+            }
+            else{
+                $first_page = ($this->cur_page - 3 == 0) ? 1 : $this->cur_page - 3;
+                
+            }
+            
+            if($this->num_pages >= ($first_page + $this->pages_per_page)){
+
+                for($i = $first_page; $i<($first_page + $this->pages_per_page); $i++){
+
+                    if($i == $this->cur_page){
+
+                        $view .= '<td>'.$i.'</td>';
+                        continue;
+
+                    }
+                  
+                    $view .= '<td><a href="'.$_SERVER['PHP_SELF'].'?'.$this->page_query($i).'">';
+                    $view .= $i;
+                    $view .= '</a></td>';
+                }
+            }
+            else{
+                 for($i = ($this->num_pages-$this->pages_per_page); $i<=$this->num_pages; $i++){
+
+                    if($i == $this->cur_page){
+
+                        $view .= '<td>'.$i.'</td>';
+                        continue;
+
+                    }
+                    
+                    
+                    $view .= '<td><a href="'.$_SERVER['PHP_SELF'].'?'.$this->page_query($i).'">';
+                    $view .= $i;
+                    $view .= '</a></td>';
+            
+                }
+            }
+            
+        }
+        
+        $view .= ($this->cur_page == $this->num_pages) ? '' : '<td><a href="'.$_SERVER['PHP_SELF'].'?'
+                .$this->page_query($this->next_page).'">></a></td>'.'<td><a href="'.$_SERVER['PHP_SELF']
+                .'?'.$this->page_query($this->num_pages).'">>|</a></td>';
+
+        
+    
+         $view .= '</tr></table> ';
+        echo($view);
+        
+    }
+
+    
+
+}
+?>

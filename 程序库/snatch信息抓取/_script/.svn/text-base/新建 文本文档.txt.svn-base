@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS `sight` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` varchar(100) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `picture` varchar(255) NOT NULL,
+  `province` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `introduce` text NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=gbk AUTO_INCREMENT=1 ;
+

@@ -1,0 +1,19 @@
+当我们点击网页上的链接时，浏览器页面就会转到链接指向的新的页面，我们想在页面转换时加上过渡效果。
+
+
+打开这个页面的原代码，在<head>与</head>插入代码:
+
+<meta http-equiv="Page-Enter" content="revealTrans(Duration=1.0,Transition=23)">
+
+<meta http-equiv="Page-Exit" content="revealTrans(Duration=1,Transition=14)">
+
+这样这个过渡效果就完成了，很简单吧。现在我们来测试一下效果如何，打开这个页面，然后点击页面上的链接，页面在转到下一个页面的过程中，我们看到页面是从上到下慢慢的转换到第二个页面的。
+
+Duration的值为网页动态过渡的时间，单位为秒。
+
+
+Transition是过渡方式，它的值为0到23，分别对应24种过渡方式。如下表:
+
+
+
+有兴趣的朋友可以试一下，自己体会一下其中的奥妙!

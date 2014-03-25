@@ -1,0 +1,174 @@
+<?php
+define("PAGELIST_MODE_ALL", 0);
+define("PAGELIST_MODE_MID", 1);
+define("PAGELIST_MODE_FIX", 2);
+define("PAGELIST_MODE_RANDOM", 3);
+
+/*-----------------------------
+类型名称        : 分页列表类型
+作者            : Sanders Yao
+文件名            : page.class.php
+作用            : 获取分页列表
+最后修改时间    : 2007-5-24
+#    @itsPage        : 当前页数
+#    @itsTotal        : 总记录数
+#    @itsRange        : 每页显示的记录数量范围
+#    @itsPageRange    : 显示页数的数量范围
+#    @itsFastAdvance    : 快进页数
+#    @itsFastRetreat    : 快退页数
+#    @itsTotalPage    : 总页数
+#    @itsList        : 页数列表
+-----------------------------*/
+
+class myPageList{
+    var $itsPage;
+    var $itsTotal;
+    var $itsRange;
+    var $itsPageRange;
+    var $itsFastAdvance;
+    var $itsFastRetreat;
+    //private
+    var $itsTotalPage;
+    var $itsList;
+    
+    /*-----------------------------
+    #    作用    : 构造函数
+    #    @page    : 当前页数
+    #    @total    : 记录总数
+    #    @range    : 每页显示记录数量范围
+    #    @prange    : 每页显示页数范围
+    -----------------------------*/
+    function myPageList($page = 1, $total = 0, $range = 10, $prange = 10){
+        $this->itsFastAdvance    = 0;
+        $this->itsFastRetreat    = 0;
+        $this->itsTotalPage        = 0;
+        $this->itsList            = array();
+        $this->ini($page, $total, $range, $prange);
+        $this->getTotalPage();
+    }
+    
+    /*-----------------------------
+    #    作用    : 初始化
+    #    @page    : 当前页数
+    #    @total    : 记录总数
+    #    @range    : 每页显示记录数量范围
+    #    @prange    : 每页显示页数范围
+    -----------------------------*/
+    function ini($page, $total, $range, $prange){
+        $page    = intval($page);
+        $total    = intval($total);
+        $range    = intval($range);
+        $prange    = intval($prange);
+        $this->itsPage        = 1 > $page        ? 1 : $page;
+        $this->itsTotal        = 0 > $total    ? 0 : $total;
+        $this->itsRange        = 1 > $range    ? 1 : $range;
+        $this->itsPageRange    = 1 > $prange    ? 1 : $prange;
+    }
+    
+    /*-----------------------------
+    #    作用    : 获取本页第一条记录的起始位置
+    #    return    : 本页第一条记录的起始位置
+    -----------------------------*/
+    function getStart(){
+        return ($this->itsPage - 1) * $this->itsRange;
+    }
+    
+    /*-----------------------------
+    #    作用    : 获取总页数
+    #    return    : 总页数
+    -----------------------------*/
+    function getTotalPage(){
+        if(0 < $this->itsTotalPage){
+            return $this->itsTotalPage;
+        }
+        return $this->itsTotalPage = 0 == $this->itsTotal ? 1 : ceil($this->itsTotal / $this->itsRange);
+    }
+    
+    /*-----------------------------
+    #    作用    : 根据模式获取页数列表
+    #    return    : 页数列表
+    -----------------------------*/
+    function getList($mode){
+        switch($mode){
+            case PAGELIST_MODE_ALL :
+            return $this->listModeAll();
+            
+            case PAGELIST_MODE_MID :
+            return $this->listModeMid();
+            
+            case PAGELIST_MODE_FIX :
+            return $this->listModeFix();
+            
+            case PAGELIST_MODE_RANDOM :
+            return $this->listModeRan();
+            
+            default:
+            return $this->listModeAll();
+        }
+    }
+    
+    /*-----------------------------
+    #    作用    : 获取所有页数的列表
+    #    return    : 所有页数的列表
+    -----------------------------*/
+    function listModeAll(){
+        $this->itsList = array();
+        for($i = 0;$i < $this->itsTotalPage;$i ++){
+            $this->itsList[] = $i + 1;
+        }
+        $this->itsFastAdvance = 0;
+        $this->itsFastRetreat = 0;
+        return $this->itsList;
+    }
+    
+    /*-----------------------------
+    #    作用    : 根据当前页数居中获取数列表
+    #    return    : 页数列表
+    -----------------------------*/
+    function listModeMid(){
+        $this->itsList = array();
+        $half = floor($this->itsPageRange / 2);
+        $firstPage = $half < $this->itsPage ? $this->itsPage - $half : 1;
+        $num = $this->itsTotalPage < $firstPage - 1 + $this->itsPageRange ? $this->itsTotalPage : $firstPage - 1 + $this->itsPageRange;
+        for($i = $firstPage;$i <= $num;$i ++){
+            $this->itsList[] = $i;
+        }
+        $this->itsFastAdvance = 1 <= $this->itsPage - $this->itsPageRange ? $this->itsPage - $this->itsPageRange : 0;
+        $this->itsFastRetreat = $this->itsTotalPage >= $this->itsPage + $this->itsPageRange ? $this->itsPage + $this->itsPageRange : 0;
+        return $this->itsList;
+    }
+    
+    /*-----------------------------
+    #    作用    : 根据固定页数范围获取数列表
+    #    return    : 页数列表
+    -----------------------------*/
+    function listModeFix(){
+        $this->itsList = array();
+        $firstPage = ($this->itsPage % $this->itsPageRange)
+        ? floor($this->itsPage / $this->itsPageRange) * $this->itsPageRange + 1
+        : floor($this->itsPage / $this->itsPageRange) * $this->itsPageRange - $this->itsPageRange + 1;
+        $num = $this->itsTotalPage < $firstPage - 1 + $this->itsPageRange ? $this->itsTotalPage : $firstPage - 1 + $this->itsPageRange;
+        for($i = $firstPage;$i <= $num;$i ++){
+            $this->itsList[] = $i;
+        }
+        $this->itsFastAdvance = 1 <= $firstPage - $this->itsPageRange ? $firstPage - $this->itsPageRange : 0;
+        $this->itsFastRetreat = $this->itsTotalPage >= $firstPage + $this->itsPageRange ? $firstPage + $this->itsPageRange : 0;
+        return $this->itsList;
+    }
+    
+    /*-----------------------------
+    #    作用    : 获取随机页数列表（谁会用这个？）
+    #    return    : 页数列表
+    -----------------------------*/
+    function listModeRan(){
+        srand((float) microtime() * 10000000);
+        $allPage = $this->listModeAll();
+        $this->itsList = array_rand($allPage, $this->itsPageRange);
+        srand((float) microtime() * 10000000);
+        $tmpArray = array_rand(array_diff($allPage, $this->itsList), 2);
+        $this->itsFastAdvance = $tmpArray[0];
+        $this->itsFastRetreat = $tmpArray[1];
+        return $this->itsList;
+    }
+}
+?>

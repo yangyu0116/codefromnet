@@ -1,0 +1,25 @@
+<?php
+function array_to_code($array, $nested_level=0) {
+   
+   $code_string = "";
+   
+   // Convert each element into code.
+   if (is_array($array)) {
+     // Create the indent.
+     $indent = str_repeat("t", $nested_level);
+     $code_string .= "array(n";
+     foreach ($array as $key => $value) {
+         // Convert this sub array to code.
+         $element_code = array_to_code($value, $nested_level+1);
+         // Add the new code to the string.
+         $code_string .= $indent."t\"".$key."\" => ".$element_code.",n";
+     }
+     $code_string .= $indent.")";
+   } else {
+     // Not an array: just return with quotes.
+     $code_string = "\"".addslashes($array)."\"";
+   }
+   
+   return $code_string;
+}
+?>

@@ -1,0 +1,62 @@
+<div class="cl m-20">
+	<h2>专家评分:</h2>
+	<div class="starsnub" id="score">0.<span>0</span>
+	</div>
+	<div class="stars" id="stars">
+		<img src="./images/x2.jpg" onmouseover="starshow(1);" onmouseout="starinit();" onclick="add(1);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(2);" onmouseout="starinit();" onclick="add(2);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(3);" onmouseout="starinit();" onclick="add(3);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(4);" onmouseout="starinit();" onclick="add(4);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(5);" onmouseout="starinit();" onclick="add(5);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(6);" onmouseout="starinit();" onclick="add(6);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(7);" onmouseout="starinit();" onclick="add(7);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(8);" onmouseout="starinit();" onclick="add(8);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(9);" onmouseout="starinit();" onclick="add(9);" />
+		<img src="./images/x2.jpg" onmouseover="starshow(10);" onmouseout="starinit();" onclick="add(10);" />
+		<p class="m-20 t-r g">
+			共<span id="scorecount">0</span>人评分[点击星星直接打分]</p>
+	</div>
+	<span id="scoredata" style="display: none">6</span>
+	<script src="./score.php?action=show&gid=12527"></script>
+	<script type="text/javascript">
+		scoreinit();
+		function scoreinit() {
+			var scores = document.getElementById('scoredata').innerHTML.split('|');
+			if (scores[0].indexOf('.') != -1) {
+				scorestr = scores[0].split('.')[0] + ".<span>" + scores[0].split('.')[1];
+			}
+			else {
+				scorestr = scores[0];
+			}
+			document.getElementById('score').innerHTML = scorestr;
+			document.getElementById('scorecount').innerHTML = scores[1];
+			starinit();
+		}
+
+		function starinit() {
+			var scores = document.getElementById('scoredata').innerHTML.split('|');
+			starshow(parseFloat(scores[0]));
+		}
+		function starshow(num) {
+			var stars = document.getElementById('stars').getElementsByTagName("img");
+			for (var i = 0; i < 10; i++) {
+				stars[i].src = "./images/x2.jpg";
+			}
+			for (var i = 0; i < num; i++) {
+				stars[i].src = "./images/x1.jpg";
+			}
+		}
+		function add(num) {
+			if (document.getElementById('addjs') != null) {
+				document.body.removeChild(document.getElementById('addjs'));
+			}
+			var s = document.createElement('script');
+			s.type = "text/javascript";
+			s.id = "addjs";
+			s.src = "./score.php?action=add&gid=12527&score=" + num;
+			//alert(s);
+			document.body.appendChild(s);
+		}
+	</script>
+</div>
+

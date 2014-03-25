@@ -1,0 +1,45 @@
+<?php
+$url = "http://www.phpx.com/happy/logging.php?action=login";
+$req = new httpRequest($url);
+
+$req->setHead("Referer", "http://www.phpx.com/happy/");
+$req->setHead("Accept", "text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+$req->setHead("Accept-Language", "zh-cn,zh;q=0.5");
+$req->setHead("Accept-Encoding", "gzip,deflate");
+$req->setHead("Accept-Charset", "gb2312,utf-8;q=0.7,*;q=0.7");
+$req->setHead("Keep-Alive", "300");
+$req->itsCookieDir = "cookies/";    //cookie保存目录
+$req->itsPostData = array(
+    "formhash" => "93a2a31f",
+    "referer" => "http://www.phpx.com/happy/",
+    "loginmode" => "normal",
+    "styleid" => "1",
+    "cookietime" => "315360000",
+    "loginfield" => "username",
+    "username" => "用户名",    //你的用户名
+    "password" => "密码",    //你的密码
+    "questionid" => "0",    //你的问题编号
+    "answer" => "",            //你的问题答案
+    "loginsubmit" => "提 &nbsp; 交"
+);
+
+$req->send();
+
+unset($req);
+
+$url = "http://www.phpx.com/happy/index.php";
+$req = new httpRequest($url);
+
+$req->setHead("Referer", "http://www.phpx.com/happy/");
+$req->setHead("Accept", "text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+$req->setHead("Accept-Language", "zh-cn,zh;q=0.5");
+$req->setHead("Accept-Encoding", "gzip,deflate");
+$req->setHead("Accept-Charset", "gb2312,utf-8;q=0.7,*;q=0.7");
+$req->setHead("Keep-Alive", "300");
+$req->itsCookieDir = "cookies/";
+
+$req->send();
+//print_r($req->itsPHead);
+//print_r($req->itsRHead);
+echo $req->itsContent;
+?>

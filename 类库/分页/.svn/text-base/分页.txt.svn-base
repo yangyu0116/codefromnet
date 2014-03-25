@@ -1,0 +1,186 @@
+<?php
+/*
+ * 分页显示类
+ * PageItem.php　v 1.0.0
+ * 编程：Boban<boban@21php.com>
+ * 讨论：http://www.21php.com/forums/
+ * 更新：2004-02-02
+ * 说明：
+ * 1. 配合MYSQL数据库使用
+ * 2. 类没有提供连接数据库的功能，需在外部建立数据库连接。
+ * */
+/*
+ * 使用方法：
+ * $sql = "select * from news limit 0,10";
+ * $hdc = new PageItem($sql);
+ * echo $hdc->myPageItem();
+ * $arrRecords = $hdc->ReadList();
+ * */
+if (!defined("__PAGEITEM__")) {
+    define("__PAGEITEM__", 1);
+} else {
+    exit(3);
+} 
+
+class PageItem {
+    var $iDefaultRecords = 10; // 默认每页显示记录数，如果没有设置，就使用默认值
+    var $iMaxRecord; //每页记录数
+    var $iTotal; //记录总数
+    var $sqlRecord; // 获取记录的SQL查询
+    var $iPages; //总页数
+    var $CPages; //当前页数
+    /*
+  * 构造函数 －－ 初始化变量
+  * 参数：SQL查询语句，将忽略LIMIT语句
+  * */
+
+    function PageItem($sql = "")
+    { 
+        // register_shutdown_function($this->_PageItem());
+        $this->SetMaxRecord($this->iDefaultRecords);
+        /*
+       * 解析SQL语句
+       * */
+        if ($sql <> "") {
+            list($sql) = spliti("LIMIT", $sql); // 去除LIMIT语句
+            $this->sqlRecord = trim($sql);
+            list(, $sql) = spliti("FROM", $sql);
+            $sql = trim($sql);
+   if(preg_match ("/\bGROUP\b \bBY\b/i", $sql))
+   {
+    //echo "HAVE GROUP BY";
+    if(preg_match ("/\bHAVING\b/i", $sql)) list(,$field) = spliti("HAVING",$sql);
+    list($field) = spliti(' ',trim($field));
+    //echo $field;
+    $this->iTotal = $this->CountRecord("SELECT $field,COUNT(DISTINCT $field) AS cnt FROM " . $sql,2);
+   }
+   else $this->iTotal = $this->CountRecord("SELECT COUNT(*) AS cnt FROM " . $sql,1);
+        } 
+        $this->iPages = ceil($this->iTotal / $this->iMaxRecord);
+        $this->CPages = $_REQUEST['page'];
+        if ($this->CPages <= 0) $this->CPages = 1;
+        if ($this->CPages > $this->iPages) $this->CPages = $this->iPages;
+        //echo "SELECT COUNT(*) AS cnt FROM " . $sql;
+  //echo $this->iTotal;
+    } 
+    /*
+     * 析构函数 -- 暂时不可用
+     * */
+    function _PageItem()
+    { 
+        // $this->linkid = NULL;
+    } 
+
+    function SetMaxRecord($cnt)
+    {
+        $this->iMaxRecord = $cnt;
+    } 
+
+    /*
+     * 统计匹配的记录总数
+     * */
+    function CountRecord($sql,$type)
+    {
+  //echo $sql;
+  if($type == 1)
+  {
+   if (($records = mysql_query($sql)) && ($record = mysql_fetch_assoc($records))) {
+    return $record['cnt'];
+   } else return 0;
+  }
+  elseif($type == 2)
+  {
+   if($records = mysql_query($sql))
+    return mysql_affected_rows();
+  }
+    }
+ /* 
+  * 读取记录
+  * */
+ function ReadList()
+ {
+  $ret = array();
+  $this->sqlRecord.=" LIMIT ".($this->CPages-1)*$this->iMaxRecord.",".$this->iMaxRecord;
+  $records = mysql_query($this->sqlRecord);
+  if(!$records) return;
+  while($record = mysql_fetch_array($records))
+  {
+   $ret[] = $record;
+  }
+  return $ret;
+ }
+
+    function LinktoPage($page, $msg)
+    {
+        $link = $this->PageUrl($page);
+        return "<A href=\"$link\">$msg</A>\n";
+    } 
+    function PageUrl($page)
+    {
+        $phpself = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
+        $querystring = $_SERVER['QUERY_STRING'];
+        $querystring = preg_replace("/page=[0-9]*&?/i", "", $querystring);
+        $link = $phpself . "?page=$page&" . $querystring;
+        return $link;
+    } 
+
+    /* 
+  * 显示当前页及总页数   
+  * */
+    function PageNav()
+    {
+        echo "第" . $this->CPages . "页/共" . $this->iPages . "页";
+    } 
+
+    /* 
+   * 显示翻页按钮，包括首页、下页、上页、未页
+   * */
+
+    function PageButton()
+    {
+        if ($this->CPages > 1) {
+            echo $this->LinktoPage(1, "首页");
+            echo " | ";
+            echo $this->LinktoPage($this->CPages-1, "上一页");
+        } else {
+            echo "首页 | 上一页";
+        } 
+
+        if ($this->CPages < $this->iPages) {
+            echo " | ";
+            echo $this->LinktoPage($this->CPages + 1, "下一页");
+            echo " | ";
+            echo $this->LinktoPage($this->iPages, "首页");
+        } else {
+            echo " | 下一页 | 尾页";
+        } 
+    }
+    /* 
+   * 显示跳转页选择框
+   * */
+
+    function SelectItem()
+    {
+        echo "跳到第<SELECT name='topage' size='1' onchange='window.location=this.value'>\n";
+        for($i = 1;$i <= $this->iPages;$i++) {
+            if ($this->CPages == $i)
+                $extra = "selected";
+            else
+                $extra = "";
+            echo "<OPTION VALUE='" . $this->PageUrl($i) . "' $extra>$i</OPTION>";
+        } 
+        echo "</SELECT>\n";
+    }
+
+    /*
+     * 一次性显示所有按钮组件
+     * */
+    function myPageItem()
+    {
+        $this->PageButton();
+        $this->SelectItem();
+        $this->PageNav();
+    } 
+} // 类结束
+
+?>   

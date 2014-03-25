@@ -1,0 +1,68 @@
+8
+
+dir
+40
+https://yangyu.googlecode.com/svn/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E7%A8%8B%E5%BA%8F%E5%BA%93/snatch%E4%BF%A1%E6%81%AF%E6%8A%93%E5%8F%96/inc/FCKeditor/editor/plugins/placeholder
+https://yangyu.googlecode.com/svn
+
+
+
+2009-11-02T08:07:36.649266Z
+4
+niceses
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+432d845a-c42f-11de-b12b-e93134c88cf6
+
+lang
+dir
+
+placeholder.gif
+file
+
+
+
+
+2009-11-14T05:05:38.000000Z
+090274dbcc2f5a50ea1086d948ca85ab
+2009-11-02T08:07:36.649266Z
+4
+niceses
+has-props
+
+fck_placeholder.html
+file
+
+
+
+
+2009-11-14T05:05:38.000000Z
+fd16779affa40dd7cb03dcd39fd9ae6b
+2009-11-02T08:07:36.649266Z
+4
+niceses
+
+fckplugin.js
+file
+
+
+
+
+2009-11-14T05:05:38.000000Z
+22abaef9cc8088de5af577ff06b438c1
+2009-11-02T08:07:36.649266Z
+4
+niceses
+

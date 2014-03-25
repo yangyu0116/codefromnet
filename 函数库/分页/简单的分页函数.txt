@@ -1,0 +1,26 @@
+/***************************************
+  函数作用:简单的分页函数
+  函数参数:
+  修改时间:20:22 2006-9-25
+***************************************/
+
+Function MyPage( $total, $pageno, $pagesize, $query)
+{
+     $pages  = ceil($total/$pagesize);
+
+     $string = "商品数:{$total}&nbsp;&nbsp;分页 <font color=red>{$pageno}</font>/{$pages}&nbsp;&nbsp;<a href={$query}pageno=1>首页</a>&nbsp;";
+
+     if( $pageno<=1){
+         $string.="上一页&nbsp; ";
+     }else{
+         $string.="<a href={$query}pageno=".($pageno-1).">上一页</a>&nbsp;";
+     }
+     if( $pageno>=$pages){
+         $string.= "下一页&nbsp;";
+     }else{
+         $string.= "<a href={$query}pageno=".($pageno+1).">下一页</a>&nbsp;";
+     }
+ 
+     $string.= "<a href={$query}pageno={$pages}>尾页</a>&nbsp;";
+     return $string ;
+}

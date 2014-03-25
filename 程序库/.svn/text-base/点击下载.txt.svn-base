@@ -1,0 +1,6 @@
+$file_name = basename($file);
+$handle = fopen($file,"r");
+header("Content-Type: application/force-download");          //强制下载
+header("Content-Disposition: attachment; filename=".basename($file_name)); //下载保存的文件名
+echo fread($handle,filesize($file));
+fclose($handle);

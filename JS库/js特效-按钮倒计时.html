@@ -1,0 +1,17 @@
+<script>
+var count = 9;
+function countDown(){
+var b = document.getElementById("s");
+
+if(this.count>=0){
+s.value = "同意("+(this.count--)+")";
+setTimeout("countDown()",1000);
+}else{
+s.value = "同意";
+b.disabled = false;
+}
+}
+</script>
+<body onload="countDown()">
+<input type=submit id='s' value='同意(9)' disabled/>
+</body>

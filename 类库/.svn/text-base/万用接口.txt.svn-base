@@ -1,0 +1,266 @@
+<?php
+// +----------------------------------------------------------------------+
+// |                  PHP version 5.0.4                                   |
+// +----------------------------------------------------------------------+
+// | Copyright (c) 1999, 2000, 2001, 2002, 2003, 2004, 2005 The PHP Group |
+// +----------------------------------------------------------------------+
+// | To change the template for this generated file go to                                  |
+// | Window - Preferences - PHPeclipse - PHP - Code Templates                          |
+// +----------------------------------------------------------------------+
+// | This source file is subject to version 2.0 of the PHP license,       |
+// | that is bundled with this package in the file LICENSE, and is        |
+// | available at through the world-wide-web at                           |
+// | http://www.php.net/license/2_02.txt.                                 |
+// | If you did not receive a copy of the PHP license and are unable to   |
+// | obtain it through the world-wide-web, please send a note to          |
+// | license@php.net so we can mail you a copy immediately.               |
+// +----------------------------------------------------------------------+
+// | Authors: GadflyBSD(Mr.LiuHaiming)                                                  |
+// +----------------------------------------------------------------------+
+//                                                                                Created on 2005-8-13
+
+/**
+* 模块接口
+*/ 
+interface Module{
+        /**
+         * 数据添加,表单提交方法接口
+         */
+        function SubmitAdd();
+        
+        /**
+         * 数据修改,表单提交方法接口
+         */
+        function SubmitEdit();
+        
+        /**
+         * 数据排序,表单提交方法接口
+         */
+        function SubmitTaxis();
+        
+        /**
+         * 数据删除,GET提交方法接口
+         */
+        function SubmitDelete();
+        
+        /**
+         * 批量数据删除，表单提交方法接口
+         */
+        function SubmitDelAll();
+        
+        /**
+         * 数据添加,页面显示方法接口
+         */
+        function ShowAdd();
+        
+        /**
+         * 数据修改,页面显示方法接口
+         */
+        function ShowEdit();
+        
+        /**
+         * 默认页面显示方法接口
+         */
+        function ShowDefault();
+        
+}
+
+/**
+* 自定义异常处理
+*/
+class CustomException extends Exception{};
+
+class ModuleObject{
+        protected $ModuleGroup;
+        protected $ModuleName;
+        protected $Navigation;
+        protected $LinkValue = "?mode=";
+        
+        /**
+         * 获得当前地址及文件属性
+         * @var String 获得当前地址及文件属性
+         */
+        protected $PHP_SELF;
+        
+        /**
+         * 获得$_SESSION数据属性
+         * @var array 获得SESSION数据属性
+         */
+        protected $SESSION;
+        
+        /**
+         * 页面模板对象属性
+         * @var Object 页面模板对象属性
+         */
+        protected $Smarty;
+        
+        /**
+         * 数据库操作对象属性
+         * @var Object 数据库操作对象属性
+         */
+        protected $Adodb;
+        
+        /**
+         * 错误提示属性
+         * @var String 错误提示属性
+         */
+        protected $Error;
+        
+        /**
+         * 获得$_POST数据属性
+         * @var array 获得$_POST数据属性
+         */
+        protected $POST;
+        
+        /**
+         * 页面转向属性
+         * @var String 页面转向属性
+         */
+        protected $Goto;
+        
+        /**
+         * 获得$_GET数据属性
+         * @var array 获得$_GET数据属性
+         */
+        protected $GET;
+        
+        function __construct($args){
+                global $_SESSION,$_SERVER,$_POST,$_GET;
+                $this->ModuleName = $args['Module'];
+                $this->Smarty = $args['Smarty'];
+                $this->Adodb = $args['Adodb'];
+                $this->PHP_SELF = $_SERVER['PHP_SELF'];
+                $this->SESSION = $_SESSION;
+                $this->POST = $_POST;
+                $this->GET = $_GET;
+                $this->ModuleGroup = $this->Adodb->Select(array(        'Table'        => "modules_view",
+                                                                                                                        'Row'                => "group_link",
+                                                                                                                        'Field'        => "Only",
+                                                                                                                        'Where'        => array('link='        => $args['Module'])));
+        }
+        
+        /**
+         * 表单提交添加数据方法，实现接口中数据添加的功能
+         */        
+        function SubmitAdd(){
+                $return = $this->Adodb->Insert(array('Table'        => $this->Table));
+                if ($return) return true;
+                else throw new CustomException("数据库操作错误,请与管理员联系!");
+        }
+        
+        /**
+         * 表单提交数据修改方法，实现接口中数据修改的功能
+         */
+        function SubmitEdit(){
+                $return = $this->Adodb->Update(array(        'Table'        => $this->Table, 
+                                                                                                'Where' => array('id=' => $this->POST['id'])));
+                if ($return) return true;
+                else throw new CustomException("您提交的内容什么都没有改变!");
+        }
+        
+        /**
+         * 表单提交删除数据方法，实现接口中删除数据的功能
+         */
+        function SubmitDelete(){
+                $return = $this->Adodb->Delete(array(        'Table'        => $this->Table, 
+                                                                                                'Where' => array('id=' => $this->POST['id'])));
+                if ($return) return true;
+                else throw new CustomException("数据库操作错误,请与管理员联系!");
+        }
+        
+        /**
+         * 表单提交批量删除方法，现实接口中批量删除功能
+         */
+        function SubmitDelAll(){
+                $return = $this->Adodb->Delete(array(        'Table'        => $this->Table, 
+                                                                                                'Where' => array('id' => $this->POST['IsDel'])));
+                if ($return) return true;
+                else throw new CustomException("数据库操作错误,请与管理员联系!");
+        }
+        
+        /**
+         * 表单提交排序方法，实现接口中的排序功能
+         */
+        function SubmitTaxis(){
+                $return = $this->Adodb->Taxis(array('Table'        => $this->Table));
+                if (in_array(true, $return)) return true;
+                else throw new CustomException("您提交的内容什么都没有改变!");
+        }
+        
+        /**
+         * 动作控制流程方法
+         */        
+        function Action(){
+                $func = "Show".$this->POST['action'];
+                try{
+                        if(in_array($this->ModuleGroup, $this->SESSION['GroupList']) OR $this->SESSION['UserGroup'] == "Demo"){
+                                if(!empty($this->POST['Submit']))
+                                        $this->FormSubmit();
+                                else
+                                        $this->ReturnPage($func);
+                        }else{
+                                throw new CustomException("您没有权限操作该模块！");
+                                $this->Goto = "";
+                        }
+                }catch(CustomException $ex){
+                        $this->Smarty->alert($ex->getMessage());
+                        $this->Smarty->assign($this->ModuleName, $this->POST);
+                        $this->POST['Submit'] = null;
+                        $this->ReturnPage($func);
+                }catch(Exception $e){
+                        error_log($e->getMessage());
+                        $this->Smarty->assign($this->ModuleName, $this->POST);
+                        $this->ReturnPage($func);
+                }
+        }
+        
+        protected function ReturnPage($func){
+                if(method_exists($this, $func)) $this->$func();
+                else $this->ShowDefault();
+        }
+        
+        protected function FormSubmit(){
+                if($this->SESSION['UserGroup'] != "Demo"){
+                        $func = "Submit".$this->POST['action'];
+                        if(method_exists($this, $func)){
+                                $this->$func();
+                                $func = (is_null($this->Goto))?"Show".$this->POST['action']:$this->Goto;
+                                if(method_exists($this, $func)) $this->$func();
+                                elseif($this->Goto == "?mode=Logout") header("location: ".$this->PHP_SELF.$this->Goto);
+                                else $this->ShowDefault();
+                        }else{
+                                throw new CustomException("该模块不支持此方法!");
+                        }
+                }else{
+                        throw new CustomException("演示用户不能够操作数据！");
+                }
+        }
+        
+        /**
+         * 导航条数据生成方法
+         */
+        function GetNavigation(){
+                $Feild = $this->Adodb->Select(array(        'Table'        => "bom_part('modules_view',0)",
+                                                                                                'Row'        => "names",
+                                                                                                'Where'        => array('link=' => $this->ModuleName),
+                                                                                                'Field' => "Only"));
+                return array_merge(array($Feild => $this->LinkValue.$this->ModuleName), $this->Navigation);
+        }
+        
+        /**
+         * 数据列表显示页面，默认数据处理方法
+         */
+        protected function DefaultInfo($args){
+                $this->Navigation = array($args['Title'] => null);
+                if(!is_null($args['Page']))
+                        $Record = $this->Adodb->PageList(array_merge(array('Table'        => $this->Table),$args));
+                else
+                        $Record = $this->Adodb->Select(array_merge(array('Table'        => $this->Table),$args));
+                $Record = (is_array($Record))?$Record:array();
+                if($args['Field'] == "Only" OR !is_null($args['Page']))
+                        $this->Smarty->assign($this->ModuleName , array_merge($Record, array('Title' => $args['Title'])));
+                else
+                        $this->Smarty->assign($this->ModuleName , array('Title' => $args['Title'], 'Record' => $Record));
+        }
+}
+?>

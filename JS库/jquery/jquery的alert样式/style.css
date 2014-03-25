@@ -1,0 +1,77 @@
+#popup_container {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	min-width: 300px; /* Dialog will be no smaller than this */
+	max-width: 600px; /* Dialog will wrap after this width */
+	background: #FFF;
+	border: solid 5px #999;
+	color: #000;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#popup_title {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1.75em;
+	color: #666;
+	background: #CCC url(http://abeautifulsite.net/notebook_files/87/images/title.gif) top repeat-x;
+	border: solid 1px #FFF;
+	border-bottom: solid 1px #999;
+	cursor: default;
+	padding: 0em;
+	margin: 0em;
+}
+
+#popup_content {
+	background: 16px 16px no-repeat url(http://abeautifulsite.net/notebook_files/87/images/info.gif);
+	padding: 1em 1.75em;
+	margin: 0em;
+}
+
+
+#popup_message {
+	padding-left: 48px;
+}
+
+#popup_panel {
+	text-align: center;
+	margin: 1em 0em 0em 1em;
+}
+
+
+
+
+
+
+#popup_container.style_1 {
+	font-family: Georgia, serif;
+	color: #A4C6E2;
+	background: #005294;
+	border-color: #113F66;
+}
+
+#popup_container.style_1 #popup_title {
+	color: #FFF;
+	font-weight: normal;
+	text-align: left;
+	background: #76A5CC;
+	border: solid 1px #005294;
+	padding-left: 1em;
+}
+
+#popup_container.style_1 #popup_content {
+	background: none;
+}
+
+#popup_container.style_1 #popup_message {
+	padding-left: 0em;
+}
+
+#popup_container.style_1 INPUT[type='button'] {
+	border: outset 2px #76A5CC;
+	color: #A4C6E2;
+	background: #3778AE;
+}

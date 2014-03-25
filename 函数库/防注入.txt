@@ -1,0 +1,33 @@
+$search_arr = array("/ union /i","/ select /i","/ update /i","/ outfile /i","/ or /i");
+/**
+("/ union /i")  这个是正则的写法？不懂正则的自己百度找教程来学。 这里不详细说了
+*/
+$replace_arr = array(' union ',' select ',' update ',' outfile ',' or ');
+/**
+看这个意思很明了。 union ：连接两条SQL语句。 outfile : 主要用来导出数据库资料到其他介质上。
+干啥字要定义这两个变量呢？ 在 global.func.php 文件(前面已经加载)里面有个函数 strip_sql() 各位可以看下。 
+function strip_sql($string)
+{
+global $search_arr,$replace_arr;
+return is_array($string) ? array_map('strip_sql', $string) : preg_replace($search_arr, $replace_arr, $string);
+}
+函数里面定义了这两个变量为 global全局变量。 那么函数里就可以直接使用了。  先讲解下这个函数吧。 顾名思义这个函数是过滤字符窜里面的SQL语句使得关键的SQL语句单词失效。
+主要过滤那些SQL语句呢。 主要是这几个关键字: union  select  update outfile  or 等。因为这几个SQL字是极度容易在$_GET传输中给截注.
+这个函数写得实在精妙。  is_array 来判断 $string 是否为数组。如果 是  就 array_map() 函数来递归过滤 $string数组里面的每一个单元. 每个单元是一个字符窜吧？
+当递归调用 strip_sql() 以后 is_array()判断 $string 肯定为假了，因为$string已经不是数组而是字符窜。所以 执行 preg_replace()函数。这个函数很好理解了。就是替换了。
+*/
+$_POST = strip_sql($_POST);
+$_GET = strip_sql($_GET);
+$_COOKIE = strip_sql($_COOKIE);
+/**
+使用strip_sql()函数来过滤 $_POST  $_GET   $_COOKIE;
+一般不是开源的站。很少过SQL关键字过滤。不过这个也是冒很大风险的。
+*/
+unset($search_arr, $replace_arr);
+/**
+unset 使用过但以后不需要的变量。这个是很好的习惯。第一不会浪费内存。如果变量存了大量的数据字节，而后你的程序是一直不需要用的。那么
+就会很浪费内存。拉底程序性能 . 哈哈。真很书面。反正是好习惯我们都要学习的拉。
+
+
+
+http://bbs.phpchina.com/thread-47107-1-1.html

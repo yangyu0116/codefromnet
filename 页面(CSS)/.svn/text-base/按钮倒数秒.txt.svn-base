@@ -1,0 +1,35 @@
+<html> 
+<head> 
+<title></title> 
+<SCRIPT language=javascript> 
+<!-- 
+var secs = 10; 
+document.form1.mybutton.value = "请稍等 (" + secs +" 秒后继续)"; 
+
+function update(num) { 
+if(num == secs) { 
+document.form1.mybutton.value =" 我 同 意 "; 
+document.form1.mybutton.disabled=false; 
+} 
+else { 
+printnr = secs-num; 
+document.form1.mybutton.value = "请稍等 (" + printnr +" 秒后继续)"; 
+} 
+} 
+
+function Go() 
+{ 
+document.form1.mybutton.disabled=true; 
+for(i=1;i<=secs;i++) { 
+window.setTimeout("update(" + i + ")", i * 1000); 
+} 
+} 
+--> 
+</SCRIPT> 
+</head> 
+<body onload="Go()"> 
+<form name="form1"> 
+<input type="button" name="mybutton" value="请稍等 (10秒后继续)"> 
+</form> 
+</body> 
+</html>

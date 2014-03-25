@@ -1,0 +1,26 @@
+<?php
+function gotourl($message='',$url='',$title='')
+{
+
+    $html  ="<html><head>";
+    if(!empty($url))
+     $html .="<meta http-equiv='refresh' content=\"3;url='".$url."'\">";
+    $html .="<link href='../templates/style.css' type=text/css rel=stylesheet>";
+    $html .="</head><body><br><br><br><br>";
+    $html .="<table cellspacing='0' cellpadding='0' border='1' width='450' align='center'>";
+$html .="<tr><td bgcolor='#ffffff'>";
+$html .="<table border='1' cellspacing='1' cellpadding='4' width='100%'>";
+$html .="<tr class='m_title'>";
+$html .="<td>".$title."</td></tr>";
+$html .="<tr class='line_1'><td align='center' height='60'>";
+$html .="<br>".$message."<br><br>";
+    if (!empty($url))
+     $html .="系统将在3秒后返回<br>如果您的浏览器不能自动返回,请点击[<a href=".$url." target=_self>这里</a>]进入";
+    else
+     $html .="[<a href='#' onclick='history.go(-1)'>返回</a>]";
+    $html .="</td></tr></table></td></tr></table>";
+$html .="</body></html>";
+echo $html;
+exit;
+}
+?>

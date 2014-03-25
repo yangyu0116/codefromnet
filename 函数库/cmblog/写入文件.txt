@@ -1,0 +1,10 @@
+function writeover($filename,$data,$method="rb+",$iflock=1,$check=1,$chmod=1){
+	$check && strpos($filename,'..')!==false && exit('Forbidden');
+	touch($filename);
+	$handle = fopen($filename,$method);
+	$iflock && flock($handle,LOCK_EX);
+	fwrite($handle,$data);
+	$method=="rb+" && ftruncate($handle,strlen($data));
+	fclose($handle);
+	$chmod && @chmod($filename,0777);
+}

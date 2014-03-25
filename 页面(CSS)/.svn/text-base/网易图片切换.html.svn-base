@@ -1,0 +1,163 @@
+<title>伊战六周年之后的巴格达_图片中心</title>
+<link href="http://cimg2.163.com/cnews/css07/style.css" rel="stylesheet" type="text/css" />
+<link href="http://img1.cache.netease.com/cnews/img/meiguojx1006/index.css" rel="stylesheet" type="text/css" />
+<link href="http://cimg2.163.com/cnews/css07/comment.css" rel="stylesheet" type="text/css" />
+<link href="http://img1.cache.netease.com/cnews/mb07/images/subject.css" rel="stylesheet" type="text/css" />
+
+<!-- 导航 -->
+<div style="background:#ffffff;">
+  <div class="content">
+<table width="960" align="center">
+  <tr>
+    <td>
+	<script language="JavaScript" type="text/javascript">
+var len=13;   //总共显示多少条;
+function setFocus(id){
+	selectLayer(id,len);
+}
+function selectLayer(id,len){
+ for(var i = 1;i<=len;i++){
+  var ss="idNum"+i;
+  var snav ="idNumnav"+i;
+  if(i==id){
+	  try{document.getElementById(ss).style.display="block"}catch(e){};
+	  try{document.getElementById(snav).className="active"}catch(e){};
+	  }else{
+	  try{document.getElementById(ss).style.display="none"}catch(e){};
+	  try{document.getElementById(snav).className=""}catch(e){};
+  }
+ }  
+}
+    </script>
+      <div class="focusPic">
+	  <div id="idNum1"  style="display:block;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46LAQ00AO0001.jpg"   onclick="javascript:setFocus(2);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum2"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46KR600AO0001.jpg"   onclick="javascript:setFocus(3);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum3"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46KAN00AO0001.jpg"   onclick="javascript:setFocus(4);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum4"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46JOP00AO0001.jpg"   onclick="javascript:setFocus(5);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum5"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46J6A00AO0001.jpg"   onclick="javascript:setFocus(6);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum6"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46IKH00AO0001.jpg"   onclick="javascript:setFocus(7);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum7"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46I3K00AO0001.jpg"   onclick="javascript:setFocus(8);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum8"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46HJV00AO0001.jpg"   onclick="javascript:setFocus(9);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum9"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46H2000AO0001.jpg"   onclick="javascript:setFocus(10);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum10"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46GIL00AO0001.jpg"   onclick="javascript:setFocus(11);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum11"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46G3O00AO0001.jpg"   onclick="javascript:setFocus(12);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum12"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46FK900AO0001.jpg"   onclick="javascript:setFocus(13);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+	  <div id="idNum13"  style="display:none;" >
+          <div class="pic"><img src="http://img2.cache.netease.com/photo/0001/2009-03-20/54S46F4U00AO0001.jpg"   onclick="javascript:setFocus(1);"  alt="点击图片查看下页" border="0" /></div>
+          <div class="text">
+            <div class="f14px">
+              <p style="padding-left:45px"></p>
+            </div>
+	    </div>
+	  </div>
+		  <div class="text">
+            <div class="num">
+              <ul>
+                <li id="idNumnav1"  class="active" ><a href="javascript:setFocus(1);" target="_self">1</a></li>
+                <li id="idNumnav2" ><a href="javascript:setFocus(2);" target="_self">2</a></li>
+                <li id="idNumnav3" ><a href="javascript:setFocus(3);" target="_self">3</a></li>
+                <li id="idNumnav4" ><a href="javascript:setFocus(4);" target="_self">4</a></li>
+                <li id="idNumnav5" ><a href="javascript:setFocus(5);" target="_self">5</a></li>
+                <li id="idNumnav6" ><a href="javascript:setFocus(6);" target="_self">6</a></li>
+                <li id="idNumnav7" ><a href="javascript:setFocus(7);" target="_self">7</a></li>
+                <li id="idNumnav8" ><a href="javascript:setFocus(8);" target="_self">8</a></li>
+                <li id="idNumnav9" ><a href="javascript:setFocus(9);" target="_self">9</a></li>
+                <li id="idNumnav10" ><a href="javascript:setFocus(10);" target="_self">10</a></li>
+                <li id="idNumnav11" ><a href="javascript:setFocus(11);" target="_self">11</a></li>
+                <li id="idNumnav12" ><a href="javascript:setFocus(12);" target="_self">12</a></li>
+                <li id="idNumnav13" ><a href="javascript:setFocus(13);" target="_self">13</a></li>
+              </ul>
+          </div>
+		  </div>
+    </div>
+       
+    </td>
+  </tr>
+</table>
+  
+</div>
+</div>

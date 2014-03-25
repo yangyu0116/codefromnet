@@ -1,0 +1,715 @@
+
+9 字符串搜索 
+
+1: <script language=”JavaScript”> 
+2: <!-- 
+3: var myVariable = “Hello there”; 
+4: var therePlace = myVariable.search(“there”); 
+5: document.write(therePlace); 
+6: // --> 
+7: </script> 
+
+
+
+10 字符串替换 
+
+1: thisVar.replace(“Monday”,”Friday”); 
+
+
+11 格式化字串 
+
+1: <script language=”JavaScript”> 
+2: <!-- 
+3: var myVariable = “Hello there”; 
+4: document.write(myVariable.big() + “<br/>”); 
+5: document.write(myVariable.blink() + “<br/>”); 
+6: document.write(myVariable.bold() + “<br/>”); 
+7: document.write(myVariable.fixed() + “<br/>”); 
+8: document.write(myVariable.fontcolor(“red”) + “<br/>”); 
+9: document.write(myVariable.fontsize(“18pt”) + “<br/>”); 
+10: document.write(myVariable.italics() + “<br/>”); 
+11: document.write(myVariable.small() + “<br/>”); 
+12: document.write(myVariable.strike() + “<br/>”); 
+13: document.write(myVariable.sub() + “<br/>”); 
+14: document.write(myVariable.sup() + “<br/>”); 
+15: document.write(myVariable.toLowerCase() + “<br/>”); 
+16: document.write(myVariable.toUpperCase() + “<br/>”); 
+17: 
+18: var firstString = “My String”; 
+19: var finalString = firstString.bold().toLowerCase().fontcolor(“red”); 
+20: // --> 
+21: </script> 
+
+
+
+12 创建数组 
+
+1: <script language=”JavaScript”> 
+2: <!-- 
+3: var myArray = new Array(5); 
+4: myArray[0] = “First Entry”; 
+5: myArray[1] = “Second Entry”; 
+6: myArray[2] = “Third Entry”; 
+7: myArray[3] = “Fourth Entry”; 
+8: myArray[4] = “Fifth Entry”; 
+9: var anotherArray = new Array(“First Entry”,”Second Entry”,”Third Entry”,”Fourth Entry”,”Fifth Entry”); 
+10: // --> 
+11: </script> 
+
+
+
+13 数组排序 
+
+1: <script language=”JavaScript”> 
+2: <!-- 
+3: var myArray = new Array(5); 
+4: myArray[0] = “z”; 
+5: myArray[1] = “c”; 
+6: myArray[2] = “d”; 
+7: myArray[3] = “a”; 
+8: myArray[4] = “q”; 
+9: document.write(myArray.sort()); 
+10: // --> 
+11: </script> 
+
+
+
+14 分割字符串 
+
+1: <script language=”JavaScript”> 
+2: <!-- 
+3: var myVariable = “a,b,c,d”; 
+4: var stringArray = myVariable.split(“,”); 
+5: document.write(stringArray[0]); 
+6: document.write(stringArray[1]); 
+7: document.write(stringArray[2]); 
+8: document.write(stringArray[3]); 
+9: // --> 
+10: </script> 
+
+
+
+15 弹出警告信息 
+
+1: <script language=”JavaScript”> 
+2: <!-- 
+3: window.alert(“Hello”); 
+4: // --> 
+5: </script> 
+
+
+
+16 弹出确认框 
+
+1: <script language=”JavaScript”> 
+2: <!-- 
+3: var result = window.confirm(“Click OK to continue”); 
+4: // --> 
+5: </script> 
+
+
+
+17 定义函数 
+
+1: <script language=”JavaScript”> 
+2: <!-- 
+3: function multiple(number1,number2) { 
+4: var result = number1 * number2; 
+5: return result; 
+6: } 
+7: // --> 
+8: </script> 
+
+
+
+18 调用JS函数 
+
+1: <a href=”#” onClick=”functionName()”>Link text</a> 
+2: <a href="/”javascript:functionName"()”>Link text</a> 
+
+
+
+19 在页面加载完成后执行函数 
+
+1: <body onLoad=”functionName();”> 
+2: Body of the page 
+3: </body> 
+
+
+20 条件判断 
+
+1: <script> 
+2: <!-- 
+3: var userChoice = window.confirm(“Choose OK or Cancel”); 
+4: var result = (userChoice == true) ? “OK” : “Cancel”; 
+5: document.write(result); 
+6: // --> 
+7: </script> 
+21 指定次数循环 
+
+1: <script> 
+2: <!-- 
+3: var myArray = new Array(3); 
+4: myArray[0] = “Item 0”; 
+5: myArray[1] = “Item 1”; 
+6: myArray[2] = “Item 2”; 
+7: for (i = 0; i < myArray.length; i++) { 
+8: document.write(myArray[i] + “<br/>”); 
+9: } 
+10: // --> 
+11: </script> 
+
+
+
+22 设定将来执行 
+
+1: <script> 
+2: <!-- 
+3: function hello() { 
+4: window.alert(“Hello”); 
+5: } 
+6: window.setTimeout(“hello()”,5000); 
+7: // --> 
+8: </script> 
+
+
+
+23 定时执行函数 
+
+1: <script> 
+2: <!-- 
+3: function hello() { 
+4: window.alert(“Hello”); 
+5: window.setTimeout(“hello()”,5000); 
+6: } 
+7: window.setTimeout(“hello()”,5000); 
+8: // --> 
+9: </script> 
+
+
+
+24 取消定时执行 
+
+1: <script> 
+2: <!-- 
+3: function hello() { 
+4: window.alert(“Hello”); 
+5: } 
+6: var myTimeout = window.setTimeout(“hello()”,5000); 
+7: window.clearTimeout(myTimeout); 
+8: // --> 
+9: </script> 
+
+
+
+25 在页面卸载时候执行函数 
+
+1: <body onUnload=”functionName();”> 
+2: Body of the page 
+3: </body> 
+
+JavaScript就这么回事2：浏览器输出 
+
+
+26 访问document对象 
+
+1: <script language=”JavaScript”> 
+2: var myURL = document.URL; 
+3: window.alert(myURL); 
+4: </script> 
+
+
+
+27 动态输出HTML 
+
+1: <script language=”JavaScript”> 
+2: document.write(“<p>Here’s some information about this document:</p>”); 
+3: document.write(“<ul>”); 
+4: document.write(“<li>Referring Document: “ + document.referrer + “</li>”); 
+5: document.write(“<li>Domain: “ + document.domain + “</li>”); 
+6: document.write(“<li>URL: “ + document.URL + “</li>”); 
+7: document.write(“</ul>”); 
+8: </script> 
+
+
+28 输出换行 
+
+1: document.writeln(“<strong>a</strong>”); 
+2: document.writeln(“b”); 
+
+
+
+29 输出日期 
+
+1: <script language=”JavaScript”> 
+2: var thisDate = new Date(); 
+3: document.write(thisDate.toString()); 
+4: </script> 
+
+
+
+30 指定日期的时区 
+
+1: <script language=”JavaScript”> 
+2: var myOffset = -2; 
+3: var currentDate = new Date(); 
+4: var userOffset = currentDate.getTimezoneOffset()/60; 
+5: var timeZoneDifference = userOffset - myOffset; 
+6: currentDate.setHours(currentDate.getHours() + timeZoneDifference); 
+7: document.write(“The time and date in Central Europe is: “ + currentDate.toLocaleString()); 
+8: </script> 
+
+
+31 设置日期输出格式 
+
+1: <script language=”JavaScript”> 
+2: var thisDate = new Date(); 
+3: var thisTimeString = thisDate.getHours() + “:” + thisDate.getMinutes(); 
+4: var thisDateString = thisDate.getFullYear() + “/” + thisDate.getMonth() + “/” + thisDate.getDate(); 
+5: document.write(thisTimeString + “ on “ + thisDateString); 
+6: </script> 
+
+
+32 读取URL参数 
+
+1: <script language=”JavaScript”> 
+2: var urlParts = document.URL.split(“?”); 
+3: var parameterParts = urlParts[1].split(“&”); 
+4: for (i = 0; i < parameterParts.length; i++) { 
+5: var pairParts = parameterParts[i].split(“=”); 
+6: var pairName = pairParts[0]; 
+7: var pairValue = pairParts[1]; 
+8: document.write(pairName + “ ：“ +pairValue ); 
+9: } 
+10: </script> 
+
+你还以为HTML是无状态的么？ 
+
+33 打开一个新的document对象 
+
+1: <script language=”JavaScript”> 
+2: function newDocument() { 
+3: document.open(); 
+4: document.write(“<p>This is a New Document.</p>”); 
+5: document.close(); 
+6: } 
+7: </script> 
+
+
+
+34 页面跳转 
+
+1: <script language=”JavaScript”> 
+2: window.location = “http://www.liu21st.com/”; 
+3: </script> 
+
+
+
+35 添加网页加载进度窗口 
+
+1: <html> 
+2: <head> 
+3: <script language='javaScript'> 
+4: var placeHolder = window.open('holder.html','placeholder','width=200,height=200'); 
+5: </script> 
+6: <title>The Main Page</title> 
+7: </head> 
+8: <body onLoad='placeHolder.close()'> 
+9: <p>This is the main page</p> 
+10: </body> 
+11: </html> 
+36 读取图像属性 
+
+1: <img src="/”image1.jpg"” name=”myImage”> 
+2: <a href=”# ” onClick=”window.alert(document.myImage.width)”>Width</a> 
+3: 
+
+
+37 动态加载图像 
+
+1: <script language=”JavaScript”> 
+2: myImage = new Image; 
+3: myImage.src = “Tellers1.jpg”; 
+4: </script> 
+
+
+38 简单的图像替换 
+
+1: <script language=”JavaScript”> 
+2: rollImage = new Image; 
+3: rollImage.src = “rollImage1.jpg”; 
+4: defaultImage = new Image; 
+5: defaultImage.src = “image1.jpg”; 
+6: </script> 
+7: <a href="/”myUrl"” onMouseOver=”document.myImage.src = rollImage.src;” 
+8: onMouseOut=”document.myImage.src = defaultImage.src;”> 
+9: <img src="/”image1.jpg"” name=”myImage” width=100 height=100 border=0> 
+
+
+39 随机显示图像 
+
+1: <script language=”JavaScript”> 
+2: var imageList = new Array; 
+3: imageList[0] = “image1.jpg”; 
+4: imageList[1] = “image2.jpg”; 
+5: imageList[2] = “image3.jpg”; 
+6: imageList[3] = “image4.jpg”; 
+7: var imageChoice = Math.floor(Math.random() * imageList.length); 
+8: document.write(‘<img src=”’ + imageList[imageChoice] + ‘“>’); 
+9: </script> 
+
+
+40 函数实现的图像替换 
+
+1: <script language=”JavaScript”> 
+2: var source = 0; 
+3: var replacement = 1; 
+4: function createRollOver(originalImage,replacementImage) { 
+5: var imageArray = new Array; 
+6: imageArray[source] = new Image; 
+7: imageArray[source].src = originalImage; 
+8: imageArray[replacement] = new Image; 
+9: imageArray[replacement].src = replacementImage; 
+10: return imageArray; 
+11: } 
+12: var rollImage1 = createRollOver(“image1.jpg”,”rollImage1.jpg”); 
+13: </script> 
+14: <a href=”#” onMouseOver=”document.myImage1.src = rollImage1[replacement].src;” 
+15: onMouseOut=”document.myImage1.src = rollImage1[source].src;”> 
+16: <img src="/”image1.jpg"” width=100 name=”myImage1” border=0> 
+17: </a> 
+
+
+41 创建幻灯片 
+
+1: <script language=”JavaScript”> 
+2: var imageList = new Array; 
+3: imageList[0] = new Image; 
+4: imageList[0].src = “image1.jpg”; 
+5: imageList[1] = new Image; 
+6: imageList[1].src = “image2.jpg”; 
+7: imageList[2] = new Image; 
+8: imageList[2].src = “image3.jpg”; 
+9: imageList[3] = new Image; 
+10: imageList[3].src = “image4.jpg”; 
+11: function slideShow(imageNumber) { 
+12: document.slideShow.src = imageList[imageNumber].src; 
+13: imageNumber += 1; 
+14: if (imageNumber < imageList.length) { 
+15: window.setTimeout(“slideShow(“ + imageNumber + “)”,3000); 
+16: } 
+17: } 
+18: </script> 
+19: </head> 
+20: <body onLoad=”slideShow(0)”> 
+21: <img src="/”image1.jpg"” width=100 name=”slideShow”> 
+
+
+42 随机广告图片 
+
+1: <script language=”JavaScript”> 
+2: var imageList = new Array; 
+3: imageList[0] = “image1.jpg”; 
+4: imageList[1] = “image2.jpg”; 
+5: imageList[2] = “image3.jpg”; 
+6: imageList[3] = “image4.jpg”; 
+7: var urlList = new Array; 
+8: urlList[0] = “http://some.host/”; 
+9: urlList[1] = “http://another.host/”; 
+10: urlList[2] = “http://somewhere.else/”; 
+11: urlList[3] = “http://right.here/”; 
+12: var imageChoice = Math.floor(Math.random() * imageList.length); 
+13: document.write(‘<a href=”’ + urlList[imageChoice] + ‘“><img src=”’ + imageList[imageChoice] + ‘“></a>’); 
+14: </script> 
+
+JavaScript就这么回事4：表单 
+
+
+还是先继续写完JS就这么回事系列吧～ 
+43 表单构成 
+
+1: <form method=”post” action=”target.html” name=”thisForm”> 
+2: <input type=”text” name=”myText”> 
+3: <select name=”mySelect”> 
+4: <option value=”1”>First Choice</option> 
+5: <option value=”2”>Second Choice</option> 
+6: </select> 
+7: <br/> 
+8: <input type=”submit” value=”Submit Me”> 
+9: </form> 
+
+
+44 访问表单中的文本框内容 
+
+1: <form name=”myForm”> 
+2: <input type=”text” name=”myText”> 
+3: </form> 
+4: <a href='#' onClick='window.alert(document.myForm.myText.value);'>Check Text Field</a> 
+
+
+45 动态复制文本框内容 
+
+1: <form name=”myForm”> 
+2: Enter some Text: <input type=”text” name=”myText”><br/> 
+3: Copy Text: <input type=”text” name=”copyText”> 
+4: </form> 
+5: <a href=”#” onClick=”document.myForm.copyText.value = 
+6: document.myForm.myText.value;”>Copy Text Field</a> 
+
+
+46 侦测文本框的变化 
+
+1: <form name=”myForm”> 
+2: Enter some Text: <input type=”text” name=”myText” onChange=”alert(this.value);”> 
+3: </form> 
+
+
+47 访问选中的Select 
+
+1: <form name=”myForm”> 
+2: <select name=”mySelect”> 
+3: <option value=”First Choice”>1</option> 
+4: <option value=”Second Choice”>2</option> 
+5: <option value=”Third Choice”>3</option> 
+6: </select> 
+7: </form> 
+8: <a href='#' onClick='alert(document.myForm.mySelect.value);'>Check Selection List</a> 
+
+
+48 动态增加Select项 
+
+1: <form name=”myForm”> 
+2: <select name=”mySelect”> 
+3: <option value=”First Choice”>1</option> 
+4: <option value=”Second Choice”>2</option> 
+5: </select> 
+6: </form> 
+7: <script language=”JavaScript”> 
+8: document.myForm.mySelect.length++; 
+9: document.myForm.mySelect.options[document.myForm.mySelect.length - 1].text = “3”; 
+10: document.myForm.mySelect.options[document.myForm.mySelect.length - 1].value = “Third Choice”; 
+11: </script> 
+
+
+49 验证表单字段 
+
+1: <script language=”JavaScript”> 
+2: function checkField(field) { 
+3: if (field.value == “”) { 
+4: window.alert(“You must enter a value in the field”); 
+5: field.focus(); 
+6: } 
+7: } 
+8: </script> 
+9: <form name=”myForm” action=”target.html”> 
+10: Text Field: <input type=”text” name=”myField”onBlur=”checkField(this)”> 
+11: <br/><input type=”submit”> 
+12: </form> 
+
+
+50 验证Select项 
+
+1: function checkList(selection) { 
+2: if (selection.length == 0) { 
+3: window.alert(“You must make a selection from the list.”); 
+4: return false; 
+5: } 
+6: return true; 
+7: } 
+51 动态改变表单的action 
+
+1: <form name=”myForm” action=”login.html”> 
+2: Username: <input type=”text” name=”username”><br/> 
+3: Password: <input type=”password” name=”password”><br/> 
+4: <input type=”button” value=”Login” onClick=”this.form.submit();”> 
+5: <input type=”button” value=”Register” onClick=”this.form.action = ‘register.html’; this.form.submit();”> 
+6: <input type=”button” value=”Retrieve Password” onClick=”this.form.action = ‘password.html’; this.form.submit();”> 
+7: </form> 
+
+
+52 使用图像按钮 
+
+1: <form name=”myForm” action=”login.html”> 
+2: Username: <input type=”text” name=”username”><br/> 
+3: Password: <input type=”password”name=”password”><br/> 
+4: <input type=”image” src="/”login.gif"” value=”Login”> 
+5: </form> 
+6: 
+
+
+53 表单数据的加密 
+
+1: <SCRIPT LANGUAGE='JavaScript'> 
+2: <!-- 
+3: function encrypt(item) { 
+4: var newItem = ''; 
+5: for (i=0; i < item.length; i++) { 
+6: newItem += item.charCodeAt(i) + '.'; 
+7: } 
+8: return newItem; 
+9: } 
+10: function encryptForm(myForm) { 
+11: for (i=0; i < myForm.elements.length; i++) { 
+12: myForm.elements[i].value = encrypt(myForm.elements[i].value); 
+13: } 
+14: } 
+15: 
+16: //--> 
+17: </SCRIPT> 
+18: <form name='myForm' onSubmit='encryptForm(this); window.alert(this.myField.value);'> 
+19: Enter Some Text: <input type=text name=myField><input type=submit> 
+20: </form> 
+
+
+
+
+JavaScript就这么回事5：窗口和框架 
+
+
+54 改变浏览器状态栏文字提示 
+
+1: <script language=”JavaScript”> 
+2: window.status = “A new status message”; 
+3: </script> 
+
+
+55 弹出确认提示框 
+
+1: <script language=”JavaScript”> 
+2: var userChoice = window.confirm(“Click OK or Cancel”); 
+3: if (userChoice) { 
+4: document.write(“You chose OK”); 
+5: } else { 
+6: document.write(“You chose Cancel”); 
+7: } 
+8: </script> 
+
+
+56 提示输入 
+
+1: <script language=”JavaScript”> 
+2: var userName = window.prompt(“Please Enter Your Name”,”Enter Your Name Here”); 
+3: document.write(“Your Name is “ + userName); 
+4: </script> 
+
+
+57 打开一个新窗口 
+
+1: //打开一个名称为myNewWindow的浏览器新窗口 
+2: <script language=”JavaScript”> 
+3: window.open(“http://www.liu21st.com/”,”myNewWindow”); 
+4: </script> 
+
+
+58 设置新窗口的大小 
+
+1: <script language=”JavaScript”> 
+2: window.open(“http://www.liu21st.com/”,”myNewWindow”,'height=300,width=300'); 
+3: </script> 
+
+
+59 设置新窗口的位置 
+
+1: <script language=”JavaScript”> 
+2: window.open(“http://www.liu21st.com/”,”myNewWindow”,'height=300,width=300,left=200,screenX=200,top=100,screenY=100'); 
+3: </script> 
+
+
+60 是否显示工具栏和滚动栏 
+
+1: <script language=”JavaScript”> 
+2: window.open(“http: 
+
+
+61 是否可以缩放新窗口的大小 
+
+1: <script language=”JavaScript”> 
+2: window.open('http://www.liu21st.com/' , 'myNewWindow', 'resizable=yes' );</script> 
+
+
+62 加载一个新的文档到当前窗口 
+
+1: <a href='#' onClick='document.location = '125a.html';' >Open New Document</a> 
+
+
+63 设置页面的滚动位置 
+
+1: <script language=”JavaScript”> 
+2: if (document.all) { //如果是IE浏览器则使用scrollTop属性 
+3: document.body.scrollTop = 200; 
+4: } else { //如果是NetScape浏览器则使用pageYOffset属性 
+5: window.pageYOffset = 200; 
+6: }</script> 
+
+
+64 在IE中打开全屏窗口 
+
+1: <a href='#' onClick=”window.open('http://www.juxta.com/','newWindow','fullScreen=yes');”>Open a full-screen window</a> 
+
+
+65 新窗口和父窗口的操作 
+
+1: <script language=”JavaScript”> 
+2: //定义新窗口 
+3: var newWindow = window.open(“128a.html”,”newWindow”); 
+4: newWindow.close(); //在父窗口中关闭打开的新窗口 
+5: </script> 
+6: 在新窗口中关闭父窗口 
+7: window.opener.close() 
+
+
+66 往新窗口中写内容 
+
+1: <script language=”JavaScript”> 
+2: var newWindow = window.open(“”,”newWindow”); 
+3: newWindow.document.open(); 
+4: newWindow.document.write(“This is a new window”); 
+5: newWIndow.document.close(); 
+6: </script> 
+
+
+67 加载页面到框架页面 
+
+1: <frameset cols=”50%,*”> 
+2: <frame name=”frame1” src="/”135a.html"”> 
+3: <frame name=”frame2” src="/”about:blank"”> 
+4: </frameset> 
+5: 在frame1中加载frame2中的页面 
+6: parent.frame2.document.location = “135b.html”; 
+
+
+68 在框架页面之间共享脚本 
+如果在frame1中html文件中有个脚本 
+
+1: function doAlert() { 
+2: window.alert(“Frame 1 is loaded”); 
+3: } 
+
+那么在frame2中可以如此调用该方法 
+
+1: <body onLoad=”parent.frame1.doAlert();”> 
+2: This is frame 2. 
+3: </body> 
+
+
+69 数据公用 
+可以在框架页面定义数据项，使得该数据可以被多个框架中的页面公用 
+
+1: <script language=”JavaScript”> 
+2: var persistentVariable = “This is a persistent value”; 
+3: </script> 
+4: <frameset cols=”50%,*”> 
+5: <frame name=”frame1” src="/”138a.html"”> 
+6: <frame name=”frame2” src="/”138b.html"”> 
+7: </frameset> 
+
+
+这样在frame1和frame2中都可以使用变量persistentVariable 
+70 框架代码库 
+根据以上的一些思路，我们可以使用一个隐藏的框架页面来作为整个框架集的代码库 
+
+1: <frameset cols=”0,50%,*”> 
+2: <frame name=”codeFrame” src="/”140code.html"”> 
+3: <frame name=”frame1” src="/”140a.html"”> 
+4: <frame name=”frame2” src="/”140b.html"”> 
+5: </frameset>

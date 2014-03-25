@@ -1,0 +1,62 @@
+这个程序是直接验证邮箱是否真实有效的函数，checkmail是主函数，使用时请直接使用即可，注意：因使用了DNS函数，该程序不能运行在Windows系统之下，使用Linux和FreeBSD都测试通过。
+
+<?
+set_time_limit(0);
+if($_POST["mail"]!=""){
+    echo "电子邮件地址：".$_POST["mail"];
+    if( checkmail($_POST["mail"]))
+        echo " — <font color=green>有效</font>";
+    else 
+        echo " — <font color=red>无效</font>";
+}
+?>
+
+<form method=post action="">
+<input type=text name=mail ><input type="submit" value="检查">
+</form>
+
+<?
+
+function server_parse($socket, $response, $line = __LINE__){ 
+    while (substr($server_response, 3, 1) != ' '){
+        if (!($server_response = fgets($socket, 512))){ 
+            return false;
+        } 
+    } 
+    if (!(substr($server_response, 0, 3) == $response)){ 
+        return false;
+    } 
+    return true;
+}
+
+function checkmail($strMail){
+    $arrMail=explode("@",$strMail);
+    if(! getmxrr ( $arrMail[1], $mxhosts ,$bb))return -1;
+    if($mxhosts[0]=="")return -1;//不能获得主机的MX信息
+    $cc=false;
+    for($i=0;$i<count($mxhosts);$i++){
+        echo $mxhosts[$i]." ";
+        if( $socket = @fsockopen($mxhosts[$i], 25, $errno, $errstr, 5) ){
+            if(server_parse($socket, "220", __LINE__)){
+                $cc=true;
+                break;
+            }
+        }
+    }
+    if($cc==false)return -2;//不能打开主机
+    fputs($socket, "HELO ".$arrMail[1]." ");
+    if(!server_parse($socket, "250", __LINE__))return -3;
+
+    srand((double)microtime()*1000000);
+    $randval = substr(md5(uniqid(rand())),0,6);
+    fputs($socket, "MAIL FROM:<$randval@testemail.com> ");
+    //使用是请将testemail.com改成你网站的域名
+    if(!server_parse($socket, "250", __LINE__))return -4;
+
+    fputs($socket, "RCPT TO:<$strMail> ");
+    if(!server_parse($socket, "250", __LINE__))return -5;//无效的用户名
+
+    fclose($socket);
+    return true; 
+}
+?>

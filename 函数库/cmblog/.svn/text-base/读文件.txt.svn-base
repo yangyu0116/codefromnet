@@ -1,0 +1,12 @@
+function readover($filename,$method='rb',$readsize='D'){
+	strpos($filename,'..')!==false && exit('Forbidden');
+	$filesize = @filesize($filename);
+	$readsize!='D' && $filesize = min($filesize,$readsize);
+	$filedata = '';
+	if ($handle = @fopen($filename,$method)) {
+		flock($handle,LOCK_SH);
+		$filedata = @fread($handle,$filesize);
+		fclose($handle);
+	}
+	return $filedata;
+}

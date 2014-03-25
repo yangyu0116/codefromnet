@@ -1,0 +1,113 @@
+<HTML><HEAD><TITLE>创软支付宝付款PHP版</TITLE><LINK href="Admin_Style.css" rel=stylesheet>
+<script language="JavaScript">
+function CheckForm()
+{
+	if (document.alipayment.aliorder.value.length == 0) {
+		alert("请输入商品订单号码.");
+		document.alipayment.aliorder.focus();
+		return false;
+	}
+
+	if (document.alipayment.aliname.value.length == 0) {
+		alert("请输入收货人的姓名.");
+		document.alipayment.aliname.focus();
+		return false;
+	}
+	
+		if (document.alipayment.alimoney.value.length == 0) {
+		alert("请输入付款金额.");
+		document.alipayment.alimoney.focus();
+		return false;
+	}
+
+	if (document.alipayment.aliaddress.value.length == 0) {
+		alert("请输入收货人的 地址.");
+		document.alipayment.aliaddress.focus();
+		return false;
+	}
+
+    if (document.alipayment.alimailtype.value.length == 0) {
+		alert("请选择物流方式.");
+		document.alipayment.alimailtype.focus();
+		return false;
+	}
+
+	if (document.alipayment.aliPhone.value.length == 0) {
+		alert("请收货人的电话.");
+		document.alipayment.aliPhone.focus();
+		return false;
+	}
+
+	if (document.alipayment.aliZipCode.value.length == 0) {
+		alert("请输入邮政编码.");
+		document.alipayment.aliZipCode.focus();
+		return false;
+	}
+
+	return true;
+}
+
+</script>
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+</HEAD>
+<BODY>
+<TABLE class=border id=table1 style="FONT-SIZE: 9pt" height=185 cellSpacing=0 
+cellPadding=0 width=492 align=center border=0>
+  <TBODY>
+  <TR>
+    <TD class=topbg height=30>
+      <DIV align=center><STRONG>支付宝付款PHP版</STRONG></DIV></TD></TR>
+  <TR>
+    <TD style="BORDER-LEFT: #e4e4e4 1px solid; BORDER-BOTTOM: #e4e4e4 1px solid" colSpan=3 height=150>
+      <TABLE style="FONT-SIZE: 9pt" height=137 width="100%" align=center bgColor=#ffffff>
+        <form name="alipayment" action="pay.php" method="POST"  onSubmit="return CheckForm();"><TBODY>
+        <TR class=tdbg>
+          <TD width="14%">订单号码：</TD>
+          <TD width="86%"><input type="text" name="aliorder"  size="20">（必填）</TD></TR>
+        <TR class=tdbg>
+          <TD width="14%">收 货 人：</TD>
+          <TD width="86%"><input type="text" name="aliname" class="form" size="20">（必填）</TD></TR>
+        <TR class=tdbg>
+          <TD width="14%">付款金额：</TD>
+          <TD width="86%"><input onkeypress="return regInput(this,/^\d*\.?\d{0,2}$/,String.fromCharCode(event.keyCode))" onpaste="return regInput(this,/^\d*\.?\d{0,2}$/,window.clipboardData.getData('Text'))" ondrop="return regInput(this,/^\d*\.?\d{0,2}$/,&#9;event.dataTransfer.getData('Text'))" maxLength=10 size=20 name=alimoney class="form"> 元（必填，格式：888.88）</TD></TR> 
+        <TR class=tdbg> 
+          <TD width="14%">收货地址：</TD> 
+          <TD width="86%"><input name="aliaddress" size="45">（必填）</TD></TR> 
+        <TR class=tdbg> 
+          <TD>物流方式：</TD>  
+          <TD><select name="alimailtype"> 
+<option value="" selected>请选择物流方式</option> 
+<option value="1">平邮</option> 
+<option value="2">快递</option> 
+<option value="3">虚拟物品</option> 
+</select>（必填）</TD></TR> 
+        <TR class=tdbg>   
+          <TD>联系电话：</TD> 
+          <TD><input type="text" name="aliPhone" class="form" size="20">（必填）</TD></TR> 
+        <TR class=tdbg> 
+          <TD>邮政编码：</TD> 
+          <TD><input type="text" name="aliZipCode" size="20">（必填）</TD></TR> 
+        <TR class=tdbg> 
+          <TD>手机号码：</TD> 
+          <TD><input type="text" name="alimob" size="20">（11位手机号码）</TD></TR> 
+          <TR class="tdbg">
+          <TD>客户留言:</TD>
+          <TD><textarea name="alibody" cols="40"></textarea><br>（如QQ、MSN、信箱等联系方式；50汉字以内）</TD></TR>
+        <TR class=tdbg> 
+          <TD></TD> 
+          <TD><input type="submit" name="nextstep" value="确认订单 >>">&nbsp;&nbsp;&nbsp; <input type="reset" name="reset" value="重新填写信息"></TD></TR></FORM></TBODY></TABLE></TD></TR></TBODY></TABLE> 
+<SCRIPT>
+	function regInput(obj, reg, inputStr)
+	{
+		var docSel	= document.selection.createRange()
+		if (docSel.parentElement().tagName != "INPUT")	return false
+		oSel = docSel.duplicate()
+		oSel.text = ""
+		var srcRange	= obj.createTextRange()
+		oSel.setEndPoint("StartToStart", srcRange)
+		var str = oSel.text + inputStr + srcRange.text.substr(oSel.text.length)
+		return reg.test(str)
+	}
+</SCRIPT>
+</BODY></HTML>

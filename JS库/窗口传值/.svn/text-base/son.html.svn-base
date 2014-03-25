@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> New Document </TITLE>
+</HEAD>
+<BODY>
+ <form name="son" id="son">
+  <p align="center">
+   <font color="red" size="3">子窗体</font>
+   <br/><table>
+   <tr><td>UserName:</td><td><input type="text" name="UserName" id="UserName"/></td></tr>
+   <tr><td>Email:</td><td><input type="text" name="Email" id="Email"/></td></tr>
+   <tr><td>Address:</td><td><input type="text" name="Address" id="Address"/></td></tr>
+   <tr><td>Type:</td><td><select name="Type" id="Type"> 
+<option value="下拉1" selected>下拉1</option> 
+<option value="下拉2">下拉2</option> 
+<option value="下拉3">下拉3</option> 
+</select></td></tr>
+   </table>
+  <br/>
+  <div align="center">
+   <input type="button" value="OK" onclick="pass();"/><br/>
+  </div>
+ </form>
+</BODY>
+</HTML>
+<script language="javascript">
+ function pass(){
+  var strValue = new Array(document.getElementById("UserName").value,document.getElementById("Email").value,document.getElementById("Address").value,document.getElementById("Type").value);
+  opener.setValue(strValue);
+  //window.opener=null;
+  window.close();
+ }
+</script>

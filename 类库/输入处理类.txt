@@ -1,0 +1,133 @@
+<?
+class Input {
+    function clean_value($val)
+    {
+        //$val=trim($val);
+        if ($val == "")
+        {
+            return "";
+        }
+        if(!Get_Magic_Quotes_GPC())
+        {
+            $val = addslashes($val);  
+        }
+        // Swop PHP added backslashes
+        
+        //$val=chop($val);
+        return $val;
+    }
+    function clean_key($key) {
+    
+        if ($key == "")
+        {
+            return "";
+        }
+        $key = preg_replace( "/../"           , ""  , $key );
+        $key = preg_replace( "/__(.+?)__/"  , ""  , $key );
+        $key = preg_replace( "/^([w.-_]+)$/", "$1", $key );
+        
+        return $key;
+    }
+    function select_var($array) {
+        
+        if ( !is_array($array) ) return -1;
+        
+        ksort($array);
+        
+        
+        $chosen = -1;  // Ensure that we return zero if nothing else is available
+        
+        foreach ($array as $k => $v)
+        {
+            if (isset($v))
+            {
+                $chosen = $v;
+                break;
+            }
+        }
+        
+        return $chosen;
+    }
+  function parse_incoming()
+    {
+        global $HTTP_X_FORWARDED_FOR, $HTTP_PROXY_USER, $HTTP_CLIENT_IP;
+        
+        $this->get_magic_quotes = get_magic_quotes_gpc();
+        
+        $return = array();
+        
+        if( is_array($_GET) )
+        {
+            while( list($k, $v) = each($_GET) )
+            {
+                if ( is_array($_GET[$k]) )
+                {
+                    while( list($k2, $v2) = each($_GET[$k]) )
+                    {
+                        $return[ $this->clean_key($k) ][ $this->clean_key($k2) ] = $this->clean_value($v2);
+                    }
+                }
+                else
+                {
+                    $return[ $this->clean_key($k) ] = $this->clean_value($v);
+                }
+            }
+        }
+        
+        //----------------------------------------
+        // Overwrite GET data with post data
+        //----------------------------------------
+        
+        if( is_array($_POST) )
+        {
+            while( list($k, $v) = each($_POST) )
+            {
+                if ( is_array($_POST[$k]) )
+                {
+                    while( list($k2, $v2) = each($_POST[$k]) )
+                    {
+                        $return[ $this->clean_key($k) ][ $this->clean_key($k2) ] = $this->clean_value($v2);
+                    }
+                }
+                else
+                {
+                    $return[ $this->clean_key($k) ] = $this->clean_value($v);
+                }
+            }
+        }
+        
+        //----------------------------------------
+        // Sort out the accessing IP
+        // (Thanks to Cosmos and schickb)
+        //----------------------------------------
+        
+        $addrs = array();
+        
+        foreach( array_reverse( explode( ',', $HTTP_X_FORWARDED_FOR ) ) as $x_f )
+        {
+            $x_f = trim($x_f);
+            
+            if ( preg_match( '/^d{1,3}.d{1,3}.d{1,3}.d{1,3}$/', $x_f ) )
+            {
+                $addrs[] = $x_f;
+            }
+        }
+        
+        $addrs[] = $_SERVER['REMOTE_ADDR'];
+        $addrs[] = $HTTP_PROXY_USER;
+        $addrs[] = $HTTP_CLIENT_IP;
+        
+        $return['IP_ADDRESS'] = $this->select_var( $addrs );
+                                                 
+        // Make sure we take a valid IP address
+        
+        $return['IP_ADDRESS'] = preg_replace( "/^([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})/", "\1.\2.\3.\4", $return['IP_ADDRESS'] );
+        
+        $return['request_method'] = strtolower($_SERVER['REQUEST_METHOD']);
+        
+        return $return;
+    }
+    
+}
+
+?>

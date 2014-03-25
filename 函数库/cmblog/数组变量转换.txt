@@ -1,0 +1,20 @@
+function N_var_export($input,$f = 1,$t = null) {
+	$output = '';
+	if (is_array($input)) {
+		$output .= "array(\r\n";
+		foreach ($input as $key => $value) {
+			$output .= $t."\t".N_var_export($key,$f,$t."\t").' => '.N_var_export($value,$f,$t."\t");
+			$output .= ",\r\n";
+		}
+		$output .= $t.')';
+	} elseif (is_string($input)) {
+		$output .= $f ? "'".str_replace(array("\\","'"),array("\\\\","\'"),$input)."'" : "'$input'";
+	} elseif (is_int($input) || is_double($input)) {
+		$output .= "'".(string)$input."'";
+	} elseif (is_bool($input)) {
+		$output .= $input ? 'true' : 'false';
+	} else {
+		$output .= 'NULL';
+	}
+	return $output;
+}

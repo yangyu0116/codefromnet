@@ -1,0 +1,109 @@
+<?PHP
+/* EssenceXP@hotmail.com
+参考资料，Excel VBA参考手册，对象，方法和函数名称一样,只是语法要改成符合PHP，但是存储结构化数据指针的方式变成“-〉”，不是VBA中的'.'，如在VBA中是 A.B,PHP此处就变成A->B
+ 要求打开php对COM的支持：
+/ Excel操作的层次级别
+//应用 -〉当前打开的工作簿集合（相当于打开多个文件）-〉具体的某个工作簿（文件）-〉工作表-〉行和列
+//
+A:对于workbooks对象里面的工作簿的个数，其值为Workbooks.Count，Workbooks(1) is the first workbook created, and Workbooks//(Workbooks.Count) is the last one created.
+对于workbook里面的sheet对象数，类似，Worksheets.Count给出了总的工作表的数量
+
+B:The worksheet index number denotes the position of the worksheet on the workbook’s tab bar. Worksheets(1) is the first (leftmost) worksheet in the workbook, and Worksheets(Worksheets.Count) is the last one. All worksheets are included in the index count, even if they’re hidden.
+
+
+//总体层次，Application -> workboooks -> workbook -> worksheet -> row,column, cell
+/*/
+$filename = "F:/test/test.xls";
+//$sheet1 = 1;
+//$sheet2 = "sheet2";
+$excel_app = new COM("Excel.application") or Die ("Did not connect");
+
+print "Application name: {$excel_app->Application->value}\n" ; 
+print "Loaded version: {$excel_app->Application->version}\n<BR>利用PHP读取多个excel文件的演示";
+
+//Echo "<br> OK---<br>";
+$Workbook = $excel_app->Workbooks->Open("$filename") or Die("Did not open $filename $Workbook");
+$Workbook2 = $excel_app->Workbooks->open("f:/test/ABC.xls") or Die("Did not open f:/test/ABC.xls");
+/*上面也可以用 $Workbook2 = $excel_app->Workbooks->add("f:/test/ABC.xls") or Die("Did not added"); 但工作簿名称变为ABC1,不知为啥*/
+$Workbook3 = $excel_app->Workbooks->open("f:/test/xia.xls") or Die("Did not open f:/test/xia.xls");
+//printf ("%d",$excel_app->Workbooks->Count);
+
+echo  "<BR>工作簿名称：$Workbook->Name <BR>";
+echo  "工作簿名称：$Workbook2->Name <BR>";
+echo  "工作簿名称：$Workbook3->Name<BR>";
+//$Worksheet = $Workbook->Worksheets($sheet1);
+//printf ("工作表数量%d",$Workbook->Worksheets->Count);
+
+//$Worksheet->activate;
+//Echo "<br> OK-22--<br>";
+//echo "工作表名称：$Worksheet->Name <BR>";
+//printf ("总行数%d",$Worksheet->Rows->Count);   //65535
+//printf ("总列数%d",$Worksheet->Columns->Count);  //256
+//printf ("<Br>Cell(10,10)%d",$Worksheet->cells(10,10));
+
+
+/*/以下此段代码的限制：用于寻找excel的某个sheet的有效数据区域（已知没有找到合适的excel函数）。直接用65535*256的循环不行
+未考虑应付复杂情况，所处理的必须是规则的矩阵，（总体要求第一行和第一列每个CELL的值均不能为空）无规则矩阵及大规模稀疏矩阵不支持。
+//$maxrow; //行数；
+//$maxcol; //列数；
+//寻找非空的行列值下标  Worksheets("Sheet1").Cells(rwIndex, colIndex)
+ */   
+/*for ($i = 1;$i<=$Worksheet->Columns->Count; $i++){       
+     if ($Worksheet->cells(1,$i)=='') break;
+     }$maxcol = $i-1;
+for ($i =1; $Worksheet->Rows->Count; $i++) {   
+    if ($Worksheet->cells($i,1)=='')  break; 
+} $maxrow = $i-1;
+printf ("<BR>总行数 %d--总列数 %d <Br>",$maxrow,$maxcol);  
+*/
+
+for ($count=1; $count<=$excel_app->Workbooks->Count;$count++){/*/对所有打开的工作簿执行操作*/
+    $Workbook = $excel_app->Workbooks($count);
+    printf("<BR>显示第%d个工作簿(文件)：%s <br>",$count,$Workbook->Name);
+
+for($i=1; $i<=$Workbook->Worksheets->Count;$i++){ /*对每个工作簿中的所有的工作表执行操作*/
+
+for ($i1 = 1;$i1<=$Workbook->Worksheets($i)->Columns->Count; $i1++){       
+     if ($Workbook->Worksheets($i)->cells(1,$i1)=='') break;
+     }
+$maxcol = $i1-1;
+
+for ($i1 =1; $Workbook->Worksheets($i)->Rows->Count; $i1++) {
+   
+    if ($Workbook->Worksheets($i)->cells($i1,1)=='')  break;
+ 
+}
+$maxrow = $i1-1;
+
+
+   printf ("<Br>显示工作簿{%s}的第%d个工作表",$Workbook->Name,$i); 
+   printf ("<BR>总行数 %d--总列数 %d ",$maxrow,$maxcol);  
+    for($j=1;$j<=$maxrow;$j++){
+       printf ("<BR>第%d行：",$j); 
+       for($k=1;$k<=$maxcol;$k++)  printf ("{%s},",$Workbook->Worksheets($i)->cells($j,$k));
+    }
+} /*///对每个工作簿中的所有的工作表执行操作*/
+
+printf("<br><BR>显示完毕了第%d个文件：%s <br>",$count,$Workbook->Name);
+
+} /*对所有打开的工作簿执行操作*/
+
+printf("<BR>至此显示完毕了所有%d个文件",$count-1);
+
+
+#To close all instances of excel:关掉所有Excel实例
+$Workbook->Close;
+//Echo "<br>Workbook->Close OK<br>";
+unset($Worksheet);
+unset($Workbook);
+
+ 
+
+$excel_app->Workbooks->Close();
+$excel_app->Quit();
+//Echo "<br>excel_app quit OK<br>";
+unset($excel_app);
+//Echo "<br>unset excel_appOK<br>";
+//
+?> 
+

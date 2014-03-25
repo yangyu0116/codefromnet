@@ -1,0 +1,141 @@
+抽象方法和抽象类 
+
+
+面向对象程序通过类的分层结构构建起来. 在单重继承语言如PHP中, 类的继承是树状的. 一个根类有一个或更多的子类,再从每个子类继承出一个或更多下一级子类. 当然,可能存在多个根类,用来实现不同的功能. 在一个良好设计的体系中,每个根类都应该有一个有用的接口, 可以被应用代码所使用. 如果我们的应用代码被设计成与根类一起工作,那么它也可以和任何一个从根类继承出来的子类合作.
+
+抽象方法是就像子类中一般的方法的占位符(占个地方但不起作用),它与一般方法不同—没有任何代码. 如果类中存在一个或更多抽象方法, 那么这个类就成了抽象类. 你不能实例化抽象类. 你必须继承它们,然后实例化子类. 你也可以把抽象类看成是子类的一个模板.
+
+如果你覆写所有的抽象方法, 子类就变成一个普通的类. 如果没有覆写所有方法, 子类仍是抽象的. 如果一个类中中包含有抽象方法(哪怕只有一个), 你必须声明这个类是抽象的, 在class关键字前加上abstract.
+
+声明抽象方法的语法与声明一般方法不同. 抽象方法的没有像一般方法那样包含在大括号{}中的主体部份,并用分号;来结束.
+
+在例子6.13中, 我们定义了一个含有getArea方法的类Shape. 但由于不知道形状不可能确定图形的面积,确良我们声明了getArea方法为抽象方法. 你不能实例化一个Shape对象,但你可以继承它或在一个表达式中使用它, 就像例6.13中那样.
+
+如果你建立了一个只有抽象方法的类,你就定义了一个接口(interface). 为了说明这种情况, PHP中有interface 和implements关键字. 你可以用interface来代替抽象类, 用implements来代替extends来说明你的类定义或使用一个接口. 例如, 你可以写一个myClass implements myIterface. 这两种方法可以依个人偏爱来选择.
+
+/*注: 
+两种方法即指:
+1. abstract class aaa{} (注意aaa中只有抽象方法,没有一般方法)
+class bbb extends aaa{} (在bbb中覆写aaa中的抽象方法)
+2. interface aaa{}
+class bbb implements aaa{} (在bbb中覆写aaa中的抽象方法)
+*/
+
+Listing 6.13 Abstract classes
+
+<?php 
+   //abstract root class 抽象根类 
+   abstract class Shape 
+   { 
+       abstract function getArea(); //定义一个抽象方法 
+   } 
+
+   //abstract child class 抽象子类 
+   abstract class Polygon extends Shape //多边形 
+   { 
+       abstract function getNumberOfSides(); 
+   } 
+
+   //concrete class 实体类 三角形类 
+   class Triangle extends Polygon 
+   { 
+       public $base; 
+       public $height; 
+
+       public function getArea() //覆写计算面积方法 
+       { 
+           return(($this->base * $this->height)/2); 
+       } 
+
+       public function getNumberOfSides() //覆写边数统计方法 
+       { 
+           return(3); 
+       } 
+   } 
+
+   //concrete class 实体类四边形 
+   class Rectangle extends Polygon 
+   { 
+       public $width; 
+       public $height; 
+
+       public function getArea() 
+       { 
+           return($this->width * $this->height); 
+       } 
+
+       public function getNumberOfSides() 
+       { 
+           return(4); 
+       } 
+   } 
+
+   //concrete class 实体类 圆形 
+   class Circle extends Shape 
+   { 
+       public $radius; 
+
+       public function getArea() 
+       { 
+           return(pi() * $this->radius * $this->radius); 
+       } 
+   } 
+
+   //concrete root class 定义一个颜色类 
+   class Color 
+   { 
+       public $name; 
+   } 
+
+   $myCollection = array(); //建立形状的集合,放入数组 
+
+   //make a rectangle 
+   $r = new Rectangle; 
+   $r->width = 5; 
+   $r->height = 7; 
+   $myCollection[] = $r; 
+   unset($r); 
+
+   //make a triangle 
+   $t = new Triangle; 
+   $t->base = 4; 
+   $t->height = 5; 
+   $myCollection[] = $t; 
+   unset($t); 
+
+   //make a circle 
+   $c = new Circle; 
+   $c->radius = 3; 
+   $myCollection[] = $c; 
+   unset($c); 
+
+   //make a color 
+   $c = new Color; 
+   $c->name = "blue"; 
+   $myCollection[] = $c; 
+   unset($c); 
+
+   foreach($myCollection as $s) 
+   { 
+       if($s instanceof Shape) //如果$s是Shape类的实例 
+       { 
+           print("Area: " . $s->getArea() . 
+               "<br>\n"); 
+       } 
+
+       if($s instanceof Polygon) 
+       { 
+           print("Sides: " . 
+               $s->getNumberOfSides() . 
+               "<br>\n"); 
+       } 
+
+       if($s instanceof Color) 
+       { 
+           print("Color: $s->name<br>\n"); 
+       } 
+
+       print("<br>\n"); 
+   } 
+
+?> 

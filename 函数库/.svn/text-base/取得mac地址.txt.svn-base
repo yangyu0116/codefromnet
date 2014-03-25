@@ -1,0 +1,19 @@
+function getMac() {   
+       
+    ( !ini_get('safe_mode') ) OR die('Error:In safe mode');   
+       
+    if( strpos($_SERVER['SERVER_SOFTWARE'], 'Win') ) {   
+        $is_win = TRUE;   
+    }   
+
+    $cmd = $is_win ? 'ipconfig /all' : '/sbin/ifconfig  -a';   
+    function_exists('exec')  ?  exec($cmd, $arr) : die('Exec() has been disabled');   
+
+    for($i = 0; $i < count($arr); $i++  ) {   
+        if( preg_match('|(([0-9A-F]{2}-?){6})|', $arr[$i], $matches) ) {   
+            Return $matches[1];   
+        }            
+    }   
+}   
+
+printf('Mac: <span style="color:#F00;font-weight:bold;">%s</span>', getMac()); 

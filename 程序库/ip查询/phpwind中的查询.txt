@@ -1,0 +1,20 @@
+<?php
+header("Content-type:text/html;charset=utf-8");
+$ip=trim($_GET['ip']);
+$inputIp=ip2long($ip);
+$ipdataFile='ipdata/'.substr($ip,0,strpos($ip,'.')).'.txt';
+!file_exists($ipdataFile) && $ipdataFile='ipdata/0.txt';
+$fh=fopen($ipdataFile,'r');
+while(!feof($fh)){
+    $ipSourceData=fgets($fh);
+    $arrIp=explode("\t",$ipSourceData);
+    $startIp=ip2long($arrIp[0]);
+    $endIp=ip2long($arrIp[1]);
+    $area=$arrIp[2].$arrIp[3];
+    if(($inputIp>=$startIp) && ($inputIp<=$endIp)){
+        echo '该IP的位置是：'.$area;
+        break;
+    }
+}
+fclose($fh);
+?>

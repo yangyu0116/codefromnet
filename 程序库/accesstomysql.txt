@@ -1,0 +1,18 @@
+mysql_connect('localhost','root','root');
+mysql_select_db('ecms');
+mysql_query('set names gbk');
+//地方法规 67
+$conn = new com("ADODB.Connection"); 
+$connstr = "DRIVER={Microsoft Access Driver (*.mdb)}; DBQ=". realpath("fagui.mdb"); 
+
+$conn->Open($connstr); 
+$rs = new com("ADODB.RecordSet"); 
+$rs->Open("select * from dz",$conn,1,1); 
+while(! $rs->eof) { 
+	$sql = "REPLACE INTO `phome_ecms_news` (`id`,`classid`,`newspath`,`ztid`,`filename`,`newstempid`,`title`,`newstime`,`writer`,`newstext`) ";
+	$sql .= "VALUES ('".$rs->Fields(0)."','67','".$rs->Fields(3)."','|','".$rs->Fields(0)."','11','".$rs->Fields(1)."','".$rs->Fields(3)."','".$rs->Fields(2)."','".$rs->Fields(4)."') ";
+	mysql_query($sql);
+	$rs->MoveNext(); 
+}
+
+echo '数据导入成功';

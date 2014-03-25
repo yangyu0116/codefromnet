@@ -1,0 +1,156 @@
+
+<?php
+/*
++-----------------------------------------------------------------------+
+| 作者： 一天空一
+| Q Q: 31769416,[url=http://www.176k.cn]www.176k.cn[/url]
+| 时间：2006-12-16
+| 功能：网银在线支付接口封装类(2.0)                                              
++-----------------------------------------------------------------------+
+*/
+class Chinabank 
+{
+        //发送参数
+        private $v_mid;                  // 商户号
+        private $v_url;                 //返回url
+        private $key;                   //密钥
+        public  $v_amount;             //支付金额
+        private $v_m;  //支付币种
+        private $v_md5info;           //md5加密后的字符串
+        public  $remark1;             //备注字段1
+        public  $remark2;            //备注字段2
+        public  $v_oid;              //定单号
+        //接收参数
+        private $v_pmode;           // 支付方式（字符串）
+        private $v_pstatus;        // 支付状态 ：20（支付成功）；30（支付失败）
+        private $v_pstring;       // 支付结果信息
+        private $v_md5str;       //返回后的md5
+        
+        function __construct($v_mid,$v_url,$key)
+        {
+                 $this->v_mid = $v_mid;
+                 $this->v_url = $v_url;
+                 $this->key   = $key;
+        }
+        
+        /*设置支付金额*/
+        public function  amount($amount=0)
+        {
+                $this->v_amount=floatval($amount);
+        }
+        
+        /*设置备注*/
+        public function  memol($memo1="",$memo2="")
+        {
+                $this->remark1=$memo1;
+                $this->remark2=$memo2;
+        }
+        
+        /*生成发送校验码*/
+        private  function send_verify()
+        {
+                 $this->v_oid=date('Ymd',time())."-".$this->v_mid."-".date('His',time());
+                 $text=$this->v_amount.$this->v_moneytype.$this->v_oid.$this->v_mid.$this->v_url.$this->key;
+                $this->v_md5info=strtoupper(trim(md5($text)));
+                $this->v_md5info=strtoupper(trim(md5($text)));        
+        }
+        
+        /*生成接收校验码*/
+        private function incept_verify()
+        {
+                $text=$this->v_oid.$this->v_pstatus.$this->v_amount.$this->v_moneytype.$this->key;
+                return strtoupper(trim(md5($text)));
+        }
+        
+        /*提交支付请求*/
+        public function pay_send()        
+        {
+                $this->send_verify();
+                $result="
+                                <FORM  name=re METHOD=post ACTION='https://pay.chinabank.com.cn/select_bank'>
+                                <input type='hidden' name='v_md5info' value='{$this->v_md5info}'>
+                                <input type='hidden' name='v_mid' value='{$this->v_mid}'>
+                                <input type='hidden' name='v_oid' value='{$this->v_oid}'>
+                                <input type='hidden' name='v_amount' value='{$this->v_amount}'>
+                                <input type='hidden' name='v_moneytype'  value='{$this->v_moneytype}'>
+                                <input type='hidden' name='v_url' value='{$this->v_url}'>
+                                <input type='hidden' name='remark1' value='{$this->remark1}'>
+                                <input type='hidden' name='remark2' value='{$this->remark2}'>
+                                </FORM>
+                                <SCRIPT>re.submit();</SCRIPT>
+                                ";
+                $result=trim($result);
+                echo $result;
+        }
+        
+        /*提交返回处理*/
+        public function pay_receive()
+        {
+                $this->v_oid = trim($_POST['v_oid']);
+                $this->v_pmode = trim($_POST['v_pmode']);
+                $this->v_pstatus = trim($_POST['v_pstatus']);
+                $this->v_pstring = trim($_POST['v_pstring']);
+                $this->v_amount = trim($_POST['v_amount']);
+                $this->v_moneytype = trim($_POST['v_moneytype']);
+                $this->remark1 = trim($_POST['remark1']);
+                $this->remark2 = trim($_POST['remark2']);
+                $this->v_md5str = trim($_POST['v_md5str']);
+        }
+        
+        /*判断返回是否有效信息*/
+        public function check_pay_receive()        
+        {
+                if ($this->v_md5str==$this->incept_verify()) {
+                        return true;
+                } else         {
+                        return false;
+                }
+        }
+        
+        /*判断返回是否提交成功*/
+        public function check_pay()        
+        {
+                if($this->v_pstatus=='20'){
+                        return true;
+                } else {
+                        return false;
+                }
+        }
+        
+}
+?> 
+
+
+调用:
+发送:
+                  $pay_num =0.01; 
+                  $v_mid = 1234578995 ;
+                  $v_url = "http://59.57.64.168/zl/index.php/Block/disposal";
+                  $key  = '#$%%45454235243&*';
+                  $pay = new Chinabank($v_mid,$v_url,$key);
+                  $pay->amount($pay_num); 
+                  $pay->pay_send(); 
+
+
+
+
+返回处理
+                  $v_mid = 1234578995 ;
+                  $v_url = "http://59.57.64.168/zl/index.php/Block/disposal";
+                  $key  = '#$%%45454235243&*';
+                  $pay = new Chinabank($v_mid,$v_url,$key);
+                  $pay->pay_receive();
+                              if ($pay->check_pay_receive()) {
+                                        if ($pay->check_pay()) {
+                                             //成功处理..
+                                           } esle {
+                                              echo "支付流程出现问题";
+                                           }
+                                  
+                                  }else {
+                  echo  'Md5校验码错误";
+                  } 
+
+
+
+

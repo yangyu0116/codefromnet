@@ -1,0 +1,41 @@
+<?
+/************************************
+##
+##文件名：mvfiles.php
+##
+##作者：西大浪人(simonlsy@vip.sina.com)
+##
+##最后生成日期：2005-4-5
+##
+## 使用说明：本程序结合winrar Win32版本
+##           的执行文件Rar.exe 一起使用
+## 操作环境：windows+php
+## 默认说明：本文档中的例子为将根目录下
+##           的test2下面的所有文件和文件
+##          夹转移到test3目录下面
+##
+************************************/
+
+    $dir            ="test2";  //这是你要压缩的目录
+    $ndir           ="test3";//这是你要转移的目录
+    $tmpfilestr     =md5(date("Y-m-d H:i:s"));  //临时文件的文件名
+    $rarcommand     ="Rar.exe a -ep1 -r ".$tmpfilestr." ".$dir."\*";      //winrar执行压缩命令行  不包含压缩的路径
+    $unrarcommand   ="Rar.exe x -o+ ".$tmpfilestr.".rar ".$ndir."\";          //winrar执行的解压命令行 覆盖已经存在的文件
+
+
+    echo "<div align=center><font color=red>+++++++++++++++++++++下面开始压缩文件+++++++++++++++++++++++++++</font>
+        <font color=blue><br><br><pre>";
+
+    system($rarcommand);      //开始执行压缩
+
+    echo "</pre></font><font color=red>+++++++++++++++++++++压缩完毕+++++++++++++++++++++++++++</font><br><br>";
+
+    echo "<font color=red>+++++++++++++++++++++开始解压文件+++++++++++++++++++++++++++</font>
+        <font color=blue><br><br><pre>";
+
+    system($unrarcommand);   //开始执行解压缩
+
+    echo "</pre></font><font color=red>+++++++++++++++++++++解压完毕+++++++++++++++++++++++++++</font><br><br></div>";
+
+    unlink($tmpfilestr.".rar"); //删除临时解压的文件
+?>

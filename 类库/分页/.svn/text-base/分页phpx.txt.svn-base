@@ -1,0 +1,95 @@
+<?
+/*分页类*/
+class Pagination{
+function page($total=0,$per=20,$mid=10)
+{
+/*++++++++++++++++++++++++++++++++
+函数名称： page($total, $per, $mid)
+功能：分页，并且提供相邻页的链接
+最后修订：西大浪人(simonlsy@vip.sina.com) 2005-4-8
+参与修改：纯粹误会（[url]http://www.zh5j.com）2005-4-7[/url] 2005-4-8再次优化
+参数说明：
+$total ： 记录总数，默认0
+$per ： 每页的记录数，默认20
+$mid ： 中间显示几个相邻页面，默认10
+返回参数：
+$this->page ：分页显示的代码
+$this->B ：分页起始，循环上限（循环起点）
+$this->E ：分页结束，循环下限（循环终点）
+
+++++++++++++++++++++++++++++++++
+#预定义变量 $_SERVER 和 $_GET 是PHP4.1.0及以后版本使用
+#否则界于PHP3.0.0和PHP4.1.0的版本可用$GLOBALS[HTTP_SERVER_VARS]和$GLOBALS[HTTP_GET_VARS]代替
++++++++++++++++++++++++++++++++++*/
+    if(!$total||!$per)return;//为零的总数和分页数算处理
+    $this->page='';#输出的分页链接初值
+    $page=$_GET[page];
+    if($page=="" || $page<1) $page=1;
+    $allpage=ceil($total/$per);//计算页数（取整返回）
+    if($page>$allpage)$page=$allpage;
+    $next=$page+1; //下一页
+    $pre=$page-1;//上一页
+
+    /*下面是一个纯粹误会早期所写的复杂语句，功能：让当前页永远距中，并使分页链接数量保持平衡*/
+    $offset=floor($mid/2);#偏移量=中间显示相邻页面数除2，并去掉小数部分
+    #将当前页码赋给$pp)
+    $pp=$page;
+    #如果中间显示相邻页面起始页码小于或等于0，则$pp=偏移量+1。$PP的值可能变了
+    if($pp-$offset<=0)$pp=$offset+1;
+    #如果中间相邻页面终止页码大于页面总数，则$pp=页面总数-偏移量。$PP的值可能变了
+    if($pp+$offset>$allpage)$pp=$allpage-$offset;
+    #如果$pp-偏移量>0，则中间相邻页面起始页码=$pp-偏移量，否则中间快选页起始码=1
+    $begin=($pp-$offset)>0?$pp-$offset:1;
+    #如果$pp+偏移量<页面总数，则中间相邻页面起始页码=$pp+偏移量，否则中间快选页起始码=页面总数
+    $end=($pp+$offset)<$allpage?$pp+$offset:$allpage;
+
+    $query_string="http://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]?";//取得当前页的绝对地址加?号
+    foreach($_GET as$k=>$v){if($k!="page")$query_string.="$k=$v&";}#处理一下，将page=xxx的参数干掉。
+
+    if($allpage==1)$this->page= "无分页";
+    else{
+        #页码大于1则输出首页和上一页
+        if($page>1)
+            $this->page.="n<a href=\"{$query_string}page=1\">首页</a>n<a href=\"{$query_string}page=$pre\">上一页</a>";
+        #中间页处理，这个增加时间复杂度，减小空间复杂度
+        for($i=$begin;$i<=$end;$i++)$this->page.=$page==$i?"n$i":"n<a href=\"{$query_string}page=$i\">$i</a>";
+        #页码小于最终页则输出末页和下一页
+        if($page<$allpage)
+            $this->page.="n<a href=\"{$query_string}page=$next\">下一页</a>n<a href=\"{$query_string}page=$allpage\">末页</a>";
+    }
+    #自定义跳转
+        $this->page.="n<a href=\"$query_string\" onclick=\"if(page=prompt('共{$total}条数据，分{$allpage}页，当前是{$page}页。自定义转到到第几页：',''))location.href=this.href+'page='+page;return false\">GO</a>";
+
+        $this->B=($page-1)*$per;#循环上界begin
+        $this->E=$page*$per;#循环下界end
+        if($this->B<0)$this->B=0;#循环上界处理
+        if($this->E>$total)$this->E=$total;#循环下界处理
+}
+}
+?>
+<?
+/*********************
+ 用法：2000000000 条数据 每页输出30条 中间显示10个相邻分页链接
+ 
+ 后面两个参数可以默认
+***********************/
+$PG=new Pagination;///调用分页类
+
+$start_time=array_sum(explode(" ",microtime()));#函数执行开始时间
+
+$PG->page(2000000000,30,10);//调用分页类的函数
+
+$runtime=array_sum(explode(" ",microtime()))-$start_time;#函数执行结束时间
+echo "Runtime: ".($runtime*1000)."ms<p>";//输出运行时间
+
+echo $PG->page;//输出分页链接，上面
+echo "n<br>";
+
+//循环输出当前显示的所有分页内容
+for($i=$PG->B;$i<$PG->E;$i++){
+    echo"n第 <b>".($i+1)."</b> 条数据的内容<br>";//这里循环体
+}
+
+echo "n<br>";
+echo $PG->page;//输出分页链接，下面
+?>

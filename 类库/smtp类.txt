@@ -1,0 +1,118 @@
+<?  
+/*
+ * Smtp sender class
+ * Author:    Goodyork
+ * Version:    1.0.0
+ * Website: [url]www.phpx.com[/url]
+ * Modifications:
+ *        2002-11-16   initial modified by goodyork
+ *
+*/
+class smtp_sender
+{  
+    var $host; 
+    var $port; 
+    var $user; 
+    var $pass; 
+    var $debug = false; 
+    var $conn;  
+    var $result_str;
+    var $in; 
+    var $from; 
+    var $to; 
+    var $subject; 
+    var $body; 
+    var $socket;
+    
+    function smtp_sender($debug=false)
+    {
+           $this->smtp_ori('smtp服务器地址','smtp端口','用户名','密码',$debug);
+    }
+    function smtp_ori($host,$port,$user,$pass,$debug=false)  
+    {  
+        $this->host   = $host;   
+        $this->port   = $port;   
+        $this->user   = base64_encode($user);   
+        $this->pass   = base64_encode($pass);   
+        $this->debug  = $debug;   
+        $this->socket = fsockopen($this->host,$this->port, $errno, $errstr, 30);
+        
+        if (!$this->socket) 
+         {
+           die("error:$errstr ($errno)<br />n");
+         } 
+     }   
+    function debug_show($str)   
+    {   
+         if($this->debug==true)   
+         {   
+            echo $str."<br>rn";   
+         }   
+    }   
+    function send($from,$to,$subject,$body,$mailtype="html",$fromname="默认显示的发件人名字")   
+    {   
+         if($from == "" || $to == "")   
+         {   
+            exit("you must enter email address");   
+         }   
+
+         if($subject == "") $sebject = "no subject";   
+         if($body    == "") $body    = "no content";   
+         $body = str_replace("n", "rn", $body);
+         $body = str_replace("rr", "r", $body);         
+         $this->from     =  $from;   
+         $this->to      =  $to;   
+         $this->subject  =  $subject;   
+         $this->body     =  $body;   
+
+         $All           = "From: $fromname<".$this->from.">rn";   
+         $All          .= "To: ".$this->to."rn";   
+         $All          .= "Subject: ".$this->subject."rn";   
+         $All                   .= "MIME-Version: 1.0rn";
+     if(strtolower($mailtype)=="html")  
+         $All                  .="Content-Type: text/html;charset=\"gb2312\"rn";
+         $All                   .= "Date: ".date("r")."rn";
+         $All                   .= "X-Mailer: Microsoft Outlook Express 5.50.4522.1200rn";
+     list($msec, $sec) = explode(" ", microtime());
+         $All                   .= "Message-ID: <".date("YmdHis", $sec).".".($msec*1000000).".".$from.">rnrn";
+         $All          .= $this->body;   
+        
+         $this->in       =  "EHLO HELOrn";   
+         $this->sendcommand();   
+         $this->in       =  "AUTH LOGINrn";   
+         $this->sendcommand();   
+         $this->in       =  $this->user."rn";   
+         $this->sendcommand();   
+         $this->in       =  $this->pass."rn";   
+         $this->sendcommand();   
+         $this->in       =  "MAIL FROM:".$this->from."rn";   
+         $this->sendcommand();   
+         $this->in       =  "RCPT TO:".$this->to."rn";   
+         $this->sendcommand();   
+         $this->in       =  "DATArn";   
+         $this->sendcommand();   
+         $this->in       =  $All."rn.rn";;            
+         $this->sendcommand();   
+         $this->in       =  "QUITrn";   
+         $this->sendcommand();   
+     
+    }   
+    function sendcommand()   
+    {   
+        fwrite($this->socket, $this->in);   
+        $this->debug_show("Command:".$this->in);   
+        $this->result_str = "Response：".fread ($this->socket, 1024)."";   
+        $this->debug_show($this->result_str);   
+    }   
+} 
+//following is a sample  ,注意事项：发送html格式邮件时，message需要做nl2br
+/*
+    $mail_title="喜悦国际村密码提醒邮件";
+    $message  = "t喜悦国际村密码提醒邮件！rnrn";
+    $message .= "t您的用户名是：".$UserName."rnrn";
+    $message .= "t您的密码是：".$Password."rnrn";
+    $message .= "t<a href=\"http://www.phpx.com/">喜悦国际村  PHP因你而精彩</a>rnrn";
+    $smtpsender=new smtp_sender(true);
+    $smtpsender->send("发件人email","收件人email",$mail_title,nl2br($message),"html");  
+*/
+?>

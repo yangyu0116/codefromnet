@@ -1,0 +1,50 @@
+<?php 
+
+//static.php
+function CreateShtml() 
+{ 
+ob_start("callback_CteateShtml"); 
+} 
+function callback_CteateShtml($buffer) 
+{ 
+$page = intval(@$_REQUEST["page"]); 
+//$fileName = $_SERVER['DOCUMENT_ROOT'] . dirname($_SERVER['PHP_SELF']) . "/article/" . basename($_SERVER['PHP_SELF'],".php") . ($page==0 ? "" : "_" . strval($page)) . ".html"; 
+
+$fileName = basename($_SERVER['PHP_SELF'],".php") . ($page==0 ? "" : "_" . strval($page)) . ".html";//可以在这里修改你的静态页面路径 
+
+$fp = fopen($fileName,"wb"); 
+fwrite($fp,$buffer); 
+fclose($fp); 
+return $buffer; 
+} 
+?> 
+
+ 
+
+ 
+
+xx.php
+
+<?php 
+include("static.php"); 
+CreateShtml(); 
+?> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" /> 
+<title>无标题文档</title> 
+</head> 
+
+<body> 
+<?php 
+echo "php欢迎您"; 
+?> 
+</body> 
+</html> 
+
+
+将会生成一个 xx.html的静态页面
+
+如果有参数,则用page来传递 如 xx.php?page=1
+则生成 xx_1.html的静态页面
+

@@ -1,0 +1,326 @@
+<?php
+//############################
+#    文件：session.php
+#    作者：Sanders Yao
+#    名称：用户会话
+#    所在系统：55w下载
+#    功能：多用户会话连接
+#    必须全局变量：
+#    $db：MySQL数据库操作对象（MyDB类型）
+#    $defaultUser：未登录用户对象
+#    $domain：session作用域名
+#    $groupData：用户组缓存数据
+#    需要常量：
+#    SCK_NAM：session发送的cookie名
+#    SES_EXP：session在服务器端的寿命
+#    类型：
+#    session：
+#    会话类型
+#    user：
+#    用户类型
+#    全局函数：
+#    getOnline：
+#    返回在线user对象数组
+#    最后修改时间：2007-2-27
+/*    sql:
+CREATE TABLE `member` (
+  `uid` int(10) unsigned NOT NULL auto_increment,
+  `uname` char(255) NOT NULL,
+  `password` char(64) NOT NULL,
+  `ol` tinyint(1) NOT NULL default '0',
+  `sid` char(6) NOT NULL default '',
+  `ttl` int(10) NOT NULL default '0',
+  `gid` mediumint(4) unsigned NOT NULL,
+  `group` char(255) NOT NULL,
+  PRIMARY KEY  (`uid`),
+  UNIQUE KEY `uname` (`uname`),
+  KEY `ol` (`ol`),
+  KEY `sid` (`sid`)
+) TYPE=MyISAM;
+
+CREATE TABLE `session` (
+  `sid` char(6) NOT NULL,
+  `uid` int(10) NOT NULL default '0',
+  `uname` char(255) NOT NULL,
+  `gid` mediumint(4) unsigned NOT NULL,
+  `group` char(255) NOT NULL,
+  `ctime` int(10) NOT NULL default '0',
+  `atime` int(10) NOT NULL default '0',
+  PRIMARY KEY  (`sid`)
+) TYPE=HEAP MAX_ROWS=2000;
+--    test records:
+
+*/
+//############################
+
+
+//会话
+class session{
+    var $itsId;
+    var $itsCtime;
+    var $itsAtime;
+    var $itsUser;
+    var $itsPerfix;
+    
+    function session($id = "", $perfix = ""){
+        $this->itsId = $id;
+        $this->itsCtime = -1;
+        $this->itsAtime = -1;
+        $this->itsUser = NULL;
+        $this->itsPerfix = $perfix;
+    }
+    
+    //加载数据
+    //返回false：无效的会话id
+    function load(){
+        global $db;
+        if("" == $this->itsId){
+            return false;
+        }
+        $query_string = sprintf("SELECT * FROM `%ssession` WHERE `sid`='%s';", $this->itsPerfix, $this->itsId);
+        $result = $db->query($query_string);
+        if(0 == mysql_num_rows($result)){
+            return false;
+        }
+        $arrayTmp = $db->fetch($result, MYSQL_ASSOC);
+        mysql_free_result($result);
+        $this->itsUser = new User(0, $this->itsPerfix);
+        $this->itsUser->itsSession = & $this;
+        $this->import($arrayTmp);
+        return true;
+    }
+    
+    //加载用户数据(自动登录)
+    //返回false：登录失败
+    function loadUser(){
+        global $db;
+        $query_string = sprintf("
+SELECT * FROM `%smember` WHERE `sid`='%s';", $this->itsPerfix, $this->itsId);
+        $result = $db->query($query_string);
+        if(0 == mysql_num_rows($result)){
+            return false;
+        }
+        $arrayTmp = $db->fetch($result, MYSQL_ASSOC);
+        mysql_free_result($result);
+        $this->itsUser = new user;
+        $this->itsUser->import($arrayTmp);
+        $this->itsUser->itsSession = & $this;
+        $query_string = sprintf("
+UPDATE `%ssession`
+SET `uid`=%d, `uname`='%s'
+WHERE `sid`='%s';", $this->itsPerfix, $this->itsUser->itsId, $this->itsUser->itsName);
+        return $db->query($query_string);
+    }
+    
+    //导入数据
+    function import(& $array){
+        global $defaultUser;
+        $this->itsId    = isset($array["sid"])    ? $array["sid"]        : $this->itsId;
+        $this->itsCtime    = isset($array["ctime"])? $array["ctime"]    : $this->itsCtime;
+        $this->itsAtime    = isset($array["atime"])? $array["atime"]    : $this->itsAtime;
+        if(0 == $this->itsUser->itsId && "" != $array["uname"]){
+            $this->itsUser->itsOl = 1;
+            $this->itsUser->import($array);
+        }
+    }
+    
+    //导出数据
+    function expert($ignoreId = false){
+        global $db;
+        $result = array(
+            "sid" => $this->itsId,
+            "ctime" => $this->itsCtime,
+            "atime" => $this->itsAtime,
+        );
+        if($ignoreId){
+            unset($result["sid"]);
+        }
+        return $result;
+    }
+    
+    //设定cookie建立会话连接
+    //返回false：发送cookie失败
+    function connect($sck_expi = 0){
+        $this->createId();
+        $sck_expi = 0 == $sck_expi ? 0 : time() + $sck_expi;
+        return @setcookie($this->itsPerfix . SCK_NAM, $this->itsId, $sck_expi, "", $domain);
+    }
+    
+    //通过用户返回的cookie加载会话数据
+    //返回false：无效的cookie值 或者 更新session表失败
+    function check(){
+        global $_COOKIE, $db;
+        if(isset($_COOKIE[$this->itsPerfix . SCK_NAM])){
+            $this->itsId = $_COOKIE[$this->itsPerfix . SCK_NAM];
+            if(!$this->load()){
+                return false;
+            }
+            $query_string = sprintf("
+UPDATE `%ssession`
+SET `atime`=UNIX_TIMESTAMP()
+WHERE `sid`='%s';", $this->itsPerfix, $this->itsId);
+            $result = $db->query($query_string);
+            return $result;
+        }
+        return false;
+    }
+    
+    //构造session的唯一id
+    //返回false：构造失败
+    function createId(){
+        global $db, $defaultUser;
+        set_time_limit(60);//
+        $this->itsCtime = $this->itsAtime = time();
+        $this->setDefault();
+        for($i = 0;$i < 1000;$i ++){//循环1000次
+            $this->itsId = randomStr(6);
+            $query_string = sprintf("
+INSERT INTO`%ssession`
+(`sid`, `uid`, `uname`, `ctime`, `atime`, `gid`, `group`)
+VALUES('%s', %d, '%s', %d, %d, %d, '%s');"
+, $this->itsPerfix, $this->itsId, $this->itsUser->itsId, $this->itsUser->itsName
+, $this->itsCtime, $this->itsAtime, $this->itsUser->itsGid, $this->itsUser->itsGroup);
+            $db->setOnError();//关闭错误中断输出开关
+            $result = $db->query($query_string);
+            $db->setOnError("die");//开启错误中断输出开关
+            if($result){
+                break;
+            }
+            if(1000 == $i){
+                return false;
+            }
+            return true;
+        }
+    }
+    
+    //设定为默认用户
+    function setDefault(){
+        global $defaultUser;
+        $this->itsUser = & $defaultUser;
+        $defaultUser->itsSession = & $this;
+    }
+}
+
+//构造随机字符串
+//模仿Discuz!的函数 ;P
+function randomStr($num, $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz"){
+    mt_srand((double)microtime() * 1000000);
+    $hash    = "";
+    $max    = strlen($chars) - 1;
+    for($i = 0;$i < $num;$i ++) {
+        $hash .= $chars[mt_rand(0, $max)];
+    }
+    return $hash;
+}
+
+//刷新会话
+function refreshSession($sessPerfix){
+    global $db;
+    //回收资源
+    $query_string = sprintf("DELETE FROM `%ssession` WHERE `atime`+%d<UNIX_TIMESTAMP();", $sessPerfix, SES_EXP);
+    $db->query($query_string);
+    //清理过期用户session
+    $query_string = sprintf("UPDATE `%smember` SET `sid`='', `ttl`=0 WHERE `ttl`<UNIX_TIMESTAMP() AND `ttl`!=0;", $sessPerfix);
+    $db->query($query_string);
+}
+
+//获取在线用户
+function getOnline($userPerfix){
+    global $db;
+    $query_string = sprintf("SELECT * FROM `%smember` WHERE `ol`=1;", $userPerfix);
+    $result = $db->query($query_string);
+    $num = mysql_num_rows($result);
+    $arrayUser = array();
+    for($i = 0;$i < $num;$i ++){
+        $tmpUser = new user;
+        $tmpUser->import($db->fetch($result, MYSQL_ASSOC));
+        $arrayUser[$tmpUser->itsId] = $tmpUser;
+    }
+    return $arrayUser;
+}
+
+
+//用户
+class user{
+    var $itsId;
+    var $itsName;
+    var $itsOl;
+    var $itsSession;
+    var $itsGid;
+    var $itsGroup;
+    var $itsPower;
+    var $itsPerfix;
+    
+    function user($id = 0, $perfix = ""){
+        $this->itsId = $id;
+        $this->itsName = "";
+        $this->itsGid = 0;
+        $this->itsGname = "";
+        $this->itsOl = 0;
+        $this->itsSession = NULL;
+        $this->itsPerfix = $perfix;
+    }
+    
+    //导入数据
+    function import(& $array){
+        global $groupData;
+        $this->itsId    = isset($array["uid"])    ? $array["uid"]        : $this->itsId;
+        $this->itsName    = isset($array["uname"])? $array["uname"]    : $this->itsName;
+        $this->itsGid    = isset($array["gid"])    ? $array["gid"]        : $this->itsGid;
+        $this->itsGroup    = isset($array["group"])? $array["group"]    : $this->itsGroup;
+        $this->itsOl    = isset($array["ol"])    ? $array["ol"]        : $this->itsOl;
+        if(isset($array["gid"]) && isset($groupData[$array["gid"]])){
+            $this->itsPower    = $groupData[$array["gid"]]["power"];
+            $this->itsGroup    = $groupData[$array["gid"]]["group"];
+        }
+    }
+    
+    //登录
+    //返回false：登录失败
+    function login($name, $psw, $ttl = 0){
+        global $db;
+        if(NULL == $this->itsSession){
+            return false;
+        }
+        $query_string = sprintf("
+SELECT * FROM `%smember`
+WHERE `uname`='%s' AND `password`=md5('%s');"
+, $this->itsPerfix, $name, $psw);
+        $result = $db->query($query_string);
+        if(1 != mysql_num_rows($result)){
+            return false;
+        }
+        $this->import($db->fetch($result, MYSQL_ASSOC));
+        $this->itsOl = 1;
+        mysql_free_result($result);
+        //mysql版本>4.0.4
+        $query_string = sprintf("
+UPDATE `%ssession`, `%smember`
+SET `%ssession`.`uid`=%d, `%ssession`.`uname`='%s', `%smember`.`ol`=1, `%smember`.`sid`='%s'
+WHERE `%ssession`.`sid`='%s' AND `%smember`.`uid`='%s';"
+, $this->itsPerfix, $this->itsPerfix
+, $this->itsPerfix, $this->itsId, $this->itsPerfix, $this->itsName, $this->itsPerfix, $this->itsPerfix, $this->itsSession->itsId
+, $this->itsPerfix, $this->itsSession->itsId, $this->itsPerfix, $this->itsId);
+        $result = $db->query($query_string);
+        if(mysql_affected_rows($db->itsLink)){
+            return $result;
+        }
+        return false;
+    }
+    
+    //注册
+    function register($psw){
+        global $db;
+        if("" == $this->itsName || 255 < strlen($this->itsName)){
+            return false;
+        }
+        $query_string = sprintf("
+INSERT INTO `%smember`(`uname`, `password`)
+VALUES ('%s', md5('%s'));", $this->itsPerfix, $this->itsName, $psw);
+        $db->errorHandle();
+        $result = $db->query($query_string);
+        $db->errorHandle("die");
+        return $result;
+    }
+}
+?>

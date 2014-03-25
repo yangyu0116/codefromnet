@@ -1,0 +1,12 @@
+<?php
+$tpl = New Template("template");
+$tpl->set_file(array(
+    "main"=>"blog_mian.html",
+    "page"=>"page.html",
+));
+$tpl -> set_block("main","ListRow2","xLists");
+$tpl -> parse("·ÖÒ³","page");
+/////////////////
+$tpl->parse("mains","main");
+$tpl->p("mains");
+?>

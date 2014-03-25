@@ -1,0 +1,3 @@
+header("Set-Cookie: testcookie=中文; path=/; domain=.phpv.net; expires=".gmstrftime("%A, %d-%b-%Y %H:%M:%S GMT",time()+9600)); 
+
+请将path=/; domain=.phpv.net;改为自己的(不知道怎么设就删除它们]

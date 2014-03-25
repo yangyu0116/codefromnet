@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>中国移动北京公司客户服务中心 - powered by phpwind.net</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<style type="text/css">
+*{	padding:0; margin:0; }
+html {height:100%; max-height:100%; font-size:12px; }
+body {height:100%; line-height:20px; max-height:100%;overflow: hidden; background:url(image/admin/bodybg.gif) repeat-x #d0e6f1;font-family:Verdana;}
+h3{ font-size: 12px; }
+img{ border-style: none; }
+a{ text-decoration: none }
+a:hover{ text-decoration: underline }
+.c{ clear: both; height: 0; font: 0/0 Arial; width: 100% }
+#header { position:absolute;top:0; left:0; display:block; width:100%; height:70px;  z-index: 21; background:url(image/admin/bodybg.gif) repeat-x }
+#footer { position:absolute;bottom:0; left:0; display:block; width:100%; height:0px; z-index: 21; background: #D0E6F1}
+#innerHeader{ height: 35px; overflow: hidden; display: block;}
+#innerFooter{text-align:right; font: 9px Tahoma}
+#selector {position:absolute;left:5px;width:136px;}
+#tools,#gird,#pages { position:absolute;left: 140px;right: 4px;}
+#selector{top:70px; bottom:5px;  z-index: 16;}
+#tools{top:70px; z-index: 15;}
+#gird{top:70px; bottom:5px;z-index: 9;}
+#selector .inner{	height: 100%;overflow:hidden;}
+#gird .inner{height: 100%; background:#fff;border:1px solid #005681;overflow:hidden;}
+
+/*heiyo*/
+#topguide { margin-top:12px; font-family:Tahoma; float:right;padding-right:40px;}
+#topguide li {list-style: none; display: inline;}
+#topguide li a{ padding:3px 9px 6px; color: #fff;line-height:16px; display:inline; border:1px solid #9CC7DF; float:none; margin-right:3px;background:#2D81AE}
+#topguide li a:hover{color:#FFF600; text-decoration: none; border-bottom:0 ; background:url(image/admin/bodybg.gif) #176FA2 }
+#topguide li.li1 a{color:#FFFF00;background:#005681;}
+#topguide li.li1 a:hover{ background:#005681;}
+
+/*guide*/
+#guide{ padding:5px 0 0;margin: auto;}
+#showmenu {z-index:2000; position: absolute}
+#showmenu dl{display:block; line-height: 15px; width:105px ; padding:0 1px 1px; background:#fff; border:#ccc 1px solid; border-bottom-color:#000; border-right-color:#000 }
+#showmenu dl dd{ border-top:1px solid #ccc; padding:5px 0 }
+#showmenu dd a{color:#666;display: list-item;list-style:none;padding:3px 8px 2px; height:auto!important; height:12px;background:url(image/admin/menubg.gif) #fff}
+#showmenu dd a:hover{background:#D0E6F1; text-decoration:none; color:#005681}
+h1{ display:inline; font: bold 14px/18px Tahoma; color: #FFF600; margin: 0 12px }
+.fr{ float: right }
+.s0{ color:#fff }
+.s1{ color:#9bd }
+
+/*selector*/
+#selector .inner dd { text-indent:0em; padding-bottom: 10px}
+#selector .inner dt { padding-left: 15px; line-height:150%; font-weight:bold; color: #FF8000}
+#selector .inner dd a { padding:0 0 0 20px; display:block;color:#005782; line-height:160%; }
+#selector .inner dd a:hover{color:#fff;background: #005681;text-decoration:none; border-right:1px solid  #005681}
+#selector .inner dd a.a1 { font-weight: bold; padding:0 0 0 18px; border:1px solid #005681; border-right: 0; background: #fff }
+#selector .inner a.a1:hover{ background: #fff;border-right:0;color:#005681}
+
+/*menu*/
+#menubg{FILTER: Alpha(opacity=20);opacity:0.2; top: 0px; bottom:0px; left:0; right: 0; background:#000; position: absolute; height:100%; width:100%; z-index:1002 }
+#menu { top:30px;	z-index: 1003; position: absolute; width:98%; height: auto; left:1%; right: 1%; background: #fff; border:1px solid #666; border-right:2px #666 solid; border-bottom:2px #666 solid}
+#menu .inner{ padding: 0 0 15px;background:url(image/admin/menubg.gif); height:auto!important; height:200px;}
+#menu .inner dl{ float: left; padding:10px 10px 0px 10px; display:block }
+#menu .inner dl dt{ color:#005681;padding:0px 1px;}
+#menu .inner dl a{ display: list-item; list-style: none; color:#222; padding:0px 1px; word-break:keep-all }
+#menu .inner dl a:hover{ background: #E9F0C8 }
+#menu .inner dl dd{ line-height: 140% ; padding:0 0 5px }
+.menu{position:absolute;}
+</style>
+<!--[if ie]>
+<style>
+#selector{ height:100%; top:0; bottom:0; border-top:70px solid #d0e6f1; }
+#gird{ height:100%; top:0; bottom:0; border-top:70px solid #d0e6f1; border-bottom:5px solid #d0e6f1;}
+#topguide li a{ float:left}
+</style><![endif]-->
+</head>
+<body>
+<div id="header">
+  <div style="background:url(image/admin/logo.gif) no-repeat;">
+	<a style="width:120px;height:36px;float:left;display:block;" href="admin.php"></a>
+	<div id="innerHeader">
+	  <div id="topguide">
+		<ul id="topguide-entry">
+
+		</ul>
+	  </div>
+	</div>
+	<div class="c"></div>
+	<div id="guide"></div>
+  </div>
+</div>
+<div id="selector">
+  <div id="left" class="inner"></div>
+</div>
+<div id="gird">
+  <div class="inner">
+	<iframe name="main" frameborder="0" style="height:100%;visibility:inherit;width:99.99%;z-index:1"></iframe>
+  </div>
+</div>
+<div id="footer">
+  <div id="innerFooter"></div>
+</div>
+<iframe name="notice" frameborder="0" style="height:0;width:0;"></iframe>
+<div id="menu" style="display:none"></div>
+<div id="showmenu" style="display:none"></div>
+<script language="JavaScript">
+var agt 	 = navigator.userAgent.toLowerCase();
+var is_ie	 = ((agt.indexOf("msie") != -1) && (agt.indexOf("opera") == -1));
+var guides={
+	'common' : {'diy' : {'setting_core' : ['核心功能','http://test.cn'],'usercp' : ['用户管理','/admin.php?action=usercp'],'setgroup_level' : ['用户组管理','/admin.php?action=setgroup&job=level'],'setmodule' : ['模块管理设置','/admin.php?action=setmodule']}}
+}
+var titles={'0' : '核心功能设置','1' : '自定义导航设置','2' : '注册登陆设置','3' : '目录部署设置','4' : '发表相关设置','5' : '通行整合设置','6' : '用户管理设置','7' : '用户组管理设置','8' : '分类基本设置','9' : '分类内容设置','10' : '分类评论设置','11' : '朋友圈管理设置','12' : '模块&缓存','13' : '公告管理设置','14' : '广告管理设置','15' : '投票数据管理','16' : '爱好管理设置','17' : '标签Tag管理','18' : '风格管理设置','19' : '网站辅助管理','20' : '网站安全过滤','21' : '数据库管理','diy' : '常用选项'}
+var cate	 = 'common';
+var action	 = '';
+var type	 = '';
+function uptopguide(id){
+	var obj  = document.getElementById('topguide-entry');
+	var objs = obj.getElementsByTagName('li');
+	for (var i=0;i<objs.length;i++) {
+		objs[i].className = objs[i].id==id ? 'li1' : '';
+	}
+}
+function upleft(t){
+	var obj  = document.getElementById('left');
+	var objs = obj.getElementsByTagName('a');
+	for (var i=0;i<objs.length;i++) {
+		objs[i].className = objs[i].id==t ? 'a1' : '';
+	}
+}
+function showleft(id,t,url){
+	cate = id;
+	var obj 	= document.getElementById('left');
+	var html	= '<dl>';
+	var guide	= guides[id];
+	url  = typeof url	!= 'undefined' ? url : '';
+	type = typeof t 	!= 'undefined' ? t	 : '';
+	for (i in guide) {
+		var subs = guide[i];
+		html += '<dt>' + titles[i] + '</dt><dd>';
+		for (j in subs) {
+			var sub = subs[j];
+			html += '<a id="'+j+'" style="cursor:pointer" onclick="return initguide(\''+id +'\',\''+j+'\')">'+sub[0]+'</a>';
+			if (url == '') {
+				if (type == '') {
+					url = sub[1];
+					type = j;
+				} else if(j == type) {
+					url = sub[1];
+				}
+				action = i;
+			}
+		}
+		html += '</dd>';
+	}
+	obj.innerHTML = html + '</dl>';
+	uptopguide(cate);
+	upleft(type);
+	parent.main.location = url;
+	return false;
+}
+function showtitle(){
+	var obj = document.getElementById('guide');
+	var guide = guides[cate];
+	var html = '<span class="fr s1" style="margin:0 16px">用户: cmblog 级别: 管理员　|　<a class="s0" href="index.php" target="_blank">博客首页</a>　<a class="s0" href="admin.php">后台首页</a>　<a class="s0" href="admin.php?action=quit">注销</a></span>';
+	if (action && type) {
+		html += '<h1>' + titles[action] + ' &raquo; ' + guide[action][type][0] + '</h1>';
+	} else {
+		html += '<h1>后台首页</h1>';
+	}
+	obj.innerHTML = html;
+}
+function initguide(id,t,url){
+	showleft(id,t,url);
+	showtitle();
+	return false;
+}
+function IsElement(id){
+	return document.getElementById(id)!=null ? true : false;
+}
+function addEvent(el,evname,func){
+	if (is_ie) {
+		el.attachEvent("on" + evname,func);
+	} else {
+		el.addEventListener(evname,func,true);
+	}
+};
+function removeEvent(el,evname,func){
+	if (is_ie) {
+		el.detachEvent("on" + evname,func);
+	} else {
+		el.removeEventListener(evname,func,true);
+	}
+};
+function ietruebody(){
+	return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body;
+}
+initguide(cate,type,'/admin.php?action=admin');
+document.onkeydown = function() {
+	if (window.event.keyCode==27) {
+		if (IsElement('menubg')) {
+			closemenu();
+		}
+	}
+}
+</script>
+</body>
+</html>

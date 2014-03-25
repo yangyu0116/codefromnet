@@ -1,0 +1,13 @@
+function delHtmlCode($vStr) 
+{ 
+        for($i=0;$i<strlen($vStr);$i++) 
+        { 
+        if (substr($vStr,$i,1)=="<") 
+        { 
+                while(substr($vStr,$i,1)!=">")$i++; 
+                $i++; 
+        } 
+                $Str=$str.substr($vStr,$i,1); 
+        } 
+        return($Str); 
+}

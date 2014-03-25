@@ -1,0 +1,16 @@
+Àý:
+ 
+³ÌÐò:
+$Sql = new Sql;
+$max = 3;
+
+$query = 'power='.$_GET['power'].'&'.'condition='.$_GET['condition'];
+$user_info = $Sql->listAlldate($_GET['page'],$max,$sql,$db);
+$gotopage = $Sql->gotoPage($_GET['page'],'page',$max,$sql,$db,$query);
+$tpl->assign('gotopage',$gotopage);
+
+ 
+Ò³Ãæ£º
+<td width="193" align="right"><table width="200" border="0" cellpadding="0" cellspacing="1" bgcolor="#cccccc" class="table_bk">
+      <%{$gotopage}%>
+</table></td>

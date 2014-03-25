@@ -1,0 +1,266 @@
+非法字符替换程序
+
+<?php
+        
+        //********************************************************
+        //--        程序名称：StrSwap V1.0
+        //--        程序编写：cngift@163.com
+        //--        完成：        2002-8-1
+        //--        程序用途：Get或Post提交值的非法数据处理
+        //--        备注：        本程序需要加载在所有程序处理前使用，以便自动进行
+        //--                        程序中使用的变量的替换
+        //--        Copyright By cngift ◎ 2002
+        //********************************************************
+        
+class StrSwap{
+        
+        //当以Get方式提交变量时用于连接变量的连接符
+        var $GetSplitStr = "&&";
+        var $TempArray = array();
+        var $VariableArray = array();
+        
+        //********************************************************
+        //--        程序名称：Main()
+        //--        程序用途：本类的默认运行方式
+        //--        传入参数：无
+        //********************************************************        
+        
+        function Main(){
+        
+                global $REQUEST_METHOD;
+                if("GET"==$REQUEST_METHOD){
+                
+                        $this->SubGetStrToArray();
+                
+                }
+                if("OST"==$REQUEST_METHOD){
+                
+                        $this->SubPostStrToArray();
+                
+                }
+                
+                $this->GlobalVariable();
+        
+        
+        
+        }
+        
+        //********************************************************
+        //--        程序名称：SubGetStrToArray()
+        //--        程序用途：当变量以Get方式提交时所调用的方法
+        //--        传入参数：无
+        //********************************************************
+        
+        function SubGetStrToArray(){
+                
+                global $QUERY_STRING;
+                $this->TempArray = explode($this->GetSplitStr,$QUERY_STRING);
+                
+                for($i=0;$i<sizeof($this->TempArray);$i++){
+                
+                        $temp = explode('=',$this->TempArray[$i]);
+                        $this->VariableArray[$i][0] = $temp[0];
+                        $this->VariableArray[$i][1] = $this->StrReplace($temp[1]);
+                
+                }
+        
+        }
+
+        //********************************************************
+        //--        程序名称：SubPostStrToArray()
+        //--        程序用途：当变量以POST方式提交时所调用的方法
+        //--        传入参数：无
+        //********************************************************        
+
+        function SubPostStrToArray(){
+        
+                global $_POST;
+                reset($_POST);
+                for($i=0;$i<count($_POST);$i++){
+                        
+                        $this->VariableArray[$i][0] = key($_POST);
+                        $this->VariableArray[$i][1] = $this->StrReplace($_POST[key($_POST)]);                        
+                        next($_POST);
+                }
+        
+        }
+        
+        //********************************************************
+        //--        程序名称：StrReplace()
+        //--        程序用途：替换变量中的非法字符
+        //--        传入参数：变量值
+        //********************************************************        
+        
+        function StrReplace($str){
+        
+                $str = StripSlashes($str);
+                $str = str_replace(chr(92),'',$str);
+                $str = str_replace(chr(47),'',$str);        
+                $str = str_replace(chr(10).chr(13),"<br>",$str);
+                $str = str_replace('<',"&lt;",$str);
+                $str = str_replace('>',"&gt;",$str);
+                $str = str_replace(';',"；",$str);
+                $str = str_replace('"',"“",$str);
+                $str = str_replace("'","‘",$str);
+                $str = str_replace(" "," ",$str);
+                $str = str_replace("/**/"," ",$str);
+        
+                return trim($str);
+
+        }
+        
+        //********************************************************
+        //--        程序名称：GlobalVariable()
+        //--        程序用途：声明变量为全局变量方便其他程序调用
+        //--        传入参数：无
+        //********************************************************        
+                
+        function GlobalVariable(){
+        
+                for($i=0;$i<sizeof($this->VariableArray);$i++){
+                
+                        global $$this->VariableArray[$i][0];
+                        $$this->VariableArray[$i][0] = $this->VariableArray[$i][1];
+                
+                }
+        
+        }
+
+}
+
+?> 
+
+
+_____________________________________________________________________________________________________________________
+
+
+<?php
+        
+        //********************************************************
+        //--        程序名称：StrSwap V1.01
+        //--        程序编写：cngift@163.com
+        //--        完成：        2002-8-1
+        //--        程序用途：Get或Post提交值的非法数据处理
+        //--        备注：        本程序需要加载在所有程序处理前使用，以便自动进行
+        //--                        程序中使用的变量的替换
+        //--        由于发现严重BUG紧急升级
+        //--        Copyright By cngift ◎ 2002
+        //********************************************************
+        
+class StrSwap{
+        
+        //当以Get方式提交变量时用于连接变量的连接符
+        var $GetSplitStr = "&&";
+        var $TempArray = array();
+        var $VariableArray = array();
+        
+        //********************************************************
+        //--        程序名称：Main()
+        //--        程序用途：本类的默认运行方式
+        //--        传入参数：无
+        //********************************************************        
+        
+        function Main(){
+        
+                global $REQUEST_METHOD;
+                if("GET"==$REQUEST_METHOD){
+                
+                        $this->SubGetStrToArray();
+                
+                }
+                if("OST"==$REQUEST_METHOD){
+                
+                        $this->SubPostStrToArray();
+                
+                }
+                
+                $this->GlobalVariable();
+        
+        
+        
+        }
+        
+        //********************************************************
+        //--        程序名称：SubGetStrToArray()
+        //--        程序用途：当变量以Get方式提交时所调用的方法
+        //--        传入参数：无
+        //********************************************************
+        
+        function SubGetStrToArray(){
+                
+                global $QUERY_STRING;
+                $this->TempArray = explode($this->GetSplitStr,$QUERY_STRING);
+                
+                for($i=0;$i<sizeof($this->TempArray);$i++){
+                
+                        $temp = explode('=',$this->TempArray[$i]);
+                        $this->VariableArray[$i][0] = $temp[0];
+                        $this->VariableArray[$i][1] = $this->StrReplace($temp[1]);
+                
+                }
+        
+        }
+
+        //********************************************************
+        //--        程序名称：SubPostStrToArray()
+        //--        程序用途：当变量以POST方式提交时所调用的方法
+        //--        传入参数：无
+        //********************************************************        
+
+        function SubPostStrToArray(){
+        
+                global $_POST;
+                reset($_POST);
+                for($i=0;$i<count($_POST);$i++){
+                        
+                        $this->VariableArray[$i][0] = key($_POST);
+                        $this->VariableArray[$i][1] = $this->StrReplace($_POST[key($_POST)]);                        
+                        next($_POST);
+                }
+        
+        }
+        
+        //********************************************************
+        //--        程序名称：StrReplace()
+        //--        程序用途：替换变量中的非法字符
+        //--        传入参数：变量值
+        //********************************************************        
+        
+        function StrReplace($str){
+        
+                $str = StripSlashes($str);
+                $str = str_replace(chr(92),'',$str);
+                $str = str_replace(chr(47),'',$str);        
+                $str = str_replace(chr(10).chr(13),"<br>",$str);
+                $str = str_replace('<',"&lt;",$str);
+                $str = str_replace('>',"&gt;",$str);
+                $str = str_replace(';',"；",$str);
+                $str = str_replace('"',"“",$str);
+                $str = str_replace("'","‘",$str);
+                $str = str_replace(" "," ",$str);
+                $str = str_replace("/**/"," ",$str);
+        
+                return trim($str);
+
+        }
+        
+        //********************************************************
+        //--        程序名称：GlobalVariable()
+        //--        程序用途：声明变量为全局变量方便其他程序调用
+        //--        传入参数：无
+        //********************************************************        
+                
+        function GlobalVariable(){
+        
+                for($i=0;$i<sizeof($this->VariableArray);$i++){
+                
+                        global $$this->VariableArray[$i][0];
+                        ${$this->VariableArray[$i][0]} = $this->VariableArray[$i][1];
+                
+                }
+        
+        }
+
+}
+
+?> 

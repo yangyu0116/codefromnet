@@ -1,0 +1,12 @@
+<?php
+   setcookie("ID","WebUpdate",time()+60);       
+   if(!isset($_COOKIE['ID']) )
+      {
+         echo "过了10秒可以操作";
+      }
+else
+      {
+          echo "反之则没过10秒,不能操作";
+      }
+?> 
+

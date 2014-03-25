@@ -1,0 +1,26 @@
+$array = "<?php /n/ n";
+$array.= "$array = ";
+$array.= var_export($list,true);
+$array.="/n/n?>";
+writeFile("arrayarray.php",$array);
+
+
+function writeFile($file,$content,$mode='w')
+{
+    $oldmask = @umask(0);
+    $fp = @fopen($file,$mode);
+    
+    @flock($fp, 3);
+    if(!$fp)
+    {
+        Return false;
+    }
+    else
+    {
+        @fwrite($fp,$content);
+        @fclose($fp);
+        @umask($oldmask);
+        @chmod( $file, 0777 ); 
+        Return true;
+    }
+}

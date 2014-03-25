@@ -1,0 +1,16 @@
+$post_data = array();//初始化需要POST的数据
+$post_data['roadnum'] = "2";
+$o="";
+foreach ($post_data as $k=>$v)
+{
+   $o.= "$k=".urlencode($v)."&";
+}
+$post_data=substr($o,0,-1);
+   $ch = curl_init();
+curl_setopt($ch, CURLOPT_POST, 1);//如果你想PHP去做一个正规的HTTP POST，设置这个选项为一个非零值。这个POST是普通的 application/x-www-from-urlencoded 类型，多数被HTML表单使用。
+curl_setopt($ch, CURLOPT_URL, "http://www.xxx.com/xxx.php?code=1");  
+curl_setopt($ch, CURLOPT_HEADER, 1);//输出head信息
+curl_setopt($ch, CURLOPT_NOBODY, 0);//输出body内容
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);//传递一个作为HTTP “POST”操作的所有数据的字符串。
+   curl_exec($ch); 
+   curl_close($ch);

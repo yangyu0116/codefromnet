@@ -1,0 +1,39 @@
+if (!function_exists('file_put_contents'))
+{
+    defined('FILE_APPEND') || define('FILE_APPEND','FILE_APPEND');
+    defined('FILE_USE_INCLUDE_PATH') || define('FILE_USE_INCLUDE_PATH','FILE_USE_INCLUDE_PATH');
+     function file_put_contents($filename, $data, $flag = '')
+     {
+        $flag = explode('|', $flag);
+        $f_flag = in_array(FILE_APPEND, $flag) ? 'ab+' : 'wb+';
+        $f_uip = in_array(FILE_USE_INCLUDE_PATH, $flag) ? true : false;
+
+         if ($handle = fopen($filename, $f_flag, $f_uip))
+         {
+             if (in_array(LOCK_EX, $flag))
+             {
+                flock($handle,LOCK_EX);
+             }
+             if (is_resource($data))
+             {
+                $contents = '';
+                 while (!feof($data))
+                 {
+                    $contents .= fread($data, 1024);
+                 }
+                $data = $contents;
+             }
+             elseif (is_array($data))
+             {
+                $data = implode('',$data);
+             }
+            fwrite($handle,$data);
+            fclose($handle);
+             return true;
+         }
+         else
+         {
+             return false;
+         }
+     }
+}

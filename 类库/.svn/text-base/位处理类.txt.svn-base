@@ -1,0 +1,95 @@
+<?php
+/** 文件：位转换类
+  *
+  * 作者：帅的像人渣   QQ: 1191391   E-mail: [email]netcat2@21cn.com[/email]
+  *
+  */
+
+if(!defined("__BITTOVAR__"))
+{
+        define("__BITTOVAR__",1);
+        
+        class Bit2Var
+        {
+                var $RuleArr;
+                var $Data = 0;
+                
+                var $_Var_Data = Array();
+                
+                function Bit2Var($Data,$RuleArr)
+                {
+                        $this->Data = $Data;
+                        $this->RuleArr = $RuleArr;
+                }
+                
+                function SetRuleArr($Arr)
+                {
+                        $this->RuleArr = $Arr;
+                }
+                
+                function SetData($Data)
+                {
+                        $this->Data = $Data;
+                }
+                                
+                function Convert()
+                {
+                        $UsedBit = 0;
+                        for($i = 0; $i < Count($this->RuleArr); $i++)
+                        {
+                                if($this->RuleArr[$i] <= 0 ) continue;
+                                $ThisTurnData = pow(2, $this->RuleArr[$i]) - 1 << $UsedBit & $this->Data;
+                                $this->_Var_Data[$i] = $ThisTurnData >> $UsedBit;
+
+                                $UsedBit += $this->RuleArr[$i];
+                        }
+
+                        return $this->_Var_Data;
+                }
+        }
+
+        class Var2Bit
+        {
+                var $RuleArr;
+                var $Data = Array();
+                
+                function Var2Bit($Data, $RuleArr)
+                {
+                        $this->Data = $Data;
+                        $this->RuleArr = $RuleArr;
+                }
+                
+                function SetRuleArr($Arr)
+                {
+                        $this->RuleArr = $Arr;
+                }
+                
+                function SetData($Data)
+                {
+                        $this->Data = $Data;
+                }
+                                
+                function Convert()
+                {
+                    
+                        $UsedBit = 0;
+                        $Result = 0;
+                        $Result = (integer)$Result;
+                        
+                        for($i = 0; $i < Count($this->RuleArr); $i++)
+                        {
+                                if($this->RuleArr[$i] <= 0 ) continue;
+
+                                if(!$this->Data[$i]) $this->Data[$i] = 0;
+
+                $Result |= $this->Data[$i] << $UsedBit;
+
+                                $UsedBit += $this->RuleArr[$i];
+                        }
+                        
+                        return $Result;
+                }
+        }
+}
+
+?>

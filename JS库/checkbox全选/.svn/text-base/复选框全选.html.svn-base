@@ -1,0 +1,66 @@
+<style>
+BODY {FONT-SIZE: 9pt;}
+table {FONT-SIZE: 9pt;}
+</style>
+
+<input type=checkbox id=checkall onclick=check_all()><label for=checkall>全部选择</label>　　　　
+线程数：<input type=text id=the_thread value=10 size=2 maxlength=2 style="height:15px; font-size:12px;padding:0px">
+<br>
+<table border=0>
+<tr><td style="width:100px;over-flow:hidden"><span id=show></span></td>
+<td style="width:400px;">
+<table id=bar style="width:90%;height:10px;border:1px black solid;display:none"><tr>
+<td id=bar1 bgcolor=skyblue style="width:0%"></td>
+<td id=bar2 style="width:100%"></td>
+</tr></table>
+</td></tr>
+<tr><td colspan=2><span id=result></span></td></tr>
+</table>
+<script language="JavaScript">
+/*
+ This following code are designed and writen by Windy_sk <seasonx@163.net>
+ You can use it freely, but u must held all the copyright items!
+*/
+var total = 505;
+var thread_num;
+var pre_thread;
+var thread = new Array();
+var completed = 0;
+var start_time = null;
+
+for(i=0;i<total;i++)document.write("<input type=checkbox id=cbox>");
+
+function init_para(){
+    thread_num = parseInt(the_thread.value);
+    if(isNaN(thread_num)) thread_num = 10;
+    pre_thread = Math.floor(total/thread_num);
+    result.innerText = "";
+    bar1.style.width = "0%";
+    bar2.style.width = "100%";
+    bar.style.display = "";
+}
+
+function check_all(){
+    checkall.disabled = true;
+    init_para();
+    for(var i=0;i<thread_num;i++){
+        thread[i]=[setInterval("thread["+i+"][1]<pre_thread?check_unit("+i+"*pre_thread + thread["+i+"][1]++):clearInterval(thread["+i+"][0])",1),0];
+    }
+    thread[i]=[setInterval("thread["+i+"][1]<total%thread_num?check_unit("+i+"*pre_thread + thread["+i+"][1]++):clearInterval(thread["+i+"][0])",1),0];
+}
+
+function check_unit(num){
+    if(completed==0)start_time=new Date;
+    cbox[num].checked=checkall.checked;
+    completed++;
+    var cur_rate = Math.round(completed*100/total);
+    show.innerText = completed + "/" + total + " : " + cur_rate + "%";
+    bar1.style.width = cur_rate + "%";
+    bar2.style.width = (100-cur_rate) + "%";
+    if(completed == total){
+        completed = 0
+        checkall.disabled = false;
+        result.innerText = "("+total+"单元/"+thread_num+"线程，总共耗时："+((new Date)-start_time)+" ms)";
+    }
+}
+</script>

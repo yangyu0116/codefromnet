@@ -1,0 +1,330 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0060)http://v35.blog.sina.com.cn/myblog/friend.php?uid=1280213783 -->
+<HTML><HEAD><TITLE>Untitled Document</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT language=javascript> 
+	var bc = {};
+	bc.show = function () {};</SCRIPT>
+
+<META content="MSHTML 6.00.2900.3157" name=GENERATOR></HEAD>
+<BODY>
+<STYLE type=text/css>BODY {
+	BORDER-RIGHT: 0px; PADDING-RIGHT: 5px; BORDER-TOP: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 5px; MARGIN: 0px; BORDER-LEFT: 0px; PADDING-TOP: 0px; BORDER-BOTTOM: 0px; BACKGROUND-COLOR: transparent
+}
+BODY {
+	FONT-SIZE: 12px; COLOR: #000
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #000
+}
+DIV {
+	FONT-SIZE: 12px; COLOR: #000
+}
+SPAN {
+	FONT-SIZE: 12px; COLOR: #000
+}
+A {
+	FONT-SIZE: 12px; COLOR: #000
+}
+A {
+	TEXT-DECORATION: none
+}
+.send_msg {
+	BORDER-RIGHT: medium none; BORDER-TOP: medium none; BACKGROUND: url(http://image2.sina.com.cn/blog/tmpl/v3/images/datong/send.gif); BORDER-LEFT: medium none; WIDTH: 38px; BORDER-BOTTOM: medium none; HEIGHT: 18px
+}
+.nickname {
+	WIDTH: 105px; PADDING-TOP: 3px
+}
+.nickname A:hover {
+	TEXT-DECORATION: underline
+}
+.sbutton {
+	PADDING-TOP: 3px
+}
+.sbutton INPUT {
+	CURSOR: pointer
+}
+.dashline {
+	FONT-SIZE: 0px; MARGIN: 2px 0px 4px 4px; WIDTH: 178px; LINE-HEIGHT: 1px; HEIGHT: 2px
+}
+.dash21 {
+	MARGIN-LEFT: 10px; WIDTH: 198px; LINE-HEIGHT: 6px; HEIGHT: 6px
+}
+.fl_title {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0px 25px; WIDTH: 174px; PADDING-TOP: 10px
+}
+.dash_border {
+	
+}
+#listbody {
+	WIDTH: 187px; TEXT-ALIGN: center
+}
+#listbody .ems {
+	PADDING-TOP: 13px; TEXT-ALIGN: center
+}
+.errorMsg {
+	MARGIN: 5px 0px 0px 24px; WIDTH: 187px; COLOR: #ff0000; TEXT-ALIGN: left
+}
+UNKNOWN {
+	TEXT-ALIGN: right
+}
+TABLE.usr_info {
+	MARGIN: 10px 0px 0px 10px
+}
+TABLE.usr_info TD {
+	PADDING-BOTTOM: 6px
+}
+TABLE.usr_info TD.star {
+	WIDTH: 15px
+}
+TABLE.usr_info TD.photo {
+	WIDTH: 25px
+}
+TABLE.usr_info TD.usrname {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 6px; PADDING-BOTTOM: 0px; WIDTH: 104px; PADDING-TOP: 6px
+}
+TABLE.usr_info TD.sendMsg INPUT {
+	CURSOR: pointer
+}
+</STYLE>
+
+<SCRIPT language=javascript> 
+	function dwlinks(){             
+		var links=parent.document.getElementsByTagName("link");
+		for(var i=0; i<links.length; i++){
+			document.write('<link media="all" href='+links[i].href+' type="text/css" rel="Stylesheet"/>');
+		}
+	}
+	dwlinks();
+	</SCRIPT>
+
+<SCRIPT id=dataScript type=text/javascript></SCRIPT>
+
+<SCRIPT type=text/javascript>
+	 var usrid=1280213783;var MFL = [1279940810];var OFL = [1281187281];	</SCRIPT>
+
+<SCRIPT type=text/javascript>
+	<!--
+function $(x) {
+	return document.getElementById(x);	
+}
+function $C(x) {
+	return document.createElement(x);	
+}
+function isRecentUpdate(postDate){
+	var ins = 86400000;
+	var todayDate = new Date().getTime();
+	return todayDate - postDate*1000 < ins;
+}
+function _show(type){
+	var obj = cfg[type];
+	var data0 = eval(obj.data);
+	if(!obj.isOpen){
+		var title_bar = $C('div');
+		title_bar.className = 'fl_title';
+		var str = '<a href="javascript:;">' + obj.txt + '</a>';
+		trace(obj.isOpen,"#0000FF");
+		str += ' <img id="openArrow" align="absmiddle" src="http://image2.sina.com.cn/blog/tmpl/v3/images/datong/ls_up.gif" />';
+		title_bar.style.cursor = "pointer";
+		title_bar.onclick = function(){
+			var bar = $('openArrow');
+			if(/up/.test(bar.src)){
+				bar.src = 'http://image2.sina.com.cn/blog/tmpl/v3/images/datong/ls_down.gif';
+				$(type).style.display = "";
+			}else{
+				bar.src = 'http://image2.sina.com.cn/blog/tmpl/v3/images/datong/ls_up.gif';
+				$(type).style.display = "none";
+			}
+			Resize();
+		}
+		title_bar.innerHTML = str;
+		$('contentBody').appendChild(title_bar);
+	}
+	var logType = "'" + obj.logFlag + "'";
+	var len = data0.length;
+	var ls = $C('div');
+	var html = '';
+	if(!obj.isOpen){
+		ls.style.display = "none";
+		html = '<div class="dash21 dashed"> </div>'
+	}
+	ls.id = type;
+	for(var i=0;i<len;i++){
+		var uid = data0[i];
+		var usrinfo = userInfoList[uid];
+		if(usrinfo.photo)
+			var photo = 'http://upic.album.sina.com.cn/pic_4/' + usrinfo.photo;
+		else
+			var photo = 'http://image2.sina.com.cn/blog/tmpl/v3/images/fl_defualt.jpg';
+		var nickname = usrinfo.nick;
+		var blogurl = 'http://blog.sina.com.cn/' + usrinfo.url;
+		var blogtitle = usrinfo.blogtitle;
+		var starStr = '';
+		if(isRecentUpdate(usrinfo.newupdate)){
+			starStr = '<img alt="该博客最近有新文章" src="http://image2.sina.com.cn/blog/tmpl/v3/images/datong/star.gif" />';
+		}
+		html += '\
+		<table cellspacing="0" cellpadding="0" class="usr_info dashed">\
+		  <tr>\
+		    <td class="star">'+starStr+'</td>\
+		    <td class="photo"><a href="javascript:;" onclick="showCard(' + uid + ',event,\'lfl\'); return false;" border="0"><img height=23 alt="查看个人名片" style="border:1px solid #000000;" onerror="this.src=\'http://image2.sina.com.cn/blog/tmpl/v3/images/fl_defualt.jpg\'" src="'+photo+'" width=23></a></td>\
+		    <td class="usrname" valign="top"><a href="' + blogurl + '" title="' + blogtitle + '" target=_blank onclick="sendLog(' + logType + ')" border="0">'+ nickname +'</a></td>\
+		    <td class="sendMsg"><input type="button" onclick="sendMSG('+uid+');" class="send_msg" /></td>\
+		  </tr>\
+		</table>\
+		';
+	}
+	if(len == 0){
+		html += '<div class="errorMsg">'+obj.emptyMsg+'</div>';
+	}
+	if(len >= 10){
+		var locatype = cfg[type].si;
+		var func = "parent.href='#" + locatype + "',parent.setFlLoc('"+usrid+"','"+locatype+"')";
+		var bo = "";
+		if(obj.isOpen){
+			bo = 'dash_border dashed';
+		}
+		html += '<DIV class="sysBr180 '+ bo  +'" style="text-align:right; margin:7px 0 0 18px; padding-bottom:6px;"><A onclick="'+func+'" href="javascript:;"><IMG class=more src="http://image2.sina.com.cn/blog/tmpl/v3/theme/images/blank.gif" border=0></A></DIV>';
+
+	}
+	ls.innerHTML = html;
+	$('contentBody').appendChild(ls);
+} 
+function showCard(oid,event,l) {
+	if(parent){
+		parent.bc.show(oid,event,window,l);
+	}else{
+		bc.show(oid,event,null,l);
+	}
+}
+function sendMSG(oid){
+	if(parent){
+		parent.bcDialog.show("http://v35.blog.sina.com.cn/myblog/message/send_message.php?toid="+oid, 274, 255);
+	}else{
+		bcDialog.show("http://v35.blog.sina.com.cn/myblog/message/send_message.php?toid="+oid, 274, 255);
+	}
+}
+function writeData() {
+	$('listbody').style.display = 'none';
+	_show('myFriendList');
+	if(typeof(OFL) != 'undefined'){
+		_show('otherFriendList');
+	}
+	Resize();
+}
+function Resize(){
+	try{
+		parent.iframeResize(window.frameElement.id,document.body.scrollHeight);
+	}catch(e){}
+}
+function errorMsg(){
+	$('listbody').innerHTML = "好友列表加载中...";
+}
+var timeoutNum = 5;
+var t = 0;
+var timer;
+var userInfoList = {};
+var trace = function (){}
+var cfg = {
+	myFriendList : {
+		data : 'MFL',
+		txt : '我的好友',
+		isOpen : true,
+		emptyMsg : '博主还没有添加好友',
+		si : 'goodfriend',
+		logFlag : 'lfl1'/* left friend list 1 */
+	},
+	otherFriendList : {
+		data : 'OFL',
+		txt : '其他联系人',
+		isOpen : false,
+		emptyMsg : '博主还没有添加其他联系人',
+		si : 'normalfriend',
+		logFlag : 'lfl2'/* left friend list 2 */
+	}
+};
+function loadUIC(uidArray,option){
+	trace('LOAD_UIC_DATA',"#F00");
+	clearInterval(timer);
+	uic_data = undefined;
+	t = 0;
+	var url = 'http://util.blog.sina.com.cn/ui?t=s&' + uidArray.join(',');
+	//var url = 'http://v35.blog.sina.com.cn/js/sample_uic_data.js';
+	trace(url);
+	$('dataScript').src = url;
+	var timer = setInterval(function (){
+		trace(uic_data);
+		if(typeof(uic_data) != "undefined")
+		{
+			clearInterval(timer);
+			//用户数据入库
+			var len = uic_data.length;
+			for(var i=0;i<len;i++){
+				var obj = uic_data[i];
+				var uid = obj.uid;
+				userInfoList[uid] = {};
+				for(var j in obj){
+					userInfoList[uid][j] = obj[j];
+				}
+			}
+			eval(option['complete'])();
+	    }
+		if(t == timeoutNum)
+		{
+			uic_data = [];
+			clearInterval(timer);
+			eval(option['error'])();
+		}
+	  t++;
+	},500);
+}
+function addHTML(oParentNode, sHTML) {
+	if(window.addEventListener) {// for MOZ
+		var oRange = oParentNode.ownerDocument.createRange();
+		oRange.setStartBefore(oParentNode);
+		var oFrag = oRange.createContextualFragment(sHTML);
+		oParentNode.appendChild(oFrag);
+	}
+	else {// for IE5+
+		oParentNode.insertAdjacentHTML("BeforeEnd", sHTML);
+	}
+}
+function sendLog(_type) {
+	addHTML(document.body, "<img style='display: none;' src='http://stat.blog.sina.com.cn/i.html?fl&" + _type + "&nick&" + new Date().valueOf() + "'>");
+	return false; 
+}
+window.onload = function () {
+	var uidList = new Array();
+	Resize();
+	if(MFL){
+		uidList = MFL.slice(0);
+		if(typeof(OFL) != 'undefined'){
+			uidList = uidList.concat(OFL);
+		}
+	}
+	loadUIC(uidList,{
+		complete : writeData,
+		error : errorMsg
+	})
+}
+	-->
+	</SCRIPT>
+
+<SCRIPT src="friend.files/bc.js" type=text/javascript></SCRIPT>
+
+<SCRIPT language=JavaScript>
+<!--
+document.onclick = function () {
+	try{
+		parent.bc.hidden();
+	}
+	catch(e)  {
+		bc.hidden();
+	}
+}
+//-->
+</SCRIPT>
+
+<DIV id=listbody>
+<DIV class=ems>好友列表加载中...</DIV></DIV>
+<DIV class=links id=contentBody></DIV></BODY></HTML>

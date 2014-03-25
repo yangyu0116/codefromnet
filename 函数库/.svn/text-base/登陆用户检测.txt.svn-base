@@ -1,0 +1,40 @@
+/***************************************
+  函数作用:登陆用户检测
+  函数参数:
+  修改时间:20:39 2006-9-25
+***************************************/
+Function CheckUser()
+{
+     global $user_info,$db,$tablepre,$SET;
+
+     if( strlen($user_info[sid])!=32)
+	 {      
+           Out();
+           return false;
+     }
+     $CheckInfo = $db->QueryFirst("select * from {$tablepre}session where uid=$user_info[uid] and sid='$user_info[sid]' limit 1");
+     $ip        = get_ip();
+     if( !$CheckInfo)
+     {
+           Out();
+           $db->Query("delete from {$tablepre}session where uid=$user_info[uid] limit 1");
+           return false ;
+     }
+     if( time()-$CheckInfo[lastactive]>$SET[cookie_expire]*3600)
+     {
+           Out();
+           $db->Query("delete from {$tablepre}session where uid=$user_info[uid] limit 1");
+           return false ;
+     }
+     if( md5($CheckInfo[str].$ip)==$user_info[sid])
+     {
+          $db->Query("update {$tablepre}session set lastactive=".time()." where uid=$user_info[uid] limit 1");
+          return true;
+     }
+     else
+     {
+          Out();
+          $db->Query("delete from {$tablepre}session where uid=$user_info[uid] limit 1");
+          return false;
+     }
+}

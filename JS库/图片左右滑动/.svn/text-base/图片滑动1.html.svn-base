@@ -1,0 +1,77 @@
+<div id=demo style=overflow:hidden;height:160;width:200;>
+    <div id=demo1 style=fload:left;width:863px;>
+        <div style="margin:0;padding:0;float:left;">
+        <img src="http://www.webjx.com/img/200406301.jpg" style=fload:left;width:100px;/>
+        <br/>
+        一
+        </div>
+
+        <div style="margin:0;padding:0;float:left;">
+        <img src="http://www.webjx.com/img/200406301.jpg" style=fload:left;width:100px;/>
+        <br/>
+        二
+        </div>
+
+        <div style="margin:0;padding:0;float:left;">
+        <img src="http://www.webjx.com/img/200406301.jpg" style=fload:left;width:100px;/>
+        <br/>
+        三
+        </div>
+
+        <div style="margin:0;padding:0;float:left;">
+        <img src="http://www.webjx.com/img/200406301.jpg" style=fload:left;width:100px;/>
+        <br/>
+        四
+        </div>
+    </div>
+</div>
+<div onmouseover="doMoveToRight()" onmouseout="stopMoveToRight();">&lt;&lt;</div>
+<div onmouseover="doMoveToLeft()" onmouseout="stopMoveToLeft();">&gt;&gt;</div>
+<div id="divshow"></div>
+<script>
+var speed=10;
+demo1.innerHTML=demo1.innerHTML+demo1.innerHTML;
+//向左
+function Marquee()
+{
+    if(demo1.offsetWidth/2-demo.scrollLeft<=33){//这里的33是随实际情况而定的，为了让调整位置时更柔和
+        demo.scrollLeft-=demo1.offsetWidth/2;
+    }else
+    {
+        demo.scrollLeft++;
+    }
+}
+var MyMar;
+function doMoveToLeft()
+{
+    MyMar=setInterval(Marquee,speed);
+}
+
+function stopMoveToLeft()
+{
+    clearInterval(MyMar);
+}
+
+//向右
+function Marquee2()
+{
+    //这里的100是随实际情况而定的，为了让调整位置时更柔和
+    if(demo.scrollLeft<=100){
+    //这里的32是随实际情况而定的，为了让调整位置时更柔和
+        demo.scrollLeft+=(demo1.offsetWidth/2-32);
+    }else
+    {
+        demo.scrollLeft--;divshow.innerHTML=""+demo.scrollLeft;
+    }
+}
+
+function doMoveToRight()
+{
+    MyMar=setInterval(Marquee2,speed);
+}
+
+function stopMoveToRight()
+{
+    clearInterval(MyMar);
+}
+</script>

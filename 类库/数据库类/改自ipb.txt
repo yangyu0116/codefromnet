@@ -1,0 +1,234 @@
+<?php
+<?
+class db_driver {
+
+    var $obj = array ( "sql_database"   => ""         ,
+                       "sql_user"       => "root"     ,
+                       "sql_pass"       => ""         ,
+                       "sql_host"       => "localhost",
+                       "sql_port"       => ""         ,
+                       "persistent"     => "0"         ,
+                       "cached_queries" => array(),
+                     );
+                     
+     var $query_id      = "";
+     var $connection_id = "";
+     var $query_count   = 0;
+     var $record_row    = array();
+     var $record_set    = array();
+     var $return_die    = 0;
+     var $error         = "";
+
+
+    function connect() {
+    
+        if ($this->obj['persistent'])
+        {
+            $this->connection_id = mysql_pconnect( $this->obj['sql_host'] ,
+                                                   $this->obj['sql_user'] ,
+                                                   $this->obj['sql_pass'] 
+                                                );
+        }
+        else
+        {
+            $this->connection_id = mysql_connect( $this->obj['sql_host'] ,
+                                                  $this->obj['sql_user'] ,
+                                                  $this->obj['sql_pass'] 
+                                                );
+        }
+        
+        if ( !mysql_select_db($this->obj['sql_database'], $this->connection_id) )
+        {
+            echo ("ERROR: Cannot find database ".$this->obj['sql_database']);
+        }
+    }
+
+    function executeQuery($the_query) {
+        
+        $this->record_set    = array();
+        $this->query_id = mysql_query($the_query, $this->connection_id);
+      
+        if (! $this->query_id )
+        {
+            $this->fatal_error("mySQL query error: $the_query");
+        }
+        
+        $this->query_count++;
+        
+        $this->obj['cached_queries'][] = $the_query;
+        
+        while($this->record_row = mysql_fetch_array($this->query_id, MYSQL_ASSOC))
+        {
+            $this->record_set[]=$this->record_row;
+        }
+        return $this->record_set;
+    }
+
+function executeUpdate($the_query)
+    {
+        $this->query_id = mysql_query($the_query, $this->connection_id);
+      
+        if (! $this->query_id )
+        {
+            $this->fatal_error("mySQL query error: $the_query");
+        }
+        
+        $this->query_count++;
+        
+        $this->obj['cached_queries'][] = $the_query;
+        
+        return $this->query_id;
+    }
+
+    function get_affected_rows() {
+        return mysql_affected_rows($this->connection_id);
+    }
+
+    function get_num_rows() {
+        return mysql_num_rows($this->query_id);
+    }
+
+    function get_insert_id() {
+        return mysql_insert_id($this->connection_id);
+    }  
+
+    function get_query_cnt() {
+        return $this->query_count;
+    }
+
+    function free_result($query_id="") {
+    
+           if ($query_id == "") {
+            $query_id = $this->query_id;
+        }
+        
+        @mysql_free_result($query_id);
+    }
+
+    function close_db() { 
+        return mysql_close($this->connection_id);
+    }
+
+    function get_table_names() {
+    
+        $result     = mysql_list_tables($this->obj['sql_database']);
+        $num_tables = @mysql_numrows($result);
+        for ($i = 0; $i < $num_tables; $i++)
+        {
+            $tables[] = mysql_tablename($result, $i);
+        }
+        
+        mysql_free_result($result);
+        
+        return $tables;
+       }
+       
+    function get_result_fields($query_id="") {
+    
+           if ($query_id == "")
+           {
+            $query_id = $this->query_id;
+        }
+    
+        while ($field = mysql_fetch_field($query_id))
+        {
+            $Fields[] = $field;
+        }
+        
+        //mysql_free_result($query_id);
+        
+        return $Fields;
+       }
+    
+    
+    function fatal_error($the_error) {
+        global $INFO;
+        
+        
+        // Are we simply returning the error?
+        
+        if ($this->return_die == 1)
+        {
+            $this->error    = mysql_error();
+            $this->error_no = mysql_errno();
+            $this->failed   = 1;
+            return;
+        }
+        
+        $the_error .= "nnmySQL error: ".mysql_error()."n";
+        $the_error .= "mySQL error code: ".$this->error_no."n";
+        $the_error .= "Date: ".date("l dS of F Y h:i:s A");
+        
+        $out = "<html><head><title>Invision Power Board Database Error</title>
+               <style>P,BODY{ font-family:arial,sans-serif; font-size:11px; }</style></head><body>
+               &nbsp;<br><br><blockquote><b>看起来我们的数据库出现了一点错误 {$INFO['board_name']} database.</b><br>
+               你可以通过点击 <a href=\"javascript:window.location=window.location;\">此处</a>来刷新本页, 如果问题依然存在, 你可以点击 <a href='mailto:{$INFO['email_in']}?subject=SQL+Error'>此处</a>来联系论坛管理员
+               <br><br><b>Error Returned</b><br>
+              
+                <br>We apologise for any inconvenience</blockquote></body></html>";
+             /*<!--<form name='mysql'><textarea rows=\"15\" cols=\"60\">".htmlspecialchars($the_error)."</textarea></form>
+                --> */  
+    
+       echo($out);
+        die("");
+    }
+    
+    function compile_db_insert_string($data) {
+    
+        $field_names  = "";
+        $field_values = "";
+        
+        foreach ($data as $k => $v)
+        {
+            $v = preg_replace( "/'/", "\'", $v );
+            //$v = preg_replace( "/#/", "\#", $v );
+            $field_names  .= "$k,";
+            $field_values .= "'$v',";
+        }
+        
+        $field_names  = preg_replace( "/,$/" , "" , $field_names  );
+        $field_values = preg_replace( "/,$/" , "" , $field_values );
+        
+        return array( 'FIELD_NAMES'  => $field_names,
+                      'FIELD_VALUES' => $field_values,
+                    );
+    }
+
+    function compile_db_update_string($data) {
+        
+        $return_string = "";
+        
+        foreach ($data as $k => $v)
+        {
+            $v = preg_replace( "/'/", "\'", $v );
+            $return_string .= $k . "='".$v."',";
+        }
+        
+        $return_string = preg_replace( "/,$/" , "" , $return_string );
+        
+        return $return_string;
+    }
+        function field_exists($field, $table) {
+        
+        $this->return_die = 1;
+        $this->error = "";
+        
+        $this->query("SELECT COUNT($field) as count FROM $table");
+        
+        $return = 1;
+        
+        if ( $this->failed )
+        {
+            $return = 0;
+        }
+        
+        $this->error = "";
+        $this->return_die = 0;
+        $this->error_no   = 0;
+        $this->failed     = 0;
+        
+        return $return;
+    }
+    
+} // end class
+?>

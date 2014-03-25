@@ -1,0 +1,32 @@
+<?php
+include("page.class.php");
+$totalRec = 1000;
+$page = isset($_GET["page"]) ? $_GET["page"] : 1;
+$pageList = new myPageList($page, $totalRec, 5, 5);
+$theList = $pageList->getList(PAGELIST_MODE_RANDOM);
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>test : page.class.php</title>
+</head>
+
+<body>
+<?php if($pageList->itsFastAdvance){ ?>
+    <a href="?page=<?=$pageList->itsFastAdvance?>">goto: <?=$pageList->itsFastAdvance?></a>
+<?php } ?>
+<?php foreach($theList as $i){ ?>
+<?php if($i != $page){ ?>
+    <a href="?page=<?=$i?>"><?=$i?></a>
+<?php }else{ ?>
+    <?=$i?>
+<?php } ?>
+<?php } ?>
+<?php if($pageList->itsFastRetreat){ ?>
+    <a href="?page=<?=$pageList->itsFastRetreat?>">goto: <?=$pageList->itsFastRetreat?></a>
+<?php } ?>
+ now: <?=$page?>/<?=$pageList->getTotalPage()?>
+ start index: <?=$pageList->getStart()?>
+</body>
+</html>

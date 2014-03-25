@@ -1,0 +1,37 @@
+<?php
+if(isset($_GET["domain"])){
+    $url = str_replace("{domain}", $_GET["domain"], "http://panda.[url]www.net.cn/cgi-bin/Check.cgi?domain1=[/url]{domain}&domain={domain}&image.x=14&image.y=14&big5=n&sign=2&com=yes&cn=yes&comcn=yes&mobi=yes");
+    //$req = new httpRequest("http://panda.[url]www.net.cn/cgi-bin/Check.cgi?domain1=lalalu&domain=lalalu&image.x=14&image.y=14&big5=n&sign=2&com=yes&cn=yes&comcn=yes&mobi=yes[/url]");
+    $req = new httpRequest($url);
+    $req->setHead("Referer", "http://www.net.cn/");
+    $req->setHead("Accept", "text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+    $req->setHead("Accept-Language", "zh-cn,zh;q=0.5");
+    $req->setHead("Accept-Encoding", "gzip,deflate");
+    $req->setHead("Accept-Charset", "gb2312,utf-8;q=0.7,*;q=0.7");
+    $req->setHead("Keep-Alive", "300");
+    if($req->send()){
+        preg_match_all(iconv("utf-8", "gb2312", "~.*?>([^=<]+?)=&gt; 已被注册~is"), $req->itsContent, $clips);
+        echo "已被注册：";
+        print_r($clips[1]);
+        preg_match_all(iconv("utf-8", "gb2312", "~.*?>([^=<]+?)=&gt;<span class=\"style1\">没有被注册</span>~is"), $req->itsContent, $clips);
+        echo "<br />未被注册：";
+        print_r($clips[1]);
+    }else{
+        echo $req->itsError;
+    }
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>test</title>
+</head>
+
+<body>
+<form action="httpRequest.php">
+    域名查询：<input type="text" name="domain" />
+    <input type="submit" />
+</form>
+</body>
+</html>
+?>

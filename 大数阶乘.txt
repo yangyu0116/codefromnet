@@ -1,0 +1,25 @@
+<?php
+function jc($n) {
+    if ($n == 1) return $n;
+    if ($n % 2 == 0) {
+        return bcmul(bcmul(bcpow(2, $n/2), jc2($n-1)), jc($n/2));
+    } else {
+        return bcmul(bcmul(bcpow(2, ($n-1)/2), jc2($n)), jc(($n-1)/2));
+    }
+}
+
+function jc2($n) {
+    $result = '1';
+    for ($i = $n; $i>0; $i-=2) {
+        $result = bcmul($result, $i);
+    }
+    return $result;
+}
+
+set_time_limit(0);
+$b = explode(' ', microtime());
+echo jc(10000);
+$e = explode(' ', microtime());
+echo '<br>';
+echo ($e[0]+$e[1]) - ($b[0]+$b[1]);
+?>

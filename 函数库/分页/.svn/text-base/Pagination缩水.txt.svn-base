@@ -1,0 +1,47 @@
+<?
+function Pagination($total,$per)
+{
+/*++++++++++++++++++++++++++++++++
+函数名称：Pagination($total, $per, $page)
+功能：分页，并且提供相邻页的链接
+最后修订：西大浪人(simonlsy@vip.sina.com) 2005-4-8（西大浪人，你这日期不对）
+参与修改：纯粹误会（[url]http://www.zh5j.com）2005-4-7[/url]
+参数说明：
+$total ：: 记录总数
+$per ： 每页的记录数
+++++++++++++++++++++++++++++++++
+#预定义变量 $_SERVER 和 $_GET 是PHP4.1.0及以后版本使用
+#否则界于PHP3.0.0和PHP4.1.0的版本可用$GLOBALS[HTTP_SERVER_VARS]和$GLOBALS[HTTP_GET_VARS]代替
++++++++++++++++++++++++++++++++++*/
+    $page=$_GET[page];
+    if($page=="" || $page<1) $page=1;
+    $allpage=ceil($total/$per);//计算页数（取整返回）
+    $next=$page+1; //下一页
+    $pre=$page-1;//上一页
+    $startcount=$page-5;//中间页起始序号
+    $endcount=$page+5; //中间页终止序号
+    if($startcount<1) $startcount=1; //为了避免输出的时候产生负数，设置如果小于1就从序号1开始
+    if($allpage<$endcount)$endcount=$allpage;//页码+5的可能性就会产生最终输出序号大于总页码，那么就要将其控制在页码数之内
+
+    $query_string="http://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]?";//取得当前页的绝对地址加?号
+    foreach($_GET as$k=>$v){if($k!="page")$query_string.="$k=$v&";}#处理一下，将page=xxx的参数干掉。
+
+    if($allpage==1)echo "无分页";
+    else{
+        #页码大于1则输出首页和上一页
+        if($page>1)
+            echo "n<a href=\"{$query_string}page=1\">首页</a>n<a href=\"{$query_string}page=$pre\">上一页</a>";
+        #中间页处理，这个增加时间复杂度，减小空间复杂度
+        for($i=$startcount;$i<=$endcount;$i++)echo $page==$i?"n$i":"n<a href=\"{$query_string}page=$i\">$i</a>";
+        #页码小于最终页则输出末页和下一页
+        if($page<$allpage)
+            echo "n<a href=\"{$query_string}page=$next\">下一页</a>n<a href=\"{$query_string}page=$allpage\">末页</a>";
+    }
+}
+?>
+<?
+/*********************
+ 用法： 200000条数据 每页输出30条
+***********************/
+Pagination("200000", "30");
+?>

@@ -1,0 +1,23 @@
+
+<input name="fromdate" id="fromdate" type="text" size="10" value="" > <input name="f_date" type="image" id="f_date" src="./image/calendar.gif" align="middle" title="选择日期">  <input name="todate" id="todate" type="text" size="10" value="" > <input name="t_date" type="image" id="t_date" src="./image/calendar.gif" align="middle" title="选择日期"> <br>(格式:1970-01-01)
+
+<SCRIPT LANGUAGE="JavaScript" src="./image/calendar/calendar.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" src="./image/calendar/calendar_cn.js"></SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" src="./image/calendar/calendar_setup.js"></SCRIPT>
+<link href="./image/calendar/calendar.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+Calendar.setup({
+	inputField     :    "fromdate",
+	ifFormat       :    "%Y-%m-%d",
+	button         :    "f_date",
+	singleClick    :    true,
+	step           :    1
+});
+Calendar.setup({
+	inputField     :    "todate",
+	ifFormat       :    "%Y-%m-%d",
+	button         :    "t_date",
+	singleClick    :    true,
+	step           :    1
+});
+</script>

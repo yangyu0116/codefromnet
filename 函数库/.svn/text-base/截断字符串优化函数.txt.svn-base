@@ -1,0 +1,14 @@
+//½Ø¶Ï×Ö·û´®ÓÅ»¯º¯Êý(¿É±ÜÃâ?×Ö·û³öÏÖ)
+function CnSubstr($content,$length,$endStr='...') {
+if(strlen($content)>$length){
+$num=0;
+if($endStr=='')
+$length = $length + 3;
+for($i=0;$i<$length-3;$i++) {
+if(ord($content[$i])>127)$num++;
+}
+$num%2==1 ? $content=substr($content,0,$length-4) content=substr($content,0,$length-3);
+$content.=$endStr;
+}
+return $content;
+}

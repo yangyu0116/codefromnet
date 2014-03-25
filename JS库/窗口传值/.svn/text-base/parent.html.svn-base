@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> New Document </TITLE>
+<!--
+请写一个HTML页面，在第一个页面上单击Open按钮后打开一个新窗体（子窗体，原来窗体还存在，子窗体上菜单，工具栏，任务栏等一个都不需要），在新窗体上有UserName，Email，Address，Type等信息，其中Type为下拉列表，填写完后点击OK按钮后，子窗体上的信息将显示在父窗体上，并同时关闭子窗体。
+-->
+</HEAD>
+<BODY>
+ <form name="form1" id="form1">
+  <center>
+  <font color="blue" size="5">父窗口</font><br/>
+  <table>
+  <tr><td>UserName:</td><td><input type="text" name="UserName" id="UserName" value=""/>&nbsp;</td></tr>
+  <tr><td>Email:</td><td><input type="text" name="Email" id="Email" value=""/>&nbsp;</td></tr>
+  <tr><td>Address:</td><td><input type="text" name="Address" id="Address" value=""/>&nbsp;</td></tr>
+  <tr><td>Type:</td><td><input type="text" name="Type" id="Type" value=""/>&nbsp;</td></tr>
+  <tr><td align=center><input type="button" name="button" id="button" value="OPEN" onclick="javascript:openwin('son.html')"/></td></tr>
+  </table>
+ </form>
+</BODY>
+</HTML>
+
+<script language="javascript"> 
+function openwin(url)
+{ 
+    var iWidth=310; //窗口宽度 
+    var iHeight=210;//窗口高度 
+    var iTop=(window.screen.height-iHeight)/2; 
+    var iLeft=(window.screen.width-iWidth)/2; 
+    window.open(url,"Box","Scrollbars=no,Toolbar=no,Location=no,Direction=no,Resizeable=no, Width="+iWidth+" ,Height="+iHeight+",top="+iTop+",left="+iLeft); 
+}
+function setValue(strValue){
+    document.getElementById("UserName").value = strValue[0];
+	document.getElementById("Email").value = strValue[1];
+	document.getElementById("Address").value = strValue[2];
+	document.getElementById("Type").value = strValue[3];
+}
+</script>

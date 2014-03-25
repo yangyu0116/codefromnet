@@ -1,0 +1,14 @@
+function uniqueByChild($array, $child){
+        $child = "['" . implode("']['", explode(',', $child)) . "']";
+        $buffer = array();
+        foreach($array as $index => $value){
+                eval("\$check = \$value{$child};");
+                if(in_array($check, $buffer)){
+                        unset($array[$index]);
+                }
+                else{
+                        $buffer[] = $check;
+                }
+        }
+        return $array;
+}

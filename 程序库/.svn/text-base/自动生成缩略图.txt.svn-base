@@ -1,0 +1,80 @@
+<?php
+$FILENAME="image_name";
+
+// 生成图片的宽度
+$RESIZEWIDTH=400;
+
+// 生成图片的高度
+$RESIZEHEIGHT=400;
+
+
+function ResizeImage($im,$maxwidth,$maxheight,$name){
+    $width = imagesx($im);
+    $height = imagesy($im);
+    if(($maxwidth && $width > $maxwidth) || ($maxheight && $height > $maxheight)){
+        if($maxwidth && $width > $maxwidth){
+            $widthratio = $maxwidth/$width;
+            $RESIZEWIDTH=true;
+        }
+        if($maxheight && $height > $maxheight){
+            $heightratio = $maxheight/$height;
+            $RESIZEHEIGHT=true;
+        }
+        if($RESIZEWIDTH && $RESIZEHEIGHT){
+            if($widthratio < $heightratio){
+                $ratio = $widthratio;
+            }else{
+                $ratio = $heightratio;
+            }
+        }elseif($RESIZEWIDTH){
+            $ratio = $widthratio;
+        }elseif($RESIZEHEIGHT){
+            $ratio = $heightratio;
+        }
+        $newwidth = $width * $ratio;
+        $newheight = $height * $ratio;
+        if(function_exists("imagecopyresampled")){
+              $newim = imagecreatetruecolor($newwidth, $newheight);
+              imagecopyresampled($newim, $im, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        }else{
+            $newim = imagecreate($newwidth, $newheight);
+              imagecopyresized($newim, $im, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        }
+        ImageJpeg ($newim,$name . ".jpg");
+        ImageDestroy ($newim);
+    }else{
+        ImageJpeg ($im,$name . ".jpg");
+    }
+}
+
+
+
+if($_FILES['image']['size']){
+    if($_FILES['image']['type'] == "image/pjpeg"){
+        $im = imagecreatefromjpeg($_FILES['image']['tmp_name']);
+    }elseif($_FILES['image']['type'] == "image/x-png"){
+        $im = imagecreatefrompng($_FILES['image']['tmp_name']);
+    }elseif($_FILES['image']['type'] == "image/gif"){
+        $im = imagecreatefromgif($_FILES['image']['tmp_name']);
+    }
+    if($im){
+        if(file_exists("$FILENAME.jpg")){
+            unlink("$FILENAME.jpg");
+        }
+        ResizeImage($im,$RESIZEWIDTH,$RESIZEHEIGHT,$FILENAME);
+        ImageDestroy ($im);
+    }
+}
+
+?>
+
+<img src="<? echo($FILENAME.".jpg?reload=".rand(0,999999)); ?>"><br><br>
+
+<form enctype="multipart/form-data" method="post">
+<br>
+<input type="file" name="image" size="50" value="浏览"><p>
+<input type="submit" value="上传图片">
+</form> 
+
+</body>
+</html>

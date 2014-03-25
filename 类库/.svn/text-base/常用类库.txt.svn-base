@@ -1,0 +1,239 @@
+自己经常用的类库
+
+
+class.config.php
+class.mysql.php
+class.page.admin.php
+
+<?
+/*
+*
+*主要用于数据库的各种操作
+*尛紅褀2007-04-01
+*函数列表
+
+                function Err($sql = "")                                                                                //错误处理函数
+                function TDatabase($config)                                                                        //连接数据库函数
+                function SelectDb($database)                                                                //选择数据库函数
+                function Query($SQL)                                                                                //执行数据库查询函数
+                function FetchArray($result)                                                                //将查询结果倒入到数组函数，可通过下标和字段名访问结果
+                function FetchRow($result)                                                                        //从结果集中取得一行作为枚举数组
+                function FetchObject($result)                                                                //从结果集中取得一行作为对象，只能通过字段名访问结果
+                function FreeResult(&$result)                                                                //释放结果内存
+                function NumRows($result)                                                                        //取得结果集中行的数目
+                function AffectedRows()                                                                                //返回数据库查询影响的记录行数
+                function DatabaseClose()                                                                        //关闭数据库
+                function getInsertID()                                                                                //得到插入的最后一条纪录的行号
+
+*
+*
+*/
+        class TDatabase 
+        { 
+                var $m_host;                                                        //主机
+                var $m_port;                                                        //端口
+                var $m_user;                                                        //账号
+                var $m_password;                                                //密码
+                var $m_name;                                                        //数据库名
+                var $m_link;                                                        //连接字符串
+
+                function Err($sql = "")                                                                                //错误处理函数
+                {
+                        global $HTTP_HOST;                                        //主机地址
+                        //echo $HTTP_HOST;
+
+                        if ($HTTP_HOST=="127.0.0.1" || $HTTP_HOST=="192.168.0.222" || $HTTP_HOST=="")
+                        {
+                                echo "<font color=red>error sql : </font><br>".$sql;
+                        }
+                        else
+                        {
+                                echo "系统调整";
+                        }
+                        exit;
+                } 
+
+                function TDatabase($config)                                                                        //连接数据库函数
+                {             
+                        $this->m_host     = $config->mDbHost;                                        //主机
+                        $this->m_port     = $config->mDbPort;                                        //端口
+                        $this->m_user     = $config->mDbUser;                                        //账号
+                        $this->m_password = $config->mDbPassword;                                //密码
+                        $this->m_name     = $config->mDbDatabase;                                //数据库名
+                                    
+                        $real_host = $this->m_host.":".$this->m_port;                               
+                        $this->m_link = mysql_connect($real_host,$this->m_user,$this->m_password) or die($this->Err(mysql_error())); 
+                        
+                        if ("" != $this->m_name)
+                        {
+                                mysql_select_db($this->m_name, $this->m_link) or die($this->Err());
+                        }  
+                } 
+
+                function SelectDb($database)                                                                //选择数据库函数
+                {
+                        $this->m_name = $database;                                                                //默认数据库
+
+                        if ("" != $this->m_name)
+                        {
+                                mysql_select_db($this->m_name, $this->m_link) or die($this->Err(mysql_error()));
+                        }
+                }
+
+                function Query($SQL)                                                                                //执行数据库查询函数
+                { 
+                //        echo $SQL; 
+                        //$escaped_sql = mysql_real_escape_string($SQL);                        //转义 SQL 语句中使用的字符串中的特殊字符，并考虑到连接的当前字符集
+                        $result=mysql_query($SQL,$this->m_link) or die($this->Err($SQL)); 
+                        return $result; 
+                } 
+
+                function FetchArray($result)                                                                //将查询结果倒入到数组函数，可通过下标和字段名访问结果
+                { 
+                        $row=mysql_fetch_array($result); 
+                        return $row; 
+                } 
+
+                function FetchRow($result)                                                                        //从结果集中取得一行作为枚举数组
+                { 
+                        $row=mysql_fetch_row($result); 
+                        return $row; 
+                } 
+
+                function FetchObject($result)                                                                //从结果集中取得一行作为对象，只能通过字段名访问结果
+                { 
+                        $row=mysql_fetch_object($result); 
+                        return $row; 
+                } 
+
+                function FreeResult(&$result)                                                                //释放结果内存
+                { 
+                        return mysql_free_result($result) or die($this->Err(mysql_error())); 
+                } 
+
+                function NumRows($result)                                                                        //取得结果集中行的数目
+                { 
+                        $result=mysql_num_rows($result) or die($this->Err(mysql_error())); 
+                        return $result; 
+                } 
+
+                function AffectedRows()                                                                                //返回数据库查询影响的记录行数
+                { 
+                        $result=mysql_affected_rows($this->m_link); 
+                        return $result; 
+                }
+                
+                function DatabaseClose()                                                                        //关闭数据库
+                {
+                        mysql_close($this->m_link) or die($this->Err(mysql_error()));
+                }
+                
+                function getInsertID()                                                                                //得到插入的最后一条纪录的行号
+                {
+                        return mysql_insert_id($this->m_link);
+                }
+                function CheckDB($link,$db)                                                                                //检查是否存在指定的数据库,返回结果为1说明存在，为0说明不存在。
+                {
+                        if (isset($db) && isset($link))
+                        {
+                                $db_list = mysql_list_dbs($link);
+
+                                $i = 0;
+                                $cnt = mysql_num_rows($db_list);
+                                while ($i < $cnt) 
+                                {
+                                        if (mysql_db_name($db_list, $i)==$db)
+                                        {
+                                                mysql_free_result($db_list);
+                                                return 1;
+                                        }
+                                        $i++;
+                                }
+                                mysql_free_result($db_list);
+                        }
+
+                        return 0;
+                }
+                function CheckTable($link,$db,$table)                                                                                //检查是否存在指定的数据表,返回结果为1说明存在，为0说明不存在。
+                {
+                        if (isset($db) && isset($table) && isset($link))
+                        {
+                                if($this->CheckDB($link,$db))
+                                {
+                                        $result = mysql_list_tables($db,$link);
+                                        $cnt = mysql_num_rows($result);
+
+                                        $i = 0;
+                                        while ($i < $cnt) 
+                                        {
+                                                if (mysql_tablename($result, $i)==$table)
+                                                {
+                                                        mysql_free_result($result);        
+                                                        return 1;
+                                                }
+                                                $i++;
+                                        }
+                                        mysql_free_result($result);                
+                                }
+                        }
+                        return 0;
+                }
+
+                function GetInsertText($link,$db,$table,$db_new,$table_new,$where)
+                {
+                        $sql_str = "";
+                        if (isset($table) && isset($db))//数据库名与表名是否为空
+                        {
+                                if($this->CheckTable($link,$db,$table))//判断数据库与表是否存在
+                                {
+                                        $fields = mysql_list_fields($db, $table, $link);
+                                        $columns = mysql_num_fields($fields);                                                                                                                                                                //得到字段的数量
+                                        $result = mysql_query("select * from ".$table." ".$where."",$link);
+                                        for ($i = 0; $i < $columns; $i++) {
+                                                $cl_name[$i] = mysql_field_name($fields, $i);                                        //得到字段的名字
+                                                $cl_type[$i] = mysql_field_type($fields, $i);                                        //得到字段的类型
+                                        } 
+                                        while($row=mysql_fetch_array($result))//拆分结果
+                                        {
+                                                $sql_str .= "INSERT INTO `".$table_new."` ";
+                                                $sql_str1 = "(";
+                                                $sql_str2 = " VALUES (";
+                                                        for ($i = 0; $i < $columns; $i++)
+                                                        {
+                                                                if ($i == $columns-1)
+                                                                {
+                                                                        $sql_str1 .= "`".$cl_name[$i]."`)";
+                                                                        $sql_str2 .= ('int' == $cl_type[$i])?"".$row[$i].")":"'".$row[$i]."')";
+                                                                }else{
+                                                                        $sql_str1 .= "`".$cl_name[$i]."`,";
+                                                                        $sql_str2 .= ('int' == $cl_type[$i])?"".$row[$i].",":"'".$row[$i]."',";
+                                                                }
+                                                        }
+                                                $sql_str .=$sql_str1.$sql_str2.";";
+
+                                        }
+                                }
+                                mysql_free_result($result);        
+                                return $sql_str;
+                        }
+
+                }
+        } 
+
+############################################################
+#标准调用范例
+#  include("class/class.config.php");
+#  include("class/class.mysql.php");
+#
+#  $config = new Config;
+#  $mysql = new TDatabase($config);  //new出的Config实例作为TDatabase类的实例的参数
+#  $sql = "select UserName from user where ID = 1";
+#  $result = $mysql->Query($sql);
+#  if ($mysql->AffectedRows != 0)
+#  {
+#     $row = $mysql->FetchArray($result);
+#     echo $row[0];
+#  }
+#  $mysql->DatabaseClose();
+############################################################
+?>

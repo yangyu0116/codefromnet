@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" >
+<script language="Javascript"> 
+<!-- 
+var checkboxname = "checkbox"; //复选框名称的前缀，所有复选框的名称要统一，用序号区分。 
+var iMaxCheckbox = 6; //复选框的个数，本例有9个，可根据需要变动。 
+var iMaxSelected = 4; //设置最大允许选择的数量，可根据需要变动。 
+var iNumChecked = 0; //声明一个变量，用于存放已选的数量。 
+function docheck(ctrl) { //控制选择数量的函数。 
+var nowCtrl; //当前复选框。 
+iNumChecked = 0; //统计数归零。 
+var i; 
+i = 1; 
+while ((i <= iMaxCheckbox) && (iNumChecked <= iMaxSelected)) { //循环检测已选中的复选框数量。 
+nowCtrl = eval("ctrl.form." + checkboxname + i); 
+if ((nowCtrl.checked)) { //如果已被选中，则计算器加1。 
+iNumChecked++; 
+} 
+i++; 
+} 
+if (iNumChecked > iMaxSelected) { // 检查是否已超过了最大选择数量； 
+ctrl.checked = false; 
+//如果已超过允许的最大选择数量，则取消增加的选择并弹出提示窗口。 
+alert("只能选择4个，谢谢") 
+} 
+} 
+// --> 
+</script> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>无标题文档</title> 
+</head> 
+<body> 
+<form action="" method="post" name="form1" id="form1" onclick="mucheck(this)"> 
+<table width="300" border="0" align="center" cellpadding="0" cellspacing="1"> 
+    <tr bgcolor="#99CCFF"> 
+      <td colspan="3">选择你的爱好：</td> 
+    </tr> 
+    <tr> 
+      <td bgcolor="#99CCFF"><label> 
+        <input name="checkbox1" type="checkbox" id="checkbox1" onclick="docheck(this)" /> 
+      阅读</label></td> 
+      <td bgcolor="#99CCFF"><label> 
+        <input name="checkbox2" type="checkbox" id="checkbox2" onclick="docheck(this)" /> 
+      运动</label></td> 
+      <td bgcolor="#99CCFF"><label> 
+        <input name="checkbox3" type="checkbox" id="checkbox3" onclick="docheck(this)" /> 
+      唱歌</label></td> 
+    </tr> 
+    <tr> 
+      <td bgcolor="#99CCFF"><label> 
+        <input name="checkbox4" type="checkbox" id="checkbox4" onclick="docheck(this)" /> 
+      旅游</label></td> 
+      <td bgcolor="#99CCFF"><label> 
+        <input name="checkbox5" type="checkbox" id="checkbox5" onclick="docheck(this)" /> 
+      演艺</label></td> 
+      <td bgcolor="#99CCFF"><label> 
+        <input name="checkbox6" type="checkbox" id="checkbox6" onclick="docheck(this)" /> 
+      爬山</label></td> 
+    </tr> 
+    <tr bgcolor="#99CCFF"> 
+      <td colspan="3" bgcolor="#99CCFF"> 
+        <input type="reset" name="button2" id="button2" value="重置" /> 
+        <input type="submit" name="button" id="button" value="提交" /> 
+     
+     </td> 
+    </tr> 
+</table> 
+</form> 
+</body> 
+</html>
+

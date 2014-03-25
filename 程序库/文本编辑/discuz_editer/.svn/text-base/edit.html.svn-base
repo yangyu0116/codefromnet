@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<title>UBB编辑器V2.0</title>
+<meta name="keywords" content="" />
+<meta name="description" content=" Discuz! Board  - Discuz! Board" />
+<meta name="generator" content="Discuz! 6.1.0" />
+<meta name="author" content="Discuz! Team and Comsenz UI Team" />
+<meta name="copyright" content="2001-2008 Comsenz Inc." />
+<meta name="MSSmartTagsPreventParsing" content="True" />
+<meta http-equiv="MSThemeCompatible" content="Yes" />
+<link rel="archives" title="Discuz! Board" href="http://localhost/php/discuz/archiver/" />
+<link rel="stylesheet" type="text/css" href="images/style_1_editor.css" />
+<link rel="stylesheet" type="text/css" href="images/style_1_common.css" />
+<script type="text/javascript">
+	var discuz_uid = 1;var IMGDIR = 'images/default';var attackevasive = '0';var gid = 0;var STYLEID = '1';
+	var fid = parseInt('2');var tid = parseInt('0');
+</script>
+<script src="images/common.js" type="text/javascript"></script>
+</head>
+<body onkeydown="if(event.keyCode==27) return false;">		
+<script type="text/javascript">
+var postminchars = parseInt('10');
+var postmaxchars = parseInt('10000');
+var disablepostctrl = parseInt('1');
+var typerequired = parseInt('');
+var tagrequired = parseInt('1');
+var bbinsert = parseInt('1');
+var seccodecheck = parseInt('');
+var secqaacheck = parseInt('');
+var special = parseInt('0');
+var isfirstpost = 1;
+var allowposttrade = parseInt('1');
+var allowpostreward = parseInt('1');
+var allowpostactivity = parseInt('1');
+lang['board_allowed'] = '系统限制';
+lang['lento'] = '到';
+lang['bytes'] = '字节';
+lang['post_curlength'] = '当前长度';
+</script>
+<form method="post" id="postform" action="" enctype="multipart/form-data">
+<input type="hidden" name="formhash" id="formhash" value="63ab076e" />
+<input type="hidden" name="frombbs" value="1" />
+<div class="mainbox formbox">
+	<script type="text/javascript">
+	lang['post_discuzcode_code'] = '请输入要插入的代码';
+	lang['post_discuzcode_quote'] = '请输入要插入的引用';
+	lang['post_discuzcode_free'] = '请输入要插入的免费信息';
+	lang['post_discuzcode_hide'] = '请输入要插入的隐藏内容';
+	var editorcss = 'images/style_1_common.css';
+	var editorcss_editor = 'images/style_1_editor.css';
+	var editorcss_append = 'images/style_1_append.css';
+	var TABLEBG = '#FFF';
+	</script>
+	<div id="posteditor" class="editor">
+	<div id="posteditor_controls">
+		<div class="editorrow">
+			<a id="posteditor_cmd_bold" title="粗体">B</a>
+			<a id="posteditor_cmd_italic" title="斜体">I</a>
+			<a id="posteditor_cmd_underline" title="下划线">U</a><em></em>
+			<a id="posteditor_popup_fontname" title="字体"><span style="width: 110px; display: block; white-space: nowrap;" id="posteditor_font_out">字体</span></a>
+			<a id="posteditor_popup_fontsize" title="大小"><span style="width: 30px; display: block;" id="posteditor_size_out">大小</span></a>
+			<a id="posteditor_popup_forecolor" title="颜色"><span style="width: 30px; display: block;"><img alt="color" src="images/common/bb_color.gif"/><br/><img width="21" height="4" style="background-color: Black;" alt="" id="posteditor_color_bar" src="images/common/bb_clear.gif"/></span></a><em></em>
+			<a id="posteditor_cmd_justifyleft" title="居左">Align Left</a>
+			<a id="posteditor_cmd_justifycenter" title="居中">Align Center</a>
+			<a id="posteditor_cmd_justifyright" title="居右">Align Right</a><em></em>
+			<a id="posteditor_cmd_createlink" title="插入链接">Url</a>
+			<a id="posteditor_cmd_email" title="插入邮箱链接">Email</a>
+			<a id="posteditor_cmd_insertimage" title="插入图片">Image</a>
+			<a id="posteditor_popup_media" title="插入多媒体文件">Media</a>
+			<em></em>
+			<a id="posteditor_cmd_quote" title="插入引用">Quote</a>
+			<a id="posteditor_cmd_code" title="插入代码">Code</a>
+			<a id="posteditor_buttonctrl" class="plugeditor editormode">简单功能</a>
+		</div>
+		<div class="editorrow" id="posteditor_morebuttons0" >
+			<a id="posteditor_cmd_removeformat" title="清除文本格式">Remove Format</a>
+			<a id="posteditor_cmd_unlink" title="移除链接">Unlink</a>
+			<a id="posteditor_cmd_undo" title="撤销">Undo</a>
+			<a id="posteditor_cmd_redo" title="重做">Redo</a><em></em>
+			<a id="posteditor_cmd_insertorderedlist" title="排序的列表">Ordered List</a>
+			<a id="posteditor_cmd_insertunorderedlist" title="未排序列表">Unordered List</a>
+			<a id="posteditor_cmd_outdent" title="减少缩进">Outdent</a>
+			<a id="posteditor_cmd_indent" title="增加缩进">Indent</a>
+			<a id="posteditor_cmd_floatleft" title="左浮动">Float Left</a>
+			<a id="posteditor_cmd_floatright" title="右浮动">Float Right</a><em></em>
+			<a id="posteditor_cmd_table" title="插入表格">Table</a>
+			<a id="posteditor_cmd_free" title="插入免费信息">Free</a>
+			<a id="posteditor_cmd_hide" title="插入隐藏内容">Hide</a>
+			<em></em>
+			<a class="plugeditor" id="posteditor_cmd_custom1_qq"><img src="images/common/bb_qq.gif" title="显示 QQ 在线状态，点这个图标可以和他（她）聊天" alt="qq" /></a>			</div>
+
+		<div id="posteditor_switcher" class="editor_switcher_bar">
+			<button type="button" id="bbcodemode">UBB 代码模式</button>
+			<button type="button" id="wysiwygmode">所见即所得模式</button>
+		</div>
+	</div>
+	</div>
+
+	<div class="editortoolbar">
+		<div class="popupmenu_popup fontname_menu" id="posteditor_popup_fontname_menu" style="display: none">
+			<ul unselectable="on">				
+				<li onclick="discuzcode('fontname', '仿宋_GB2312');hideMenu()" style="font-family: 仿宋_GB2312" unselectable="on">仿宋_GB2312</li>
+				<li onclick="discuzcode('fontname', '黑体');hideMenu()" style="font-family: 黑体" unselectable="on">黑体</li>
+				<li onclick="discuzcode('fontname', '楷体_GB2312');hideMenu()" style="font-family: 楷体_GB2312" unselectable="on">楷体_GB2312</li>
+				<li onclick="discuzcode('fontname', '宋体');hideMenu()" style="font-family: 宋体" unselectable="on">宋体</li>
+				<li onclick="discuzcode('fontname', '新宋体');hideMenu()" style="font-family: 新宋体" unselectable="on">新宋体</li>
+				<li onclick="discuzcode('fontname', '微软雅黑');hideMenu()" style="font-family: 微软雅黑" unselectable="on">微软雅黑</li>
+				<li onclick="discuzcode('fontname', 'Trebuchet MS');hideMenu()" style="font-family: Trebuchet MS" unselectable="on">Trebuchet MS</li>
+				<li onclick="discuzcode('fontname', 'Tahoma');hideMenu()" style="font-family: Tahoma" unselectable="on">Tahoma</li>
+				<li onclick="discuzcode('fontname', 'Arial');hideMenu()" style="font-family: Arial" unselectable="on">Arial</li>
+				<li onclick="discuzcode('fontname', 'Impact');hideMenu()" style="font-family: Impact" unselectable="on">Impact</li>
+				<li onclick="discuzcode('fontname', 'Verdana');hideMenu()" style="font-family: Verdana" unselectable="on">Verdana</li>
+				<li onclick="discuzcode('fontname', 'Times New Roman');hideMenu()" style="font-family: Times New Roman" unselectable="on">Times New Roman</li>
+			</ul>
+		</div>
+		<div class="popupmenu_popup fontsize_menu" id="posteditor_popup_fontsize_menu" style="display: none">
+			<ul unselectable="on">				
+				<li onclick="discuzcode('fontsize', 1);hideMenu()" unselectable="on"><font size="1" unselectable="on">1</font></li>
+				<li onclick="discuzcode('fontsize', 2);hideMenu()" unselectable="on"><font size="2" unselectable="on">2</font></li>
+				<li onclick="discuzcode('fontsize', 3);hideMenu()" unselectable="on"><font size="3" unselectable="on">3</font></li>
+				<li onclick="discuzcode('fontsize', 4);hideMenu()" unselectable="on"><font size="4" unselectable="on">4</font></li>
+				<li onclick="discuzcode('fontsize', 5);hideMenu()" unselectable="on"><font size="5" unselectable="on">5</font></li>
+				<li onclick="discuzcode('fontsize', 6);hideMenu()" unselectable="on"><font size="6" unselectable="on">6</font></li>
+				<li onclick="discuzcode('fontsize', 7);hideMenu()" unselectable="on"><font size="7" unselectable="on">7</font></li>
+			</ul>
+		</div>
+		<div class="popupmenu_popup" id="posteditor_popup_media_menu" style="width: 240px;display: none">
+			<input type="hidden" id="posteditor_mediatype" value="ra">
+			<input type="hidden" id="posteditor_mediaautostart" value="0">
+			<table cellpadding="4" cellspacing="0" border="0" unselectable="on">
+			<tr class="popupmenu_option">
+				<td nowrap>
+					请输入多媒体文件的地址:<br />
+					<input id="posteditor_mediaurl" size="40" value="" onkeyup="setmediatype('posteditor')" />
+				</td>
+			</tr>
+			<tr class="popupmenu_option">
+				<td nowrap>
+					<label style="float: left; width: 32%"><input type="radio" name="posteditor_mediatyperadio" id="posteditor_mediatyperadio_ra" onclick="$('posteditor_mediatype').value = 'ra'" checked="checked">RA</label>
+					<label style="float: left; width: 32%"><input type="radio" name="posteditor_mediatyperadio" id="posteditor_mediatyperadio_wma" onclick="$('posteditor_mediatype').value = 'wma'">WMA</label>
+					<label style="float: left; width: 32%"><input type="radio" name="posteditor_mediatyperadio" id="posteditor_mediatyperadio_mp3" onclick="$('posteditor_mediatype').value = 'mp3'">MP3</label>
+					<label style="float: left; width: 32%"><input type="radio" name="posteditor_mediatyperadio" id="posteditor_mediatyperadio_rm" onclick="$('posteditor_mediatype').value = 'rm'">RM/RMVB</label>
+					<label style="float: left; width: 32%"><input type="radio" name="posteditor_mediatyperadio" id="posteditor_mediatyperadio_wmv" onclick="$('posteditor_mediatype').value = 'wmv'">WMV</label>
+					<label style="float: left; width: 32%"><input type="radio" name="posteditor_mediatyperadio" id="posteditor_mediatyperadio_mov" onclick="$('posteditor_mediatype').value = 'mov'">MOV</label>
+				</td>
+			</tr>
+			<tr class="popupmenu_option">
+				<td nowrap>
+					<label style="float: left; width: 32%">宽: <input id="posteditor_mediawidth" size="5" value="400" /></label>
+					<label style="float: left; width: 32%">高: <input id="posteditor_mediaheight" size="5" value="300"/></label>
+					<label style="float: left; width: 32%"><input type="checkbox" onclick="$('posteditor_mediaautostart').value =this.checked ? 1 : 0"> 自动播放</label>
+				</td>
+			</tr>
+			<tr class="popupmenu_option">
+				<td align="center" colspan="2"><input type="button" size="8" value="提交" onclick="setmediacode('posteditor')"> <input type="button" onclick="hideMenu()" value="取消" /></td>
+			</tr>
+			</table>
+		</div>
+
+		<div class="popupmenu_popup" id="posteditor_popup_forecolor_menu" style="display: none">
+			<table cellpadding="0" cellspacing="0" border="0" unselectable="on" style="width: auto;"><tr><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Black');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Black" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Sienna');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Sienna" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DarkOliveGreen');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DarkOliveGreen" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DarkGreen');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DarkGreen" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DarkSlateBlue');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DarkSlateBlue" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Navy');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Navy" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Indigo');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Indigo" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DarkSlateGray');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DarkSlateGray" unselectable="on"></div></td></tr><tr><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DarkRed');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DarkRed" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DarkOrange');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DarkOrange" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Olive');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Olive" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Green');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Green" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Teal');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Teal" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Blue');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Blue" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'SlateGray');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: SlateGray" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DimGray');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DimGray" unselectable="on"></div></td></tr><tr><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Red');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Red" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'SandyBrown');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: SandyBrown" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'YellowGreen');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: YellowGreen" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'SeaGreen');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: SeaGreen" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'MediumTurquoise');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: MediumTurquoise" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'RoyalBlue');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: RoyalBlue" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Purple');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Purple" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Gray');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Gray" unselectable="on"></div></td></tr><tr><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Magenta');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Magenta" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Orange');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Orange" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Yellow');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Yellow" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Lime');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Lime" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Cyan');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Cyan" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DeepSkyBlue');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DeepSkyBlue" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'DarkOrchid');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: DarkOrchid" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Silver');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Silver" unselectable="on"></div></td></tr><tr><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Pink');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Pink" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Wheat');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Wheat" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'LemonChiffon');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: LemonChiffon" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'PaleGreen');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: PaleGreen" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'PaleTurquoise');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: PaleTurquoise" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'LightBlue');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: LightBlue" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'Plum');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: Plum" unselectable="on"></div></td><td class="editor_colornormal" onclick="discuzcode('forecolor', 'White');hideMenu()" unselectable="on" onmouseover="colorContext(this, 'mouseover')" onmouseout="colorContext(this, 'mouseout')"><div style="background-color: White" unselectable="on"></div></td></tr><tr></tr></table>
+		</div>
+
+	</div>
+	<table class="editor_text" summary="Message Textarea" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
+		<tr>
+			<td>
+				<textarea class="autosave" name="message" rows="10" cols="60" style="width:99%; height:250px" tabindex="100" id="posteditor_textarea"></textarea>
+			</td>
+		</tr>
+	</table>
+	<div id="posteditor_bottom" >
+		<table summary="Enitor Buttons" cellpadding="0" cellspacing="0" class="editor_button" style="border-top: none;">
+			<tr>
+				<td style="border-top: none;">
+					<div class="editor_textexpand">
+						<img src="images/common/bb_contract.gif" width="11" height="21" title="收缩编辑框" alt="收缩编辑框" id="posteditor_contract" /><img src="images/common/bb_expand.gif" width="12" height="21" title="扩展编辑框" alt="扩展编辑框" id="posteditor_expand" />
+					</div>
+					</td>
+				<td align="right" style="border-top: none;">
+					<button type="button" id="checklength">字数检查</button>
+					<button type="button" tabindex="103" id="clearcontent">清空内容</button>
+					<button type="button" id="restoredata" onclick="loadData()" title="恢复上次自动保存的数据">恢复数据</button>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="wysiwyg" id="posteditor_mode" value="0" />
+	</div>
+	<table class="box" summary="Upload" cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+				<th>上传附件</th>
+				<td class="nums">阅读权限</td>												<td>描述</td>
+			</tr>
+		</thead>
+		<tbody id="attachbodyhidden" style="display:none"><tr>
+			<th>
+				<input type="file" name="attach[]" />
+				<span id="localfile[]"></span>
+				<input type="hidden" name="localid[]" />
+			</th>
+			<td class="nums"><input type="text" name="attachperm[]" value="0" size="1" /></td>										<td><input type="text" name="attachdesc[]" size="25" /></td>
+		</tr></tbody>
+		<tbody id="attachbody"></tbody>
+		<tr><td colspan="5" style="border-bottom: none;">
+			文件尺寸: <strong>小于 1000 kb </strong>&nbsp;
+			可用扩展名: <strong>jpg, bmp, png, gif, jpeg, rar, doc</strong>&nbsp;					</strong>
+		</td></tr>
+		<tr>
+			<td colspan="5" style="border-bottom: none;">将上传的图片存放于我的相册：<select id="myalbum" name="myalbum" size="1"><option value="0">公共相册</option><option value="47">新浪房产</option><option value="46">松侣</option></select> &nbsp;&nbsp; <a href="album.php?action=cp&amp;sub=dir" target="_blank">创建相册</a>：<input name="newalbumname" value="" maxlength="20" /></td>
+		</tr>
+	</table>
+	<div id="img_hidden" alt="1" style="position:absolute;top:-100000px;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image');width:150px;height:150px"></div>
+</form>
+
+<script type="text/javascript">
+	</script><script type="text/javascript">
+	var isubb;
+	if(location.search.indexOf("ubb=1")==1)isubb=1;
+	else isubb=0;
+
+	if(!(is_ie >= 5 || is_moz >= 2)) {
+		$('restoredata').style.display = 'none';
+	}
+	var editorid = 'posteditor';
+	var textobj = $(editorid + '_textarea');
+	var wysiwyg = (is_ie || is_moz || (is_opera >= 9)) && parseInt(isubb) && bbinsert == 1 ? 1 : 0;
+	var allowswitcheditor = parseInt('1');
+	var allowhtml = parseInt('0');
+	var forumallowhtml = parseInt('0');
+	var allowsmilies = parseInt('1');
+	var allowbbcode = parseInt('1');
+	var allowimgcode = parseInt('1');
+	var special = parseInt('0');
+	var BORDERCOLOR = "#9DB3C5";
+	var ALTBG2 = "#E8F3FD";
+	var charset = 'gbk';
+	var smilies = new Array();
+	smilies[1] = {'code' : ':)', 'url' : 'default/smile.gif'};smilies[12] = {'code' : ':lol', 'url' : 'default/lol.gif'};smilies[13] = {'code' : ':hug:', 'url' : 'default/hug.gif'};smilies[14] = {'code' : ':victory:', 'url' : 'default/victory.gif'};smilies[15] = {'code' : ':time:', 'url' : 'default/time.gif'};smilies[16] = {'code' : ':kiss:', 'url' : 'default/kiss.gif'};smilies[17] = {'code' : ':handshake', 'url' : 'default/handshake.gif'};smilies[18] = {'code' : ':call:', 'url' : 'default/call.gif'};smilies[28] = {'code' : ':loveliness:', 'url' : 'default/loveliness.gif'};smilies[11] = {'code' : ':Q', 'url' : 'default/mad.gif'};smilies[10] = {'code' : ':L', 'url' : 'default/sweat.gif'};smilies[2] = {'code' : ':(', 'url' : 'default/sad.gif'};smilies[3] = {'code' : ':D', 'url' : 'default/biggrin.gif'};smilies[4] = {'code' : ':\'(', 'url' : 'default/cry.gif'};smilies[5] = {'code' : ':@', 'url' : 'default/huffy.gif'};smilies[6] = {'code' : ':o', 'url' : 'default/shocked.gif'};smilies[7] = {'code' : ':P', 'url' : 'default/tongue.gif'};smilies[8] = {'code' : ':$', 'url' : 'default/shy.gif'};smilies[9] = {'code' : ';P', 'url' : 'default/titter.gif'};smilies[29] = {'code' : ':funk:', 'url' : 'default/funk.gif'};	lang['post_autosave_none']		= "没有可以恢复的数据！";
+	lang['post_autosave_confirm']		= "此操作将覆盖当前帖子内容，确定要恢复数据吗？";
+	lang['post_video_uploading']		= "您还没有上传视频，或者视频还在上传中，请稍侯重试。";
+	lang['post_video_vsubject_required']	= "没有添加视频主题。";
+	lang['post_video_vtag_required']	= "没有填写视频标签";
+	lang['post_video_vclass_required']	= "请您选择视频所属分类。";
+</script>
+
+<script type="text/javascript">
+	var thumbwidth = parseInt(400);
+	var thumbheight = parseInt(300);
+	var extensions = '';
+	lang['post_attachment_ext_notallowed']	= '对不起，不支持上传此类扩展名的附件。';
+	lang['post_attachment_img_invalid']	= '无效的图片文件。';
+	lang['post_attachment_deletelink']	= '删除';
+	lang['post_attachment_insert']		= '点击这里将本附件插入帖子内容中当前光标的位置';
+	lang['post_attachment_insertlink']	= '插入';
+</script>
+<script src="images/post_attach.js" type="text/javascript"></script>
+
+<script src="images/post.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	var fontoptions = new Array("仿宋_GB2312", "黑体", "楷体_GB2312", "宋体", "新宋体", "微软雅黑", "Trebuchet MS", "Tahoma", "Arial", "Impact", "Verdana", "Times New Roman");
+	var custombbcodes = new Array();
+	custombbcodes["qq"] = {'prompt' : '请输入显示在线状态 QQ 号码:'};		lang['enter_list_item']			= "输入一个列表项目.\r\n留空或者点击取消完成此列表.";
+	lang['enter_link_url']			= "请输入链接的地址:";
+	lang['enter_image_url']			= "请输入图片链接地址:";
+	lang['enter_email_link']		= "请输入此链接的邮箱地址:";
+	lang['fontname']			= "字体";
+	lang['fontsize']			= "大小";
+	lang['post_advanceeditor']		= "全部功能";
+	lang['post_simpleeditor']		= "简单功能";
+	lang['submit']				= "提交";
+	lang['cancel']				= "取消";
+</script>
+<script src="images/editor.js" type="text/javascript"></script>
+<script src="images/bbcode.js" type="text/javascript"></script>
+<script type="text/javascript">
+	newEditor(wysiwyg);
+</script>
+<script src="images/post_editor.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(editorid + '_contract').onclick = function() {resizeEditor(-100)};
+	$(editorid + '_expand').onclick = function() {resizeEditor(100)};
+	$('checklength').onclick = function() {checklength($('postform'))};
+	//$('previewbutton').onclick = function() {previewpost()};
+	$('clearcontent').onclick = function() {clearcontent()};
+	//$('postform').onsubmit = function() {return validate(this);};
+	//$('subject').focus();
+	/*天枫修改增加调用设置*/
+	function $(objID) {return document.getElementById(objID)};
+	function $$(node){return document.getElementsByTagName(node)};
+	function addEvent(obj,type,fn){ 
+		if (obj.attachEvent){ 
+			obj['e'+type+fn] = fn; 
+			obj[type+fn] = function(){obj['e'+type+fn]( window.event );} 
+			obj.attachEvent('on'+type,obj[type+fn]); 
+		}else{
+			obj.addEventListener(type,fn,false); 
+		}
+	} 
+	var _url = location.href;
+	var _fromid = _url.lastIndexOf("id=");
+	if (_fromid == -1)alert("请传入调用参数ID，即隐藏的内容表单项ID！");
+	else _fromid = _fromid + 3
+	var _fromname = _url.substring(_fromid).replace(/#/g,"");
+	//alert(_fromname);
+	var _fromobj = parent.document.getElementsByName(_fromname)[0];
+	addEvent(_fromobj.form,"submit",AttachSubmit);
+	addEvent(_fromobj.form,"reset",AttachReset);
+	AttachReset();
+	function AttachSubmit() { 
+		if(wysiwyg==0)_fromobj.value=$("posteditor_textarea").value;
+		else _fromobj.value=html2bbcode(getEditorContents());
+	} 
+	function AttachReset() {
+		 if(wysiwyg==0)$("posteditor_textarea").value="";
+		 else editdoc.body.innerHTML="";
+		 if (_fromobj.value!=""){
+			if(wysiwyg==0)$("posteditor_textarea").value=_fromobj.value;
+			else editdoc.body.innerHTML=bbcode2html(_fromobj.value);
+		 }
+	}
+	/*以上增加处理外部调用*/
+	</script>
+</body>
+</html>

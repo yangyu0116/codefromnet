@@ -1,0 +1,38 @@
+#NewsPic {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; LEFT: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 368px; PADDING-TOP: 0px; POSITION: relative; TOP: 0px; HEIGHT: 184px; BORDER-RIGHT-WIDTH: 0px
+}
+#NewsPicTxt {padding-top:7px;FONT-SIZE: 14px;font-weight:bold;width:370px;text-align:center;FONT-FAMILY:simsun;color:#0F0CBF}
+#NewsPicTxt A {
+	COLOR: #0F0CBF; TEXT-DECORATION: none
+}
+#NewsPicTxt A:hover {
+	COLOR: #0F0CBF; TEXT-DECORATION: underline
+}
+#NewsPicTxt A:hover {
+	COLOR: red
+}
+#NewsPic A {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px; TEXT-DECORATION: none
+}
+#NewsPic A:hover {
+	TEXT-DECORATION: none
+}
+#NewPic A:visited {
+	TEXT-DECORATION: none
+}
+#NewsPic img{WIDTH:370px; HEIGHT:185px}
+#NewsPic .Nav {left:0;float:left;margin-top:27px;WIDTH:370px; HEIGHT: 16px;line-height:16px;clear:both;BACKGROUND-color:#E2EAF7;position:absolute}
+#NewsPic .Nav SPAN {
+	DISPLAY: block; BACKGROUND: #000000; FLOAT: right; FONT: 10px Courier; BORDER-LEFT: #ffffff 1px solid; WIDTH: 24px; CURSOR: hand; COLOR: #ffffff; HEIGHT: 100%; TEXT-ALIGN: center
+}
+#NewsPic .Nav SPAN.Cur{
+	BACKGROUND:#0049A5; COLOR: #004AA7
+}
+#NewsPic .Nav SPAN.Cur a{
+	BACKGROUND:#0049A5; COLOR: #FFFFFF
+}
+#NewsPic .Nav SPAN.Normal {
+	BACKGROUND: #9EC9EC; COLOR: #004AA7}
+#NewsPic .Nav SPAN A {
+	DISPLAY: block; WIDTH: 100%; COLOR: #004AA7; HEIGHT: 100%;font-size:14px;FONT-WEIGHT: normal; FONT-FAMILY: Arial}
+#NewsPic .Nav SPAN A:hover {CURSOR:pointer}

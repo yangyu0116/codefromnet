@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/44/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93
+END
+创建多级目录.txt
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E5%88%9B%E5%BB%BA%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95.txt
+END
+生成随机字符串.txt
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E5%AD%97%E7%AC%A6%E4%B8%B2.txt
+END
+用curl取ftp数据.txt
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E7%94%A8curl%E5%8F%96ftp%E6%95%B0%E6%8D%AE.txt
+END
+截取字符串__完美分词 .txt
+K 25
+svn:wc:ra_dav:version-url
+V 168
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2__%E5%AE%8C%E7%BE%8E%E5%88%86%E8%AF%8D%20.txt
+END
+登陆用户检测.txt
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E7%99%BB%E9%99%86%E7%94%A8%E6%88%B7%E6%A3%80%E6%B5%8B.txt
+END
+PHP访问url.txt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/39/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/PHP%E8%AE%BF%E9%97%AEurl.txt
+END
+汉字转拼音.txt
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E6%B1%89%E5%AD%97%E8%BD%AC%E6%8B%BC%E9%9F%B3.txt
+END
+跳转.txt
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E8%B7%B3%E8%BD%AC.txt
+END
+去掉数组重复项(二维).txt
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E5%8E%BB%E6%8E%89%E6%95%B0%E7%BB%84%E9%87%8D%E5%A4%8D%E9%A1%B9(%E4%BA%8C%E7%BB%B4).txt
+END
+防注入.txt
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E9%98%B2%E6%B3%A8%E5%85%A5.txt
+END
+截断字符串优化函数.txt
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E6%88%AA%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0.txt
+END
+js中的escape及unescape函数的php实现.txt
+K 25
+svn:wc:ra_dav:version-url
+V 173
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/js%E4%B8%AD%E7%9A%84escape%E5%8F%8Aunescape%E5%87%BD%E6%95%B0%E7%9A%84php%E5%AE%9E%E7%8E%B0.txt
+END
+生成静态页面.txt
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2.txt
+END
+表单验证和电子邮件地址.txt
+K 25
+svn:wc:ra_dav:version-url
+V 181
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81%E5%92%8C%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E5%9C%B0%E5%9D%80.txt
+END
+获得当前的脚本网址.txt
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E8%8E%B7%E5%BE%97%E5%BD%93%E5%89%8D%E7%9A%84%E8%84%9A%E6%9C%AC%E7%BD%91%E5%9D%80.txt
+END
+取得mac地址.txt
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E5%8F%96%E5%BE%97mac%E5%9C%B0%E5%9D%80.txt
+END
+防止sql注入.txt
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E9%98%B2%E6%AD%A2sql%E6%B3%A8%E5%85%A5.txt
+END
+取得各类商品.txt
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E5%8F%96%E5%BE%97%E5%90%84%E7%B1%BB%E5%95%86%E5%93%81.txt
+END
+PHP4兼容file_put_contents特性.txt
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/PHP4%E5%85%BC%E5%AE%B9file_put_contents%E7%89%B9%E6%80%A7.txt
+END
+PHP图片水印.txt
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/PHP%E5%9B%BE%E7%89%87%E6%B0%B4%E5%8D%B0.txt
+END
+非法字符替换.txt
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E9%9D%9E%E6%B3%95%E5%AD%97%E7%AC%A6%E6%9B%BF%E6%8D%A2.txt
+END
+加密解密函数.txt
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/!svn/ver/36/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E5%87%BD%E6%95%B0.txt
+END
+txt下载.txt
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/44/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/txt%E4%B8%8B%E8%BD%BD.txt
+END
+PHP伪造ip访问url.txt
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/!svn/ver/39/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/PHP%E4%BC%AA%E9%80%A0ip%E8%AE%BF%E9%97%AEurl.txt
+END
+相对路径转化为绝对路径.txt
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/svn/!svn/ver/29/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E8%BD%AC%E5%8C%96%E4%B8%BA%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84.txt
+END
+判断邮箱地址.txt
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E5%88%A4%E6%96%AD%E9%82%AE%E7%AE%B1%E5%9C%B0%E5%9D%80.txt
+END
+创建相应的文件夹.txt
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E5%88%9B%E5%BB%BA%E7%9B%B8%E5%BA%94%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9.txt
+END
+返回最佳图片的高度，宽度以及原来的高度和宽度.txt
+K 25
+svn:wc:ra_dav:version-url
+V 280
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E8%BF%94%E5%9B%9E%E6%9C%80%E4%BD%B3%E5%9B%BE%E7%89%87%E7%9A%84%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%BD%E5%BA%A6%E4%BB%A5%E5%8F%8A%E5%8E%9F%E6%9D%A5%E7%9A%84%E9%AB%98%E5%BA%A6%E5%92%8C%E5%AE%BD%E5%BA%A6.txt
+END
+获取IP.txt
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/4/trunk/%E4%BB%A3%E7%A0%81%E5%BA%93/%E5%87%BD%E6%95%B0%E5%BA%93/%E8%8E%B7%E5%8F%96IP.txt
+END

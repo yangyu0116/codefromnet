@@ -1,0 +1,36 @@
+<?
+    if (!$page){
+	$page=1;
+	}
+	$page_size=4;
+	$message_count=10;
+	$page_count=ceil($message_count/$page_size);
+	$offset=($page-1)*$page_size;
+        $prev_page=$page-1;
+	$next_page=$page+1;
+	echo "<p align=\"center\">| ";
+		if ($page<=1){
+			echo "第一页 | ";
+		}
+		else{
+			echo "<a href='$PATH_INFO?page=1'>第一页</a> | ";
+		}
+		if ($prev_page<1){
+			echo "上一页 | ";
+		}
+		else{
+			echo "<a href='$PATH_INFO?page=$prev_page'>上一页</a> | ";
+		}
+		if ($next_page>$page_count){
+			echo "下一页 | ";
+		}
+		else{
+			echo "<a href='$PATH_INFO?page=$next_page'>下一页</a> | ";
+		}
+		if ($page>=$page_count){
+			echo "最后一页 |</p>\n";
+		}
+		else{
+			echo "<a href='$PATH_INFO?page=$page_count'>最后一页</a> |</p>\n";
+		}
+?>

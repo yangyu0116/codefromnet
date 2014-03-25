@@ -1,0 +1,37 @@
+//code by yangyu
+//citylife列表页分页函数
+function pager($page, $pagetotal){
+
+	(int)$page < 1  && $page = 1;
+	(int)$page > $pagetotal  && $page = $pagetotal;
+	$start = ($page <= 4) ? 1 : $page - 3;
+
+	if ($page + 3 > $pagetotal){
+		$start -=  $page + 3 -$pagetotal;
+	}
+	$end = $pagetotal;
+
+	$html = '<div class="pagination">';
+	if($page < 2) {
+		$html .= "<span class='disabled'>&#171; 上一页</span>";
+	}else{
+		$temp = $page - 1;
+		$html .= "<span class='prev'><a href='?page=".$temp."'>&#171; 上一页</a></span>";
+	}
+
+	for ($i = $start; $i < $start + 7; $i++){
+		if ($i == $page)	$html .= "<span class='current'>".$i."</span>";
+		else	$html .= "<a href='?page=".$i."'>".$i."</a>";
+	}
+
+	if($page == $end) {
+		$html .= "<span class='disabled'>下一页 &#187;</span>";
+	}else{
+		$temp = $page + 1;
+		$html .= "<span class='next'><a href='?page=".$temp."'>下一页 &#187; </a></span>";
+	}
+
+	$html .= '</div>';
+
+	return $html;
+}
