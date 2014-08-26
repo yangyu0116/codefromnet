@@ -1,0 +1,68 @@
+
+$mine = array(116.3883,39.9289);
+
+$citylist = get_citylist();
+$dis_arr = array();
+foreach ($citylist as $city_name => $city_loc){
+	$dis_key = get_distance($mine[0], $mine[1], $city_loc[0], $city_loc[1]);
+	$dis_arr[$dis_key] = $city_name;
+}
+ksort($dis_arr);
+
+echo '<pre>';
+print_r ($dis_arr);
+echo '</pre>';
+
+
+function get_distance($lat1, $lng1, $lat2, $lng2){
+	$EARTH_RADIUS = 6378.137;
+	$rad_lat1 = deg2rad($lat1);
+	$rad_lat2 = deg2rad($lat2);
+	$lat_dval = $rad_lat1 - $rad_lat2;
+	$lng_dval = deg2rad($lng1) - deg2rad($lng2);
+	$dis_dval = 2 * asin(sqrt(pow(sin($lat_dval/2),2) + cos($rad_lat1)*cos($rad_lat2)*pow(sin($lng_dval/2),2)));
+	$s = $dis_dval * $EARTH_RADIUS;
+	$s = round($s * 10000) / 10000;
+	return $s;
+}
+
+function get_citylist(){
+	return array(
+		'北京' => array(116.41667, 39.91667),
+		'上海' => array(121.43333, 31.50000),
+		'天津' => array(117.20000, 39.13333),
+		'香港' => array(114.10000,22.20000),
+		'广州' => array(113.23333,23.16667),
+		'珠海' => array(113.51667,22.30000),
+		'深圳' => array(114.06667,22.61667),
+		'杭州' => array(120.20000,30.26667),
+		'重庆' => array(106.45000,29.56667),
+		'青岛' => array(120.33333,36.06667),
+		'厦门' => array(118.10000,24.46667),
+		'福州' => array(119.30000,26.08333),
+		'兰州' => array(103.73333,36.03333),
+		'贵阳' => array(106.71667,26.56667),
+		'长沙' => array(113.00000,28.21667),
+		'南京' => array(118.78333,32.05000),
+		'南昌' => array(115.90000,28.68333),
+		'沈阳' => array(123.38333,41.80000),
+		'太原' => array(112.53333,37.86667),
+		'成都' => array(104.06667,30.66667),
+		'拉萨' => array(91.00000,29.60000),
+		'乌鲁木齐' => array(87.68333,43.76667),
+		'昆明' => array(102.73333,25.05000),
+		'西安' => array(108.95000,34.26667),
+		'西宁' => array(101.75000,36.56667),
+		'银川' => array(106.26667,38.46667),
+		'呼兰浩特' => array(122.08333,46.06667),
+		'哈尔滨' => array(126.63333,45.75000),
+		'长春' => array(125.35000,43.88333),
+		'武汉' => array(114.31667,30.51667),
+		'郑州' => array(113.65000,34.76667),
+		'石家庄' => array(114.48333,38.03333),
+		'三亚' => array(109.50000,18.20000),
+		'海口' => array(110.35000,20.01667),
+		'澳门' => array(113.50000,22.20000)
+	);
+}
+
