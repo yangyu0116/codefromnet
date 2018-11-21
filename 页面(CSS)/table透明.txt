@@ -1,7 +1,0 @@
-<table border=1 style="filter:alpha(opacity=10)">
-<tr>
-<td>123456789
-<table style="position:relative;"><tr><td>......我为什么要透明？.......</td></tr></table>
-</td>
-</tr>
-</table>
